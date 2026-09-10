@@ -1,0 +1,19 @@
+{
+  "variantName": "carousel-hero",
+  "baseBlock": "carousel",
+  "canonicalModel": "container-items",
+  "visualCharacteristics": {
+    "layout": "full-bleed rotating hero slides, one slide visible at a time",
+    "theme": "dark",
+    "background": "full-viewport background image per slide",
+    "contentAlignment": "bottom-left overlay",
+    "pagination": "thin progress-bar indicators, bottom-left",
+    "navigation": "prev/next arrow buttons"
+  },
+  "contentPattern": "Each slide: background image + headline + 1-2 CTA buttons. Multiple slides rotate.",
+  "usage": "Full-bleed dark hero banner rotator for landing/section headers. Reusable across the site for any full-bleed hero rotator.",
+  "options": [],
+  "memberVariantIds": [
+    "carousel-hero"
+  ]
+}

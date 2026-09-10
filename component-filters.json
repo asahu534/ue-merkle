@@ -15,13 +15,42 @@
       "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "carousel-hero",
+      "cards-feature",
+      "cards-icon",
+      "video-centered",
+      "carousel-cases"
+    ]
+  },
+  {
+    "id": "cards-feature",
+    "components": [
+      "cards-feature-item"
+    ]
+  },
+  {
+    "id": "cards-icon",
+    "components": [
+      "cards-icon-item"
     ]
   },
   {
     "id": "cards",
     "components": [
       "card"
+    ]
+  },
+  {
+    "id": "carousel-cases",
+    "components": [
+      "carousel-cases-item"
+    ]
+  },
+  {
+    "id": "carousel-hero",
+    "components": [
+      "carousel-hero-item"
     ]
   },
   {
@@ -38,5 +67,9 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "video-centered",
+    "components": []
   }
 ]

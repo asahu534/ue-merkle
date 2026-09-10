@@ -1,0 +1,64 @@
+.cards-feature > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.cards-feature > ul > li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.cards-feature .cards-feature-card-image {
+  line-height: 0;
+}
+
+.cards-feature .cards-feature-card-image img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.cards-feature .cards-feature-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+}
+
+/* Category eyebrow: first line/paragraph of the body — muted grey, bold, uppercase */
+.cards-feature .cards-feature-card-body p:first-child {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--muted-text-color);
+  margin: 0;
+}
+
+.cards-feature .cards-feature-card-body h1,
+.cards-feature .cards-feature-card-body h2,
+.cards-feature .cards-feature-card-body h3,
+.cards-feature .cards-feature-card-body h4,
+.cards-feature .cards-feature-card-body h5,
+.cards-feature .cards-feature-card-body h6 {
+  margin: 0;
+}
+
+@media (width >= 900px) {
+  .cards-feature > ul {
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: stretch;
+  }
+
+  /* First (featured) card spans full height, image beside text handled by its own stacking */
+  .cards-feature > ul > li:first-child {
+    grid-column: 1;
+  }
+}

@@ -1,0 +1,96 @@
+/* Block: video-centered
+ * Centered, width-constrained promo video with rounded corners and a large
+ * circular play button, matching the .video.centered block on merkle.com.
+ * Values extracted from source computed styles (see migration-work/video-centered-extracted.css).
+ */
+
+.video-centered {
+  max-width: 1000px;
+  margin: 0 auto 80px; /* source: 80px bottom spacer */
+  text-align: center;
+  border-radius: 24px; /* source .cmp-video__player border-radius */
+  overflow: hidden; /* clip video to rounded corners */
+  position: relative;
+}
+
+.video-centered[data-embed-loaded='false']:not(.placeholder) {
+  /* reserve space to avoid layout shift before the video loads */
+  aspect-ratio: 16 / 9;
+}
+
+.video-centered > div {
+  display: flex;
+  justify-content: center;
+}
+
+.video-centered video {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain; /* source video object-fit */
+  background-color: #000;
+}
+
+/* poster placeholder (rendered when a cover image is authored) */
+.video-centered .video-centered-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  cursor: pointer;
+}
+
+.video-centered .video-centered-placeholder > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0;
+}
+
+.video-centered[data-embed-loaded='true'] .video-centered-placeholder,
+.video-centered[data-embed-loaded='false'] .video-centered-placeholder + * {
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}
+
+.video-centered .video-centered-placeholder picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* large circular play button — source control is 96 x 96, centered */
+.video-centered .video-centered-placeholder-play button {
+  position: relative;
+  display: block;
+  width: 96px;
+  height: 96px;
+  border: 0;
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 90%);
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.video-centered .video-centered-placeholder-play button:hover {
+  background-color: #fff;
+  transform: scale(1.05);
+}
+
+.video-centered .video-centered-placeholder-play button::before {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 0;
+  height: 28px;
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  border-left: 24px solid var(--accent-color, #dd3039);
+  top: 50%;
+  left: calc(50% + 3px);
+  transform: translate(-50%, -50%);
+}
