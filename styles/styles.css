@@ -362,3 +362,17 @@ main .section.dark h6 {
 main .section.dark a:any-link {
   color: #fff;
 }
+
+/* Centered intro copy — matches merkle.com, where the default-content
+ * headings/paragraphs above the cards/icon/case blocks are centered. Scoped to
+ * the default-content wrappers in these sections so block content is unaffected. */
+main .section.cards-feature-container > .default-content-wrapper,
+main .section.cards-icon-container > .default-content-wrapper {
+  text-align: center;
+}
+
+/* center the button row in those intros too */
+main .section.cards-feature-container > .default-content-wrapper .button-wrapper,
+main .section.cards-icon-container > .default-content-wrapper .button-wrapper {
+  justify-content: center;
+}

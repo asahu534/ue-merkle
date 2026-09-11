@@ -1,6 +1,21 @@
 /* Block: carousel-hero -- full-bleed dark rotator hero.
  * Values extracted from computed styles on https://www.merkle.com/ */
 
+/* Full-bleed: break the hero out of the section's max-width/padding so it
+ * spans the entire viewport width, like the source. The section wrapper caps
+ * content at 1200px with side padding (`main > .section > div`); override that
+ * just for this block, matching that selector's specificity. */
+main > .section.carousel-hero-container {
+  margin: 0;
+  padding: 0;
+}
+
+main > .section > .carousel-hero-wrapper {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
 .carousel-hero {
   position: relative;
 }
