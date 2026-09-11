@@ -177,6 +177,16 @@ export default {
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
 
+    // 5b. Re-relativize DAM asset URLs. adjustImageUrls absolutizes every src to
+    // the source origin (https://www.merkle.com/content/dam/...). For md2jcr to
+    // store these as AEM DAM references (not external images), the src must be a
+    // root-relative /content/dam/... path.
+    main.querySelectorAll('img[src*="/content/dam/universal-editor-merkle/"]').forEach((img) => {
+      const src = img.getAttribute('src') || '';
+      const idx = src.indexOf('/content/dam/universal-editor-merkle/');
+      if (idx > 0) img.setAttribute('src', src.slice(idx));
+    });
+
     // 6. Generate sanitized path. Map the root/homepage URL to `/index`.
     const rawPath = new URL(params.originalURL).pathname
       .replace(/\/$/, '')

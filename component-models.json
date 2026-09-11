@@ -145,7 +145,7 @@
     "id": "cards-feature-item",
     "fields": [
       {
-        "component": "richtext",
+        "component": "reference",
         "valueType": "string",
         "name": "image",
         "label": "Image",
@@ -164,7 +164,7 @@
     "id": "cards-icon-item",
     "fields": [
       {
-        "component": "richtext",
+        "component": "reference",
         "valueType": "string",
         "name": "image",
         "label": "Icon",
@@ -202,7 +202,7 @@
     "id": "carousel-cases-item",
     "fields": [
       {
-        "component": "richtext",
+        "component": "reference",
         "valueType": "string",
         "name": "image",
         "label": "Background Image",
@@ -228,7 +228,7 @@
     "id": "carousel-hero-item",
     "fields": [
       {
-        "component": "richtext",
+        "component": "reference",
         "valueType": "string",
         "name": "image",
         "label": "Background Image",
@@ -333,7 +333,7 @@
         ]
       },
       {
-        "component": "richtext",
+        "component": "reference",
         "valueType": "string",
         "name": "placeholder_image",
         "label": "Placeholder Image",

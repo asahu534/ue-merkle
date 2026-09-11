@@ -46,7 +46,7 @@
           ]
         },
         {
-          "component": "richtext",
+          "component": "reference",
           "valueType": "string",
           "name": "placeholder_image",
           "label": "Placeholder Image",

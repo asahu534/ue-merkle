@@ -2,111 +2,63 @@
 /* global WebImporter */
 
 /**
- * Transformer: Merkle Dynamic Media / Scene7 images.
- * Source contains Scene7 IS/Image URLs (verified in migration-work/metadata.json
- * .images.mapping, e.g. https://assets.merkle.com/is/image/merkle/...).
+ * Transformer: Merkle Scene7/Dynamic Media images -> AEM DAM asset paths.
  *
- * Rewrites DM/Scene7 <img> tags into anchors so the DM URL round-trips through
- * markdown intact; the companion auto-block in scripts/scripts.js rebuilds them
- * as responsive <picture> elements at render time.
+ * The source serves images from Scene7 (https://assets.merkle.com/is/image/merkle/<Name>?...).
+ * Those assets have been uploaded to the AEM DAM at
+ * /content/dam/universal-editor-merkle/<file>, so instead of round-tripping the
+ * external DM URL we rewrite each Scene7 <img> src to its DAM path. The block
+ * parsers (which run after this beforeTransform hook) then capture a normal
+ * <img> cell, and md2jcr stores it as a proper DAM asset reference — giving
+ * authors the standard image picker.
  *
- * Runs in afterTransform ONLY — block parsers run between the hooks and extract
- * <img> references into block cells (cards/carousel). Rewriting to anchors in
- * beforeTransform would leave parsers with empty image cells.
- *
- * Helpers below are copied verbatim from references/dm-scene7-helpers.js — keep
- * byte-identical. Only the subset the transformer consumes is inlined.
+ * Mapping (Scene7 image name -> DAM path) is embedded below from
+ * tools/importer/dm-to-dam-map.json.
  */
 
-// ---- Begin canonical helpers (copy from dm-scene7-helpers.js) ----
-function detectDynamicMediaUrl(urlStr) {
-  let u;
-  try { u = new URL(urlStr, 'https://x/'); } catch { return false; }
-  // Scene7 detected by path alone — hostname is irrelevant because
-  // customer sites routinely CNAME a vanity domain to Scene7 (e.g.
-  // media-assets.brand.example). Keep byte-identical with dm-scene7-helpers.js.
-  if (u.pathname.startsWith('/is/image/')) {
-    return 'scene7';
-  }
-  if (/^delivery-p\d+-e\d+\.adobeaemcloud\.com$/.test(u.hostname)
-      && u.pathname.startsWith('/adobe/assets/urn:')) {
-    return 'dm-openapi';
-  }
-  return false;
-}
+const DM_TO_DAM = {
+  'Merkle-Hero-Carousel-01B': '/content/dam/universal-editor-merkle/merkle-hero-carousel-01b.png',
+  'LBR2026-Web-1920': '/content/dam/universal-editor-merkle/lbr2026-web-1920.png',
+  'Six-Flags-Full-Width-1920': '/content/dam/universal-editor-merkle/six-flags-full-width-1920.png',
+  'dreamforce-hero-banner-1080-2': '/content/dam/universal-editor-merkle/dreamforce-hero-banner-1080-2.jpg',
+  'CX-Imperatives-1920': '/content/dam/universal-editor-merkle/cx-imperatives-1920.jpg',
+  'Orchestrating the Content Ecosystem-Hero Image': '/content/dam/universal-editor-merkle/orchestrating-the-content-ecosystem-hero-image.jpg',
+  'Merkle-GTM-Shape_GBA-Lotus_Black_1080': '/content/dam/universal-editor-merkle/merkle-gtm-shape-gba-lotus-black-1080.png',
+  'Merkle-GTM_Shape_FRT-Chrys_Black_1080': '/content/dam/universal-editor-merkle/merkle-gtm-shape-frt-chrys-black-1080.png',
+  'Merkle-GMT-Shape_CFE-Cherry-B_Black_1080': '/content/dam/universal-editor-merkle/merkle-gmt-shape-cfe-cherry-b-black-1080.png',
+  'Merkle-GTM-Shape_BLE-Camellia_Black_1080': '/content/dam/universal-editor-merkle/merkle-gtm-shape-ble-camellia-black-1080.png',
+  'Satair-CS-square-1080': '/content/dam/universal-editor-merkle/satair-cs-square-1080.jpg',
+  'Volvo_CS_square_1080x1080': '/content/dam/universal-editor-merkle/volvo-cs-square-1080x1080.jpg',
+  'FunLab-CS-square-1080': '/content/dam/universal-editor-merkle/funlab-cs-square-1080.jpg',
+  'KFC-Restore-CS-square-1080': '/content/dam/universal-editor-merkle/kfc-restore-cs-square-1080.jpg',
+  'Under-Armour-CS-square-1080': '/content/dam/universal-editor-merkle/under-armour-cs-square-1080.jpg',
+  'Signify-CS-square-1080': '/content/dam/universal-editor-merkle/signify-cs-square-1080.jpg',
+  'CTCA-CS-Masonry-IMGTeaserCard-Gallery-Square-1080': '/content/dam/universal-editor-merkle/ctca-cs-masonry-imgteasercard-gallery-square-1080.jpg',
+  'Siemens-CS-Masonry-IMGTeaserCard-Gallery-Square-1080': '/content/dam/universal-editor-merkle/siemens-cs-masonry-imgteasercard-gallery-square-1080.jpg',
+};
 
-// Walk up from a DM <img> through allow-listed inline wrappers (currently
-// just <picture>) to find the carrier anchor for the linked-image
-// round-trip. Returns the outer <a> when the img is the sole meaningful
-// descendant; null otherwise. Keep byte-identical with dm-scene7-helpers.js.
-const LINKED_DM_INLINE_WRAPPER_TAGS = new Set(['PICTURE']);
-const LINKED_DM_WRAPPER_SIBLING_TAGS = new Set(['SOURCE']); // standard <picture> siblings
-function findLinkedDmCarrier(img) {
-  if (!img || !img.parentElement) return null;
-  let node = img;
-  let parent = img.parentElement;
-  while (parent && LINKED_DM_INLINE_WRAPPER_TAGS.has(parent.tagName)) {
-    let foundNode = false;
-    for (const child of parent.children) {
-      if (child === node) {
-        foundNode = true;
-      } else if (!LINKED_DM_WRAPPER_SIBLING_TAGS.has(child.tagName)) {
-        return null;
-      }
-    }
-    if (!foundNode) return null;
-    node = parent;
-    parent = parent.parentElement;
+function scene7Name(urlStr) {
+  try {
+    const u = new URL(urlStr, 'https://x/');
+    if (!u.pathname.startsWith('/is/image/')) return null;
+    const parts = u.pathname.split('/is/image/')[1].split('/');
+    parts.shift(); // drop the company segment (merkle)
+    return decodeURIComponent(parts.join('/'));
+  } catch {
+    return null;
   }
-  if (!parent || parent.tagName !== 'A') return null;
-  if (parent.children.length !== 1 || parent.children[0] !== node) return null;
-  if (parent.textContent.trim() !== '') return null;
-  return parent;
 }
-
-const EMPTY_ALT_SENTINEL = 'Image without alt text';
-
-function altToLinkText(alt) {
-  return alt || EMPTY_ALT_SENTINEL;
-}
-// ---- End canonical helpers ----
 
 export default function transform(hookName, element, payload) {
-  if (hookName !== 'afterTransform') return;
-  const doc = element.ownerDocument;
+  if (hookName !== 'beforeTransform') return;
 
   element.querySelectorAll('img').forEach((img) => {
     const src = img.getAttribute('src') || '';
-    if (!detectDynamicMediaUrl(src)) return;
-
-    // Preserve alt verbatim, including empty string for decorative images.
-    // When alt is empty we substitute EMPTY_ALT_SENTINEL so authors editing
-    // the doc see a visible cell; the auto-block translates it back to alt="".
-    const alt = img.getAttribute('alt') || '';
-
-    // Linked image (incl. parser-wrapped `<a><picture><img></picture></a>`).
-    // Stash DM URL in title, keep outer href; setting textContent replaces
-    // any wrapper descendants with the link text.
-    const linkedAnchor = findLinkedDmCarrier(img);
-    if (linkedAnchor) {
-      linkedAnchor.setAttribute('title', src);
-      linkedAnchor.textContent = altToLinkText(alt);
-      return;
-    }
-
-    // Inside an anchor but not a sole-meaningful-child shape — mixed
-    // content. No clean single-anchor markdown representation; skip.
-    const parent = img.parentElement;
-    if (parent && parent.tagName === 'A') {
-      // eslint-disable-next-line no-console
-      console.warn('DM image inside mixed-content anchor, skipped:', src);
-      return;
-    }
-
-    // Unlinked image: create an anchor whose href is the DM URL.
-    const a = doc.createElement('a');
-    a.href = src;
-    a.textContent = altToLinkText(alt);
-    img.replaceWith(a);
+    const name = scene7Name(src);
+    if (!name) return;
+    const damPath = DM_TO_DAM[name];
+    if (!damPath) return;
+    img.setAttribute('src', damPath);
+    img.removeAttribute('srcset');
   });
 }

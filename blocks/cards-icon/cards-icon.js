@@ -1,20 +1,5 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-
-/**
- * Rebuild a Scene7 rendition URL that preserves the source's alpha channel.
- * The source gems are transparent PNGs (fmt=png-alpha); the default optimized
- * pipeline re-encodes them as webp/jpg, flattening transparency to white.
- * Keep all authored params, swap width/format for a png-alpha rendition.
- */
-function pngAlphaRendition(src, width) {
-  const normalized = src.startsWith('//') ? `https:${src}` : src;
-  const qIdx = normalized.indexOf('?');
-  const base = qIdx >= 0 ? normalized.slice(0, qIdx) : normalized;
-  const query = qIdx >= 0 ? normalized.slice(qIdx + 1) : '';
-  const pairs = query.split('&').filter((p) => p && !/^(wid|fmt)=/.test(p));
-  pairs.push(`wid=${width}`, 'fmt=png-alpha');
-  return `${base}?${pairs.join('&')}`;
-}
 
 export default function decorate(block) {
   /* change to ul, li */
@@ -29,13 +14,10 @@ export default function decorate(block) {
     });
     ul.append(li);
   });
-  // Preserve transparency: force png-alpha renditions on the gem images.
-  ul.querySelectorAll('picture').forEach((pic) => {
-    const img = pic.querySelector('img');
-    if (!img || !img.src) return;
-    pic.querySelectorAll('source').forEach((source) => source.remove());
-    img.src = pngAlphaRendition(img.src, 750);
-    img.loading = 'lazy';
+  ul.querySelectorAll('picture > img').forEach((img) => {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    img.closest('picture').replaceWith(optimizedPic);
   });
   block.textContent = '';
   block.append(ul);

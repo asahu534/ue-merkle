@@ -36,7 +36,7 @@
       "id": "cards-icon-item",
       "fields": [
         {
-          "component": "richtext",
+          "component": "reference",
           "valueType": "string",
           "name": "image",
           "label": "Icon",

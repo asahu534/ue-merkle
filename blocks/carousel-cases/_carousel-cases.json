@@ -36,7 +36,7 @@
       "id": "carousel-cases-item",
       "fields": [
         {
-          "component": "richtext",
+          "component": "reference",
           "valueType": "string",
           "name": "image",
           "label": "Background Image",

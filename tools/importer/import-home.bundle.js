@@ -265,71 +265,47 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/transformers/merkle-dm-images.js
-  function detectDynamicMediaUrl(urlStr) {
-    let u;
+  var DM_TO_DAM = {
+    "Merkle-Hero-Carousel-01B": "/content/dam/universal-editor-merkle/merkle-hero-carousel-01b.png",
+    "LBR2026-Web-1920": "/content/dam/universal-editor-merkle/lbr2026-web-1920.png",
+    "Six-Flags-Full-Width-1920": "/content/dam/universal-editor-merkle/six-flags-full-width-1920.png",
+    "dreamforce-hero-banner-1080-2": "/content/dam/universal-editor-merkle/dreamforce-hero-banner-1080-2.jpg",
+    "CX-Imperatives-1920": "/content/dam/universal-editor-merkle/cx-imperatives-1920.jpg",
+    "Orchestrating the Content Ecosystem-Hero Image": "/content/dam/universal-editor-merkle/orchestrating-the-content-ecosystem-hero-image.jpg",
+    "Merkle-GTM-Shape_GBA-Lotus_Black_1080": "/content/dam/universal-editor-merkle/merkle-gtm-shape-gba-lotus-black-1080.png",
+    "Merkle-GTM_Shape_FRT-Chrys_Black_1080": "/content/dam/universal-editor-merkle/merkle-gtm-shape-frt-chrys-black-1080.png",
+    "Merkle-GMT-Shape_CFE-Cherry-B_Black_1080": "/content/dam/universal-editor-merkle/merkle-gmt-shape-cfe-cherry-b-black-1080.png",
+    "Merkle-GTM-Shape_BLE-Camellia_Black_1080": "/content/dam/universal-editor-merkle/merkle-gtm-shape-ble-camellia-black-1080.png",
+    "Satair-CS-square-1080": "/content/dam/universal-editor-merkle/satair-cs-square-1080.jpg",
+    "Volvo_CS_square_1080x1080": "/content/dam/universal-editor-merkle/volvo-cs-square-1080x1080.jpg",
+    "FunLab-CS-square-1080": "/content/dam/universal-editor-merkle/funlab-cs-square-1080.jpg",
+    "KFC-Restore-CS-square-1080": "/content/dam/universal-editor-merkle/kfc-restore-cs-square-1080.jpg",
+    "Under-Armour-CS-square-1080": "/content/dam/universal-editor-merkle/under-armour-cs-square-1080.jpg",
+    "Signify-CS-square-1080": "/content/dam/universal-editor-merkle/signify-cs-square-1080.jpg",
+    "CTCA-CS-Masonry-IMGTeaserCard-Gallery-Square-1080": "/content/dam/universal-editor-merkle/ctca-cs-masonry-imgteasercard-gallery-square-1080.jpg",
+    "Siemens-CS-Masonry-IMGTeaserCard-Gallery-Square-1080": "/content/dam/universal-editor-merkle/siemens-cs-masonry-imgteasercard-gallery-square-1080.jpg"
+  };
+  function scene7Name(urlStr) {
     try {
-      u = new URL(urlStr, "https://x/");
+      const u = new URL(urlStr, "https://x/");
+      if (!u.pathname.startsWith("/is/image/")) return null;
+      const parts = u.pathname.split("/is/image/")[1].split("/");
+      parts.shift();
+      return decodeURIComponent(parts.join("/"));
     } catch (e) {
-      return false;
+      return null;
     }
-    if (u.pathname.startsWith("/is/image/")) {
-      return "scene7";
-    }
-    if (/^delivery-p\d+-e\d+\.adobeaemcloud\.com$/.test(u.hostname) && u.pathname.startsWith("/adobe/assets/urn:")) {
-      return "dm-openapi";
-    }
-    return false;
-  }
-  var LINKED_DM_INLINE_WRAPPER_TAGS = /* @__PURE__ */ new Set(["PICTURE"]);
-  var LINKED_DM_WRAPPER_SIBLING_TAGS = /* @__PURE__ */ new Set(["SOURCE"]);
-  function findLinkedDmCarrier(img) {
-    if (!img || !img.parentElement) return null;
-    let node = img;
-    let parent = img.parentElement;
-    while (parent && LINKED_DM_INLINE_WRAPPER_TAGS.has(parent.tagName)) {
-      let foundNode = false;
-      for (const child of parent.children) {
-        if (child === node) {
-          foundNode = true;
-        } else if (!LINKED_DM_WRAPPER_SIBLING_TAGS.has(child.tagName)) {
-          return null;
-        }
-      }
-      if (!foundNode) return null;
-      node = parent;
-      parent = parent.parentElement;
-    }
-    if (!parent || parent.tagName !== "A") return null;
-    if (parent.children.length !== 1 || parent.children[0] !== node) return null;
-    if (parent.textContent.trim() !== "") return null;
-    return parent;
-  }
-  var EMPTY_ALT_SENTINEL = "Image without alt text";
-  function altToLinkText(alt) {
-    return alt || EMPTY_ALT_SENTINEL;
   }
   function transform2(hookName, element, payload) {
-    if (hookName !== "afterTransform") return;
-    const doc = element.ownerDocument;
+    if (hookName !== "beforeTransform") return;
     element.querySelectorAll("img").forEach((img) => {
       const src = img.getAttribute("src") || "";
-      if (!detectDynamicMediaUrl(src)) return;
-      const alt = img.getAttribute("alt") || "";
-      const linkedAnchor = findLinkedDmCarrier(img);
-      if (linkedAnchor) {
-        linkedAnchor.setAttribute("title", src);
-        linkedAnchor.textContent = altToLinkText(alt);
-        return;
-      }
-      const parent = img.parentElement;
-      if (parent && parent.tagName === "A") {
-        console.warn("DM image inside mixed-content anchor, skipped:", src);
-        return;
-      }
-      const a = doc.createElement("a");
-      a.href = src;
-      a.textContent = altToLinkText(alt);
-      img.replaceWith(a);
+      const name = scene7Name(src);
+      if (!name) return;
+      const damPath = DM_TO_DAM[name];
+      if (!damPath) return;
+      img.setAttribute("src", damPath);
+      img.removeAttribute("srcset");
     });
   }
 
@@ -501,6 +477,11 @@ var CustomImportScript = (() => {
       WebImporter.rules.createMetadata(main, document2);
       WebImporter.rules.transformBackgroundImages(main, document2);
       WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
+      main.querySelectorAll('img[src*="/content/dam/universal-editor-merkle/"]').forEach((img) => {
+        const src = img.getAttribute("src") || "";
+        const idx = src.indexOf("/content/dam/universal-editor-merkle/");
+        if (idx > 0) img.setAttribute("src", src.slice(idx));
+      });
       const rawPath = new URL(params.originalURL).pathname.replace(/\/$/, "").replace(/\.html?$/, "");
       const path = WebImporter.FileUtils.sanitizePath(rawPath === "" ? "/index" : rawPath);
       return [{
