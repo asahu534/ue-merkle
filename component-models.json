@@ -270,6 +270,41 @@
     ]
   },
   {
+    "id": "cta-buttons-item",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
+      },
+      {
+        "component": "text",
+        "name": "linkText",
+        "label": "Text"
+      },
+      {
+        "component": "text",
+        "name": "linkTitle",
+        "label": "Title"
+      },
+      {
+        "component": "select",
+        "name": "linkType",
+        "label": "Style",
+        "options": [
+          {
+            "name": "Primary (filled)",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary (outline)",
+            "value": "secondary"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
