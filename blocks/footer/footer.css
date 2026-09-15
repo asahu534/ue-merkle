@@ -57,13 +57,17 @@ footer .footer-brand img {
   display: block;
 }
 
-/* legal / utility links — two columns (matches source) */
+/* legal / utility links — two columns, filled column-first to match source
+ * (left: Legal Terms, Privacy Policy, Your Privacy Choices, Disclosure Policy;
+ *  right: Cookie Notice, Email Preferences, Sitemap). */
 footer .footer-links ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(4, auto);
+  grid-auto-flow: column;
   gap: 24px 48px;
   max-width: 640px;
 }
