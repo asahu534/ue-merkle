@@ -12,6 +12,12 @@ function iconFor(href) {
   return null;
 }
 
+// Decorative outlined "M" brand mark shown on the right of the footer (source design).
+// Purely decorative — hidden from assistive tech.
+const DECORATION_M = `<svg viewBox="0 0 200 220" fill="none" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMax meet">
+  <path d="M4 216 V16 L100 120 L196 16 V216" stroke="#1f6bff" stroke-width="2" fill="none" stroke-linejoin="round"/>
+</svg>`;
+
 /**
  * Fetch the footer fragment. Metadata-independent dual-fetch:
  * /content/footer.plain.html (localhost / aem up) then /footer.plain.html (DA/EDS prod).
@@ -71,6 +77,13 @@ export default async function decorate(block) {
     dentsu.setAttribute('target', '_blank');
     dentsu.setAttribute('rel', 'noopener');
   }
+
+  // Decorative outlined "M" on the right
+  const decoration = document.createElement('div');
+  decoration.className = 'footer-decoration';
+  decoration.setAttribute('aria-hidden', 'true');
+  decoration.innerHTML = DECORATION_M;
+  footer.append(decoration);
 
   block.append(footer);
 }
