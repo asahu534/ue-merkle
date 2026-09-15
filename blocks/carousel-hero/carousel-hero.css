@@ -147,7 +147,7 @@ main > .section > .carousel-hero-wrapper {
 
 /* Subsequent CTAs = secondary (transparent, red border, white text) */
 .carousel-hero .carousel-hero-slide-actions a:any-link:not(:first-child) {
-  border: 2px solid var(--accent-color);
+  border: 2px solid #dd3039;
   padding: 14px 16px;
   background-color: transparent;
   color: #fff;
@@ -155,15 +155,15 @@ main > .section > .carousel-hero-wrapper {
 
 .carousel-hero .carousel-hero-slide-actions a:any-link:first-child:hover,
 .carousel-hero .carousel-hero-slide-actions a:any-link:first-child:focus-visible {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
+  border-color: #dd3039;
+  background-color: #dd3039;
   color: #fff;
   text-decoration: none;
 }
 
 .carousel-hero .carousel-hero-slide-actions a:any-link:not(:first-child):hover,
 .carousel-hero .carousel-hero-slide-actions a:any-link:not(:first-child):focus-visible {
-  background-color: var(--accent-color);
+  background-color: #dd3039;
   color: #fff;
   text-decoration: none;
 }

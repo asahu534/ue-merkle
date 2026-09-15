@@ -211,8 +211,8 @@ main a.button.primary:any-link:hover,
 main a.button.primary:any-link:focus-visible,
 button.button.primary:hover,
 button.button.primary:focus-visible {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
+  border-color: #dd3039;
+  background-color: #dd3039;
   color: #fff;
 }
 
@@ -243,8 +243,8 @@ main a.button.secondary:any-link:hover,
 main a.button.secondary:any-link:focus-visible,
 button.button.secondary:hover,
 button.button.secondary:focus-visible {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
+  border-color: #dd3039;
+  background-color: #dd3039;
   color: #fff;
 }
 
@@ -281,8 +281,8 @@ main a.button.accent:any-link:hover,
 main a.button.accent:any-link:focus-visible,
 button.button.accent:hover,
 button.button.accent:focus-visible {
-  border-color: var(--link-hover-color);
-  background-color: var(--link-hover-color);
+  border-color: #dd3039;
+  background-color: #dd3039;
 }
 
 a.button.accent[aria-disabled="true"],
