@@ -1,6 +1,9 @@
 // media query match that indicates desktop width
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
+// Magnifying-glass search icon (fixed UI glyph, not authorable content).
+const SEARCH_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm5 12 4 4"/></svg>';
+
 /**
  * Fetch the nav fragment. Metadata-independent dual-fetch:
  * /content/nav.plain.html (localhost / aem up) then /nav.plain.html (DA/EDS prod).
@@ -85,7 +88,8 @@ export default async function decorate(block) {
         link.classList.add('button', 'primary');
       } else if (link && /search/i.test(link.getAttribute('href') || '')) {
         li.classList.add('nav-search');
-        link.setAttribute('aria-label', 'Search');
+        link.setAttribute('aria-label', link.textContent.trim() || 'Search');
+        link.innerHTML = SEARCH_ICON;
       }
     });
   }
