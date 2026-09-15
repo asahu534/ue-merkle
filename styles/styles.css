@@ -363,6 +363,17 @@ main .section.dark a:any-link {
   color: #fff;
 }
 
+/* Primary buttons keep black text on dark sections (white fill needs dark text);
+ * the generic dark-section white-link rule above must not override them. */
+main .section.dark a.button.primary:any-link {
+  color: #000;
+}
+
+main .section.dark a.button.primary:any-link:hover,
+main .section.dark a.button.primary:any-link:focus-visible {
+  color: #fff;
+}
+
 /* Centered intro copy — matches merkle.com, where the default-content
  * headings/paragraphs above the cards/icon/case blocks are centered. Scoped to
  * the default-content wrappers in these sections so block content is unaffected. */
