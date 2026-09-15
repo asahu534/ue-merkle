@@ -75,9 +75,17 @@ export default async function decorate(block) {
     });
   }
 
-  // Tools: the language selector (a nav-drop), search, and Contact Us CTA
+  // Tools: the language selector (a nav-drop), search, and Contact Us CTA.
+  // The published nav fragment wraps each link in a <p> (markdown pipeline),
+  // while local dev serves a bare <a>. Unwrap sole-child <p> wrappers first so
+  // the link is a direct child of the <li> in both environments.
   const navTools = nav.querySelector('.nav-tools');
   if (navTools) {
+    navTools.querySelectorAll(':scope ul > li > p').forEach((p) => {
+      if (p.children.length === 1 && p.firstElementChild.tagName === 'A') {
+        p.replaceWith(p.firstElementChild);
+      }
+    });
     navTools.querySelectorAll(':scope ul > li').forEach((li) => {
       const link = li.querySelector(':scope > a');
       if (li.querySelector('ul')) {
