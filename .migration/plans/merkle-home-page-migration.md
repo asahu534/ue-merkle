@@ -1,135 +1,49 @@
-# Merkle Home Page Migration Plan
+# Merkle Header — Language Selector, Search Icon & Spacing Refinements
 
-## Objective
-Migrate the home page from `https://www.merkle.com/` into this AEM Edge Delivery Services (Universal Editor / crosswalk) project, producing authorable content that renders correctly in the local preview and is ready to publish to the configured AEMaaCS content source.
+## Context
+The prior `language-selector` block work has been discarded. The header is back to its fragment-based state: `blocks/header/header.js` builds the language dropdown (`.nav-lang`), search (`.nav-search`), and Contact Us CTA (`.nav-cta`) from `content/nav.plain.html`. This plan covers three targeted header refinements only — no new block, no re-migration.
 
-## Source & Target
-- **Source URL:** `https://www.merkle.com/` (home page)
-- **Project type:** `xwalk` (Universal Editor, based on `aem-boilerplate-xwalk`)
-- **Preview org/site:** `asahu534` / `ue-merkle`
-- **AEM site path:** `/content/universal-editor-merkle`
-- **Assets folder:** `/content/dam/universal-editor-merkle`
-- **Available blocks today:** `cards`, `columns`, `footer`, `fragment`, `header`, `hero`
+## Current State (verified in code)
+- `header.js` labels tools list items: nested-list item → `.nav-lang`; contact link → `.nav-cta`; search link → `.nav-search` (currently sets `aria-label="Search"` but leaves the visible **"Search" text**).
+- `header.css` desktop language dropdown already renders a chevron via `.nav-lang > a::after` (a CSS border triangle) — but the request is to match merkle.com's caret specifically.
+- Desktop tools sit in a flex row; the gap between the last nav link ("Careers") and the tools group comes only from the nav's `gap: 0 32px` — no dedicated separation.
+- `.nav-search > a` is styled as uppercase bold text, not an icon.
 
-## Approach
-Use the site-migration workflow for a **single-page migration**:
-1. Scrape the source home page (HTML, metadata, images) — with bot-protection fallback if needed.
-2. Analyze page structure → sections, content sequences, and needed block variants.
-3. Reconcile required blocks against the existing block palette; design/generate any missing block variants and their styling.
-4. Build import infrastructure (page template, block parsers, page transformers).
-5. Run the bundled import script to generate content (never hand-write content HTML).
-6. Preview locally, visually critique against the original, and iterate.
-7. Prepare for publish to the AEMaaCS content source.
+## Requested Changes
+1. **Dropdown icon on the language selector** — render a caret/chevron matching the merkle.com source next to the current language (e.g. `EN ⌄`), flipping when open. Refine the existing `::after` (or swap to an inline SVG glyph) so it visually matches the source.
+2. **Gap between "Careers" and the language selector** — add explicit spacing so the tools group is clearly separated from the primary nav's last item (e.g. left margin on `.nav-tools`, or increased gap), on desktop.
+3. **Search as a clickable icon** — replace the visible "Search" word with a magnifying-glass icon (inline SVG injected in `header.js`), keeping the link clickable and `aria-label="Search"` for accessibility. Style/size it in `header.css`; add a hover color.
 
-## Checklist
-
-### Phase 1 — Scrape & Analyze
-- [ ] Scrape `https://www.merkle.com/` (capture cleaned HTML, metadata, and images), using the Bright Data fallback if the site blocks scraping
-- [ ] Analyze page structure: identify sections, content sequences, and candidate block variants
-- [ ] Produce analysis artifacts (structure JSON, screenshots, cleaned HTML)
-
-### Phase 2 — Block Reconciliation
-- [ ] Compare required variants against existing blocks (`cards`, `columns`, `hero`, `header`, `footer`, `fragment`)
-- [ ] Reuse existing blocks where similarity is high; name any missing block variants
-- [ ] Generate code for missing blocks and migrate their design/CSS from the source
-- [ ] Run `npm run build:json` after any block model changes; run `npm run lint`
-
-### Phase 3 — Import Infrastructure
-- [ ] Create/confirm the page template for the home page
-- [ ] Add DOM selector mappings for each block variant
-- [ ] Generate block parsers and page transformers
-- [ ] Assemble the bundled import script
-
-### Phase 4 — Import & Preview
-- [ ] Run the bulk import script to generate content (no manual content HTML)
-- [ ] Start local dev server and open the imported page in the preview
-- [ ] Verify sections, blocks, images, and metadata render correctly
-
-### Phase 5 — Validate & Iterate
-- [ ] Visually critique the imported page against the original merkle.com home page
-- [ ] Fix content-completeness and styling divergences; re-import as needed
-- [ ] Confirm header and footer migration scope (decide whether to instrument nav/footer now or separately)
-
-### Phase 6 — Publish Prep
-- [ ] Confirm target content path aligns with `/content/universal-editor-merkle`
-- [ ] Upload/publish the page to the AEMaaCS content source
-- [ ] Sanity-check the published page in preview
-
-## Open Questions
-- Should this migration include **header and footer** instrumentation from merkle.com, or home-page body content only for now?
-- Is the home page the only page in scope, or the first of a larger site migration (affects how reusable the block variants should be)?
-
-## Notes
-- Content HTML will be generated via the project's bundled import script, never hand-authored.
-- Execution requires **Execute mode** — this plan does not run any migration steps yet.
-
-Before I finalize scope, two quick decisions:# Merkle Home Page Migration Plan
-
-## Objective
-Migrate the home page from `https://www.merkle.com/` into this AEM Edge Delivery Services (Universal Editor / crosswalk) project — including header and footer — producing authorable content that renders correctly in the local preview and is ready to publish to the configured AEMaaCS content source. Block variants will be designed for **reuse across future pages**, since this is the first of a larger site migration.
-
-## Source & Target
-- **Source URL:** `https://www.merkle.com/` (home page)
-- **Project type:** `xwalk` (Universal Editor, based on `aem-boilerplate-xwalk`)
-- **Preview org/site:** `asahu534` / `ue-merkle`
-- **AEM site path:** `/content/universal-editor-merkle`
-- **Assets folder:** `/content/dam/universal-editor-merkle`
-- **Available blocks today:** `cards`, `columns`, `footer`, `fragment`, `header`, `hero`
-
-## Decisions (confirmed)
-- **Scope:** Full page — includes header/navigation and footer instrumentation.
-- **Site scope:** First of many pages — block variants must be designed to be reusable across the site.
-
-## Approach
-Single-page migration as the foundation of a multi-page site migration:
-1. Scrape the source home page (HTML, metadata, images) — with bot-protection fallback if needed.
-2. Analyze page structure → sections, content sequences, and needed block variants.
-3. Reconcile required blocks against the existing palette; design/generate missing, **reusable** block variants and their styling.
-4. Instrument header/navigation and footer from the source.
-5. Build import infrastructure (page template, block parsers, page transformers).
-6. Run the bundled import script to generate content (never hand-write content HTML).
-7. Preview locally, visually critique against the original, and iterate.
-8. Prepare for publish to the AEMaaCS content source.
+## Scope / Constraints
+- Header remains **fragment-based** (no `language-selector` UE block reintroduced).
+- Changes limited to `blocks/header/header.js` and `blocks/header/header.css`.
+- The search magnifying glass and the language caret are **fixed UI glyphs kept in code**, not authorable content.
+- Preserve existing mobile (hamburger drawer) behavior; refinements target the desktop tools row primarily, verified not to break mobile.
 
 ## Checklist
 
-### Phase 1 — Scrape & Analyze
-- [ ] Scrape `https://www.merkle.com/` (cleaned HTML, metadata, images), using Bright Data fallback if blocked
-- [ ] Analyze page structure: identify sections, content sequences, and candidate block variants
-- [ ] Produce analysis artifacts (structure JSON, screenshots, cleaned HTML)
+### 1. Language selector dropdown icon
+- [ ] Inspect merkle.com's caret styling (shape/size/position) for the language toggle
+- [ ] Update `.nav-lang > a::after` in `header.css` (or inject an inline caret SVG in `header.js`) to match the source caret
+- [ ] Confirm the caret flips/rotates when `aria-expanded="true"`
 
-### Phase 2 — Block Reconciliation (reusable variants)
-- [ ] Compare required variants against existing blocks (`cards`, `columns`, `hero`, `header`, `footer`, `fragment`)
-- [ ] Reuse existing blocks where similarity is high; name any missing block variants with future pages in mind
-- [ ] Generate code for missing blocks and migrate their design/CSS from the source
-- [ ] Run `npm run build:json` after model changes; run `npm run lint`
+### 2. Gap between "Careers" and language selector
+- [ ] Add explicit separation on desktop (e.g. `margin-left` on `header nav .nav-tools`, or dedicated gap) so tools are clearly offset from the last nav link
+- [ ] Verify spacing looks right at 900px+ and does not misalign items on mobile
 
-### Phase 3 — Header & Footer
-- [ ] Instrument the header/navigation from merkle.com (desktop, mobile, and any megamenu behavior)
-- [ ] Migrate the footer from merkle.com (sections, links, appearance)
-- [ ] Validate header/footer structure against the source
+### 3. Search icon (not the word)
+- [ ] Add a magnifying-glass inline SVG constant in `header.js`
+- [ ] In the `.nav-search` branch, set `innerHTML` to the SVG and keep `aria-label="Search"`
+- [ ] Style `.nav-search > a` + `svg` in `header.css` (size ~22–24px, white, red on hover); remove the uppercase-text rule
+- [ ] Ensure hover-color rules keep correct source order (avoid stylelint `no-descending-specificity`)
 
-### Phase 4 — Import Infrastructure
-- [ ] Create/confirm the home page template
-- [ ] Add DOM selector mappings for each block variant
-- [ ] Generate block parsers and page transformers
-- [ ] Assemble the bundled import script
-
-### Phase 5 — Import & Preview
-- [ ] Run the bulk import script to generate content (no manual content HTML)
-- [ ] Start local dev server and open the imported page in the preview
-- [ ] Verify sections, blocks, images, metadata, header, and footer render correctly
-
-### Phase 6 — Validate & Iterate
-- [ ] Visually critique the imported page against the original merkle.com home page
-- [ ] Fix content-completeness and styling divergences; re-import as needed
-
-### Phase 7 — Publish Prep
-- [ ] Confirm target content path aligns with `/content/universal-editor-merkle`
-- [ ] Upload/publish the page to the AEMaaCS content source
-- [ ] Sanity-check the published page in preview
+### 4. Verify
+- [ ] `npm run lint` (ESLint on `header.js`, stylelint on `header.css`) passes
+- [ ] Preview at desktop width: `EN ⌄` caret, gap after "Careers", magnifying-glass search icon, Contact Us button — all match the merkle.com header
+- [ ] Open the language dropdown to confirm caret flip + list still work
+- [ ] Confirm mobile hamburger drawer is unaffected
 
 ## Notes
-- Content HTML will be generated via the project's bundled import script, never hand-authored.
-- Block variants will be built for reuse, anticipating additional pages in the site migration.
-- Execution requires **Execute mode** — this plan does not run any migration steps yet.
+- No content re-import or DAM upload is involved; this is header CSS/JS only.
+- These are the same three refinements attempted before the discard — reapplied cleanly on the restored fragment-based header.
+- Execution requires **Execute mode** — this plan does not modify files yet.
