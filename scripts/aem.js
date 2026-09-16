@@ -328,7 +328,9 @@ function createOptimizedPicture(
   breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }],
 ) {
   // --- BEGIN DM dispatch (excat-generated) ---
+  // eslint-disable-next-line no-underscore-dangle
   if (typeof window.__dmRender__ === 'function') {
+    // eslint-disable-next-line no-underscore-dangle
     const dmPicture = window.__dmRender__(src, alt);
     if (dmPicture) return dmPicture;
   }

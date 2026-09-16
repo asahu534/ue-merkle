@@ -219,6 +219,7 @@ function buildDynamicMediaImages(main) {
 // Returning null for non-DM URLs lets the caller (createOptimizedPicture)
 // fall through to its standard path-only optimization. This is the
 // regression guard for non-DM images on the same page.
+// eslint-disable-next-line no-underscore-dangle
 window.__dmRender__ = (src, alt) => {
   const family = detectDynamicMediaUrl(src);
   if (!family) return null;
