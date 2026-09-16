@@ -9,9 +9,17 @@
     "navigation": "prev/next arrow controls"
   },
   "contentPattern": "Each card: background image, client label, title, and a 'Read case' link. Multiple cards scroll horizontally.",
-  "usage": "'Our work / case studies' rotators. Reusable across the site.",
+  "purpose": "'Our work / case studies' rotators. Reusable across the site.",
   "options": [],
   "memberVariantIds": [
     "carousel-cases"
-  ]
+  ],
+  "usage": {
+    "pagesUsing": [
+      "/index",
+      "/en/work"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-16"
+  }
 }

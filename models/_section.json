@@ -56,7 +56,8 @@
         "cards-icon",
         "video-centered",
         "carousel-cases",
-        "cta-buttons"
+        "cta-buttons",
+        "content-filter"
       ]
     }
   ]

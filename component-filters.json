@@ -21,7 +21,8 @@
       "cards-icon",
       "video-centered",
       "carousel-cases",
-      "cta-buttons"
+      "cta-buttons",
+      "content-filter"
     ]
   },
   {
@@ -67,6 +68,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "content-filter",
+    "components": [
+      "content-filter-item"
     ]
   },
   {
