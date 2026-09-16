@@ -1,0 +1,12 @@
+{
+  "status": "success",
+  "url": "https://www.merkle.com/en/merkle-now.html",
+  "path": "en/merkle-now",
+  "timestamp": "2026-09-16T12:57:26.158Z",
+  "title": "Merkle Now: Thought Leadership, Culture & Resources",
+  "template": "merkle-now",
+  "blocks": [
+    "carousel-cases",
+    "content-filter"
+  ]
+}

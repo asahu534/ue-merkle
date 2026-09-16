@@ -1,0 +1,12 @@
+{
+  "status": "success",
+  "url": "https://www.merkle.com/en/work.html",
+  "path": "en/work",
+  "timestamp": "2026-09-16T12:57:34.193Z",
+  "title": "Customer Experience Case Studies & Client Stories | Merkle",
+  "template": "work",
+  "blocks": [
+    "carousel-cases",
+    "content-filter"
+  ]
+}

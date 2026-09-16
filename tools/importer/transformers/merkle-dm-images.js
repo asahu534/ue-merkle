@@ -35,6 +35,16 @@ const DM_TO_DAM = {
   'Signify-CS-square-1080': '/content/dam/universal-editor-merkle/signify-cs-square-1080.jpg',
   'CTCA-CS-Masonry-IMGTeaserCard-Gallery-Square-1080': '/content/dam/universal-editor-merkle/ctca-cs-masonry-imgteasercard-gallery-square-1080.jpg',
   'Siemens-CS-Masonry-IMGTeaserCard-Gallery-Square-1080': '/content/dam/universal-editor-merkle/siemens-cs-masonry-imgteasercard-gallery-square-1080.jpg',
+  'AdobeStock_1563501105-RG-A1-1920x1080-1': '/content/dam/universal-editor-merkle/adobestock-1563501105-rg-a1-1920x1080-1.jpg',
+  'Amica-CS-Featured-Image-02': '/content/dam/universal-editor-merkle/amica-cs-featured-image-02.jpg',
+  'CS - Party City 1080': '/content/dam/universal-editor-merkle/cs-party-city-1080.jpg',
+  'Kellanova-CS-FullWidth-02': '/content/dam/universal-editor-merkle/kellanova-cs-fullwidth-02.jpg',
+  'Lumen-CS-Featured-Image': '/content/dam/universal-editor-merkle/lumen-cs-featured-image.jpg',
+  'Retails_AI_Window_Is_Open': '/content/dam/universal-editor-merkle/retails-ai-window-is-open.jpg',
+  'Swisscard-CS-hero-banner-1920': '/content/dam/universal-editor-merkle/swisscard-cs-hero-banner-1920.jpg',
+  'The Five Patterns That Make Enterprise AI Work_1080': '/content/dam/universal-editor-merkle/the-five-patterns-that-make-enterprise-ai-work-1080.jpg',
+  'clarins-cs-featured-img-1080': '/content/dam/universal-editor-merkle/clarins-cs-featured-img-1080.jpg',
+  'compare-the-market-cs-featured-img-1080': '/content/dam/universal-editor-merkle/compare-the-market-cs-featured-img-1080.jpg',
 };
 
 function scene7Name(urlStr) {

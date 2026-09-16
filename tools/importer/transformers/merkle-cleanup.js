@@ -17,6 +17,10 @@ export default function transform(hookName, element, payload) {
     WebImporter.DOMUtils.remove(element, [
       '#onetrust-consent-sdk',
       '.grecaptcha-badge',
+      // <noscript> holds analytics/tracking pixels (Bing UET, Meta Pixel) as
+      // raw text; strip the wrappers before the importer can re-parse them into
+      // <img> content on the listing pages.
+      'noscript',
     ]);
   }
 
@@ -34,5 +38,13 @@ export default function transform(hookName, element, payload) {
       'h1.visually-hidden',
       'iframe',
     ]);
+
+    // Analytics/tracking pixels rendered as <img> inside <noscript> (Bing UET,
+    // Meta/Facebook Pixel). They surface as content images after parsing on the
+    // listing pages — strip by tracking-host src so they never reach the block.
+    element.querySelectorAll('img[src*="bat.bing.com"], img[src*="facebook.com/tr"]').forEach((img) => {
+      const wrap = img.closest('p') || img;
+      wrap.remove();
+    });
   }
 }

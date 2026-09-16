@@ -1,49 +1,78 @@
-# Merkle Header — Language Selector, Search Icon & Spacing Refinements
+I'll analyze the two source pages and the existing blocks to build a migration plan. Let me gather the necessary information.Let me examine the existing blocks' capabilities to map reuse accurately.Both pages are "listing/index" pages that share a nearly identical structure, and most of it maps cleanly onto existing blocks. The one genuine architectural decision is how to handle the interactive **filter + dynamically-loaded results** section (the live site fetches/filters content via JS), which no existing block covers. Let me get your call on that before finalizing the plan.# Migrate "Merkle Now" & "Work" Pages — Block Reuse Plan
 
-## Context
-The prior `language-selector` block work has been discarded. The header is back to its fragment-based state: `blocks/header/header.js` builds the language dropdown (`.nav-lang`), search (`.nav-search`), and Contact Us CTA (`.nav-cta`) from `content/nav.plain.html`. This plan covers three targeted header refinements only — no new block, no re-migration.
+## Goal
+Migrate two Merkle listing pages into the xwalk project, maximizing reuse of the blocks already built for the home page:
+- **Merkle Now** — https://www.merkle.com/en/merkle-now.html
+- **Work** — https://www.merkle.com/en/work.html
 
-## Current State (verified in code)
-- `header.js` labels tools list items: nested-list item → `.nav-lang`; contact link → `.nav-cta`; search link → `.nav-search` (currently sets `aria-label="Search"` but leaves the visible **"Search" text**).
-- `header.css` desktop language dropdown already renders a chevron via `.nav-lang > a::after` (a CSS border triangle) — but the request is to match merkle.com's caret specifically.
-- Desktop tools sit in a flex row; the gap between the last nav link ("Careers") and the tools group comes only from the nav's `gap: 0 32px` — no dedicated separation.
-- `.nav-search > a` is styled as uppercase bold text, not an icon.
+Both pages share the same skeleton: **Hero intro → Featured content carousel → "Find something specific" faceted filter + results grid → Footer**. The header/footer fragments and most section blocks already exist; the one net-new piece is an interactive filter block.
 
-## Requested Changes
-1. **Dropdown icon on the language selector** — render a caret/chevron matching the merkle.com source next to the current language (e.g. `EN ⌄`), flipping when open. Refine the existing `::after` (or swap to an inline SVG glyph) so it visually matches the source.
-2. **Gap between "Careers" and the language selector** — add explicit spacing so the tools group is clearly separated from the primary nav's last item (e.g. left margin on `.nav-tools`, or increased gap), on desktop.
-3. **Search as a clickable icon** — replace the visible "Search" word with a magnifying-glass icon (inline SVG injected in `header.js`), keeping the link clickable and `aria-label="Search"` for accessibility. Style/size it in `header.css`; add a hover color.
+## Block Reuse Map (verified against existing blocks)
 
-## Scope / Constraints
-- Header remains **fragment-based** (no `language-selector` UE block reintroduced).
-- Changes limited to `blocks/header/header.js` and `blocks/header/header.css`.
-- The search magnifying glass and the language caret are **fixed UI glyphs kept in code**, not authorable content.
-- Preserve existing mobile (hamburger drawer) behavior; refinements target the desktop tools row primarily, verified not to break mobile.
+| Page section | Existing block | Reuse decision |
+|---|---|---|
+| Header (logo, nav, language, search, Contact CTA) | `header` fragment | **Reuse as-is** (already deployed) |
+| Footer (links, social, dentsu) | `footer` fragment | **Reuse as-is** |
+| Hero title + tagline (text intro, no image) | default content (title + text) — *not* `carousel-hero` (these are simple text heros, not full-bleed image rotators) | **Reuse default content**; style via section |
+| Featured content carousel (image + label + title + "Read more"/"Read case") | `carousel-cases` (container-items: bg image + label + title + link) | **Reuse as-is** (confirmed) |
+| "Find something specific" + facets + results grid + Load more | *none exists* | **Build new `content-filter` block** (confirmed) |
+| Results cards (fallback / initial render) | `cards-feature` markup pattern | Rendered by the new filter block's item template |
+
+**No changes needed** to `carousel-hero`, `cards-icon`, `video-centered`, `cta-buttons` for these pages (they stay available but aren't required here).
+
+## New Block: `content-filter`
+An authorable, client-side faceted filter + paginated results grid. Since there is no live backend feed in EDS, the block reads its result items from **authored content** (each result card = image + type/label + title + link + facet tags), filters them in-browser by the selected facets, and reveals more via "Load more".
+
+- **Model (`container-items`)**:
+  - *Container filter*: heading (e.g. "Find something specific"), page-size (Load-more increment), facet-group config.
+  - *Item model*: image (asset reference), content-type, title, description, link, and facet fields (Content Type, Industries, Capabilities, Partners, Country) as tag/multiselect.
+- **JS**: build facet checkbox groups from the union of item tags; filter on change; "Show All"/"Apply"/"Load more" controls; update result count; graceful no-JS fallback (all cards visible).
+- **CSS**: filter bar + responsive results grid (mobile-first, 600/900/1200 breakpoints), dark/light theme via section.
+- Register in `models/_section.json` filters and run `npm run build:json`.
+
+## Approach
+1. Run page analysis on both URLs to capture DOM, sections, and the exact facet lists → add both to `tools/importer/page-templates.json` as new templates (`merkle-now`, `work`), reusing existing block instances where selectors match.
+2. Build the `content-filter` block (js/css/`_content-filter.json`/metadata/README) and register it in the section filter.
+3. Generate importer parsers/transformers for the new templates + the new block; reuse existing parsers for `carousel-cases`.
+4. Run the bundled import script to produce the two content HTML pages (never hand-write content).
+5. Verify in preview; lint; stage DAM images.
 
 ## Checklist
 
-### 1. Language selector dropdown icon
-- [ ] Inspect merkle.com's caret styling (shape/size/position) for the language toggle
-- [ ] Update `.nav-lang > a::after` in `header.css` (or inject an inline caret SVG in `header.js`) to match the source caret
-- [ ] Confirm the caret flips/rotates when `aria-expanded="true"`
+### 1. Analysis & template config
+- [ ] Analyze `merkle-now.html` — capture sections, selectors, featured-carousel items, and the full facet taxonomy (Content Type / Industries / Capabilities / Partners / Country)
+- [ ] Analyze `work.html` — capture sections, case-study carousel items, and its facet taxonomy (Partners / Country / Capabilities / Industries)
+- [ ] Add `merkle-now` and `work` templates to `tools/importer/page-templates.json`, mapping: hero→default content, featured→`carousel-cases`, filter→`content-filter`
+- [ ] Validate the template schema
 
-### 2. Gap between "Careers" and language selector
-- [ ] Add explicit separation on desktop (e.g. `margin-left` on `header nav .nav-tools`, or dedicated gap) so tools are clearly offset from the last nav link
-- [ ] Verify spacing looks right at 900px+ and does not misalign items on mobile
+### 2. Reuse verification (no-code-change blocks)
+- [ ] Confirm `carousel-cases` markup/model covers both the "Merkle Now" featured cards and the "Work" case-study cards (label + title + "Read more"/"Read case" + image) — reuse as-is
+- [ ] Confirm hero intros are plain title+text default content (no new block needed)
+- [ ] Confirm `header`/`footer` fragments render on both pages unchanged
 
-### 3. Search icon (not the word)
-- [ ] Add a magnifying-glass inline SVG constant in `header.js`
-- [ ] In the `.nav-search` branch, set `innerHTML` to the SVG and keep `aria-label="Search"`
-- [ ] Style `.nav-search > a` + `svg` in `header.css` (size ~22–24px, white, red on hover); remove the uppercase-text rule
-- [ ] Ensure hover-color rules keep correct source order (avoid stylelint `no-descending-specificity`)
+### 3. Build the `content-filter` block (net-new)
+- [ ] Create `blocks/content-filter/content-filter.js` — build facet groups from item tags, in-browser filtering, Show All / Apply / Load more, result count, no-JS fallback
+- [ ] Create `blocks/content-filter/content-filter.css` — filter bar + responsive results grid, mobile-first w/ 600/900/1200 breakpoints, block-scoped selectors
+- [ ] Create `blocks/content-filter/_content-filter.json` — container filter (heading, page size) + item model (image reference, content-type, title, description, link, facet tags)
+- [ ] Create `blocks/content-filter/metadata.json` + `README.md`
+- [ ] Register `content-filter` in `models/_section.json` filters; run `npm run build:json`
 
-### 4. Verify
-- [ ] `npm run lint` (ESLint on `header.js`, stylelint on `header.css`) passes
-- [ ] Preview at desktop width: `EN ⌄` caret, gap after "Careers", magnifying-glass search icon, Contact Us button — all match the merkle.com header
-- [ ] Open the language dropdown to confirm caret flip + list still work
-- [ ] Confirm mobile hamburger drawer is unaffected
+### 4. Import content
+- [ ] Generate/adjust importer parsers for the new templates (reuse `carousel-cases` parser; add `content-filter`)
+- [ ] Generate transformers (cleanup / sections / Dynamic Media) for both pages
+- [ ] Run the bundled import script (`run-bulk-import.js`) to produce the two content pages — do NOT hand-edit content HTML
+- [ ] Stage any new page images/logos for DAM upload under `migration-work/dam-upload/`
+
+### 5. Verify
+- [ ] `npm run lint` (ESLint + stylelint) passes for the new block
+- [ ] Preview both pages: hero, featured `carousel-cases` rotator, and `content-filter` (facets toggle, Load more works, count updates), header + footer intact
+- [ ] Check responsive layout at mobile / 900 / 1200 and confirm no-JS fallback shows all cards
+- [ ] Confirm images are authorable (asset-reference fields, not hardcoded)
 
 ## Notes
-- No content re-import or DAM upload is involved; this is header CSS/JS only.
-- These are the same three refinements attempted before the discard — reapplied cleanly on the restored fragment-based header.
-- Execution requires **Execute mode** — this plan does not modify files yet.
+- Featured carousels reuse `carousel-cases` **unchanged** — the only new block is `content-filter`.
+- `content-filter` is client-side over **authored** items (no live backend feed exists in EDS); facets are derived from item tags.
+- Content HTML is produced only via the bundled import script, never hand-written.
+- **Execution requires Execute mode** — this plan does not modify files yet.
+
+Also — a heads-up unrelated to the plan: a **modern-web-guidance** plugin is available (keeps CSS/JS practices current) that could help while building the new `content-filter` block. Want me to enable it before we start?

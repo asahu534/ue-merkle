@@ -83,6 +83,136 @@
           "defaultContent": []
         }
       ]
+    },
+    {
+      "name": "merkle-now",
+      "urls": [
+        "https://www.merkle.com/en/merkle-now.html"
+      ],
+      "representativeUrl": "https://www.merkle.com/en/merkle-now.html",
+      "description": "Merkle Now content hub — text hero, featured content carousel, faceted content archive",
+      "urlPattern": "/en/merkle-now",
+      "blocks": [
+        {
+          "name": "carousel-cases",
+          "instances": [
+            ".teasergallerylist.list.mer-featured-tgl"
+          ]
+        },
+        {
+          "name": "content-filter",
+          "instances": [
+            ".masonry"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "rc1",
+          "name": "Hero",
+          "selector": [
+            "#container-7f3660d720 > div.aem-Grid > div.teaser.cmp-teaser-layout-large.content-center:nth-of-type(1)"
+          ],
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "title",
+            "text"
+          ]
+        },
+        {
+          "id": "rc2",
+          "name": "Featured content",
+          "selector": [
+            "#container-7f3660d720 > div.aem-Grid > div.teasergallerylist.list.mer-featured-tgl:nth-of-type(2)"
+          ],
+          "style": null,
+          "blocks": [
+            "carousel-cases"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc3",
+          "name": "Find something specific",
+          "selector": [
+            "#container-7f3660d720 > div.aem-Grid > div.teaser.cmp-teaser-layout-large.content-center:nth-of-type(3)"
+          ],
+          "style": null,
+          "blocks": [
+            "content-filter"
+          ],
+          "defaultContent": [
+            "title",
+            "text"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "work",
+      "urls": [
+        "https://www.merkle.com/en/work.html"
+      ],
+      "representativeUrl": "https://www.merkle.com/en/work.html",
+      "description": "Merkle Work — text hero, case-study carousel, faceted case-study archive",
+      "urlPattern": "/en/work",
+      "blocks": [
+        {
+          "name": "carousel-cases",
+          "instances": [
+            ".listcards.teasergallerylist.list.mer-featured-lc"
+          ]
+        },
+        {
+          "name": "content-filter",
+          "instances": [
+            ".masonry"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "rc2",
+          "name": "Our work hero",
+          "selector": [
+            "#container-3051d9e9c8 > div.aem-Grid > div.teaser.cmp-teaser-layout-large.cmp-teaser-blue-black.content-center:nth-of-type(1)"
+          ],
+          "style": "dark",
+          "blocks": [],
+          "defaultContent": [
+            "title",
+            "text"
+          ]
+        },
+        {
+          "id": "rc3",
+          "name": "Case studies",
+          "selector": [
+            "#container-3051d9e9c8 > div.aem-Grid > div.listcards.teasergallerylist.list.mer-featured-lc:nth-of-type(2)"
+          ],
+          "style": "dark",
+          "blocks": [
+            "carousel-cases"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc4",
+          "name": "Find something specific",
+          "selector": [
+            "#container-8d1cb3406c > div.aem-Grid > div.teaser.cmp-teaser-layout-large.content-center:nth-of-type(2)"
+          ],
+          "style": null,
+          "blocks": [
+            "content-filter"
+          ],
+          "defaultContent": [
+            "title",
+            "text"
+          ]
+        }
+      ]
     }
   ]
 }
