@@ -60,11 +60,24 @@ export default async function decorate(block) {
     if (section) section.classList.add(`nav-${c}`);
   });
 
-  // Brand: strip any button styling from the logo link
+  // Brand: ensure the logo links to home. The default-content Image has no
+  // link field in Universal Editor, so if the brand image isn't already
+  // wrapped in an anchor, wrap it in a home link here.
   const navBrand = nav.querySelector('.nav-brand');
   if (navBrand) {
     const brandLink = navBrand.querySelector('a');
-    if (brandLink) brandLink.className = '';
+    if (brandLink) {
+      brandLink.className = '';
+    } else {
+      const logo = navBrand.querySelector('picture, img');
+      if (logo) {
+        const homeLink = document.createElement('a');
+        homeLink.href = '/';
+        homeLink.setAttribute('aria-label', 'Merkle home');
+        logo.replaceWith(homeLink);
+        homeLink.append(logo);
+      }
+    }
   }
 
   // Primary nav links: mark items with sub-lists as dropdowns
