@@ -60,22 +60,37 @@ export default async function decorate(block) {
     if (section) section.classList.add(`nav-${c}`);
   });
 
-  // Brand: ensure the logo links to home. The default-content Image has no
-  // link field in Universal Editor, so if the brand image isn't already
-  // wrapped in an anchor, wrap it in a home link here.
+  // Brand: ensure the logo image lives in the brand section and links to home.
+  // The default-content Image has no link field in Universal Editor and may be
+  // authored just outside the brand section, so we (1) find the logo image
+  // wherever it is near the top, (2) move it into .nav-brand, (3) wrap it in a
+  // home link, and (4) remove any empty leftover brand link.
   const navBrand = nav.querySelector('.nav-brand');
   if (navBrand) {
-    const brandLink = navBrand.querySelector('a');
-    if (brandLink) {
-      brandLink.className = '';
-    } else {
-      const logo = navBrand.querySelector('picture, img');
-      if (logo) {
+    // The logo <picture>/<img> may have landed in the brand section or the
+    // adjacent (sections) block; grab the first image in the nav.
+    const logo = nav.querySelector('.nav-brand picture, .nav-brand img, .nav-sections picture, .nav-sections img');
+    // Remove any empty anchor already sitting in the brand section.
+    navBrand.querySelectorAll('a').forEach((a) => {
+      if (!a.textContent.trim() && !a.querySelector('picture, img')) {
+        const wrap = a.closest('p') || a;
+        wrap.remove();
+      }
+    });
+    if (logo) {
+      const existingLink = logo.closest('a');
+      if (existingLink) {
+        existingLink.href = '/';
+        existingLink.className = '';
+        existingLink.setAttribute('aria-label', 'Merkle home');
+        navBrand.append(existingLink.closest('p') || existingLink);
+      } else {
         const homeLink = document.createElement('a');
         homeLink.href = '/';
         homeLink.setAttribute('aria-label', 'Merkle home');
         logo.replaceWith(homeLink);
         homeLink.append(logo);
+        navBrand.append(homeLink.closest('p') || homeLink);
       }
     }
   }
