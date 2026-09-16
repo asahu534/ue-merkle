@@ -1,0 +1,17 @@
+{
+  "variantName": "content-filter",
+  "baseBlock": "cards",
+  "canonicalModel": "container-items",
+  "visualCharacteristics": {
+    "layout": "FILTERS toggle + faceted checkbox panel above a responsive result-card grid, with a Load more button",
+    "theme": "light",
+    "cardStructure": "optional image + content-type label + title + 'Read more' link on a light-grey tile",
+    "controls": "Filters toggle, Show All (clear), Apply Filter, Load more"
+  },
+  "contentPattern": "Each item: optional image, a text block (content-type label + title + link), and a Facet Tags string categorising it by Content Type / Industries / Capabilities / Partners / Country. The block derives the filter panel from the union of item tags and filters client-side.",
+  "usage": "'Find something specific' faceted content/case-study archives (e.g. Merkle Now, Work). Reusable across the site for any authored, checkbox-filtered listing.",
+  "options": [],
+  "memberVariantIds": [
+    "content-filter"
+  ]
+}

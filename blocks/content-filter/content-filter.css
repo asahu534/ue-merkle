@@ -1,0 +1,281 @@
+/* Content Filter — faceted archive listing matching merkle.com "Find something
+ * specific": a FILTERS toggle, a facet panel, a grid of light-grey rounded tiles
+ * (label + title + Read more) where the whole tile is clickable, and a Load more
+ * control. Mobile-first. */
+
+.content-filter {
+  --content-filter-tile-bg: #f2f2f4;
+  --content-filter-label: #0391f2;
+
+  max-width: 1264px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* toolbar: FILTERS toggle + result count */
+.content-filter .content-filter-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.content-filter .content-filter-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 15px 24px;
+  border: 0;
+  border-radius: 16px;
+  background-color: #000;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.content-filter .content-filter-toggle:hover,
+.content-filter .content-filter-toggle:focus-visible {
+  background-color: var(--accent-color);
+}
+
+.content-filter .content-filter-count {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* filter panel */
+.content-filter .content-filter-panel {
+  margin-bottom: 32px;
+  padding: 24px;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  background-color: #fff;
+}
+
+.content-filter .content-filter-groups {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.content-filter .content-filter-group {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.content-filter .content-filter-group-title {
+  padding: 0;
+  margin-bottom: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+}
+
+.content-filter .content-filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.content-filter .content-filter-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.content-filter .content-filter-option input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-color);
+  cursor: pointer;
+}
+
+.content-filter .content-filter-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.content-filter .content-filter-clear {
+  margin: 0;
+  padding: 12px 24px;
+  border: 2px solid #000;
+  border-radius: 16px;
+  background-color: transparent;
+  color: #000;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.content-filter .content-filter-clear:hover,
+.content-filter .content-filter-clear:focus-visible {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.content-filter .content-filter-apply {
+  margin: 0;
+  padding: 12px 24px;
+  border: 0;
+  border-radius: 16px;
+  background-color: #000;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.content-filter .content-filter-apply:hover,
+.content-filter .content-filter-apply:focus-visible {
+  background-color: var(--accent-color);
+}
+
+/* results grid */
+.content-filter .content-filter-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.content-filter .content-filter-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 24px;
+  background-color: var(--content-filter-tile-bg);
+  transition: background-color 0.2s ease;
+}
+
+.content-filter .content-filter-card:hover {
+  background-color: #e9e9ec;
+}
+
+.content-filter .content-filter-card[hidden] {
+  display: none;
+}
+
+.content-filter .content-filter-card-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.content-filter .content-filter-card-body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+
+  /* let clicks fall through to the full-tile overlay link, except on the
+     visible label/heading/link which re-enable pointer events below */
+  pointer-events: none;
+}
+
+.content-filter .content-filter-card-body p {
+  margin: 0;
+}
+
+/* content-type label (eyebrow) */
+.content-filter .content-filter-card-label {
+  color: var(--content-filter-label);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.content-filter .content-filter-card-body h2,
+.content-filter .content-filter-card-body h3,
+.content-filter .content-filter-card-body h4 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.25;
+  color: #000;
+}
+
+.content-filter .content-filter-card-body a:any-link {
+  margin-top: auto;
+  font-size: 18px;
+  font-weight: 400;
+  text-decoration: none;
+  color: #000;
+  pointer-events: auto;
+}
+
+.content-filter .content-filter-card-body a:any-link:hover {
+  color: var(--accent-color);
+}
+
+/* full-tile clickable overlay (sits above the tile, below the visible content) */
+.content-filter .content-filter-card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  font-size: 0;
+  overflow: hidden;
+  text-indent: -9999px;
+}
+
+/* load more */
+.content-filter .content-filter-load-more {
+  display: block;
+  margin: 40px auto 0;
+  padding: 15px 40px;
+  border: 0;
+  border-radius: 16px;
+  background-color: #000;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.content-filter .content-filter-load-more[hidden] {
+  display: none;
+}
+
+.content-filter .content-filter-load-more:hover,
+.content-filter .content-filter-load-more:focus-visible {
+  background-color: var(--accent-color);
+}
+
+/* ===== Tablet ===== */
+@media (width >= 600px) {
+  .content-filter .content-filter-groups {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .content-filter .content-filter-results {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===== Desktop ===== */
+@media (width >= 900px) {
+  .content-filter .content-filter-groups {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (width >= 1200px) {
+  .content-filter .content-filter-groups {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
