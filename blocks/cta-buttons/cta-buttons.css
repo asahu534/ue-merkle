@@ -1,0 +1,20 @@
+/* CTA Buttons — a horizontal row of call-to-action buttons.
+ * Button appearance (primary/secondary) is inherited from the global button
+ * styles in styles.css; this block only handles layout. */
+
+.cta-buttons .cta-buttons-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.cta-buttons .cta-buttons-list .button-wrapper {
+  margin: 0;
+}
+
+/* When the block sits in a centered intro, center the row too */
+.cta-buttons.center .cta-buttons-list,
+.section [style*="text-align: center"] .cta-buttons .cta-buttons-list {
+  justify-content: center;
+}

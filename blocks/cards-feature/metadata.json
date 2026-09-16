@@ -1,0 +1,17 @@
+{
+  "variantName": "cards-feature",
+  "baseBlock": "cards",
+  "canonicalModel": "container-items",
+  "visualCharacteristics": {
+    "layout": "row of mixed-size feature cards; first card wider/featured",
+    "theme": "light",
+    "cardStructure": "category eyebrow + heading + image + link",
+    "imageTreatment": "4:3 cover"
+  },
+  "contentPattern": "Each card: category eyebrow, heading, image, and a link. Cards vary in width.",
+  "usage": "Editorial 'latest content / featured' promo rows on light backgrounds. Reusable across the site.",
+  "options": [],
+  "memberVariantIds": [
+    "cards-feature"
+  ]
+}

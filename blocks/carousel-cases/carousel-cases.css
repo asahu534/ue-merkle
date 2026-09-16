@@ -1,0 +1,164 @@
+/* Block: carousel-cases — CSS refined from merkle.com source computed styles */
+
+.carousel-cases {
+  position: relative;
+  padding-bottom: 80px;
+}
+
+.carousel-cases .carousel-cases-slides-container {
+  position: relative;
+}
+
+.carousel-cases .carousel-cases-slides {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.carousel-cases .carousel-cases-slides::-webkit-scrollbar {
+  display: none;
+}
+
+/* Portrait case-study card (source aspect-ratio 290 / 516) */
+.carousel-cases .carousel-cases-slide {
+  position: relative;
+  flex: 0 0 80%;
+  scroll-snap-align: start;
+  display: flex;
+  aspect-ratio: 290 / 516;
+  overflow: hidden;
+  background-color: #000;
+}
+
+/* Background image fills the card */
+.carousel-cases .carousel-cases-slide-image {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  line-height: 0;
+}
+
+.carousel-cases .carousel-cases-slide-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content overlaid on top of the card, with a top-down dark gradient */
+.carousel-cases .carousel-cases-slide-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  padding: 24px 16px;
+  color: #fff;
+  background: linear-gradient(rgb(0 0 0 / 95%) 0%, rgb(0 0 0 / 0%) 100%);
+}
+
+.carousel-cases .carousel-cases-slide-content h1,
+.carousel-cases .carousel-cases-slide-content h2,
+.carousel-cases .carousel-cases-slide-content h3,
+.carousel-cases .carousel-cases-slide-content h4,
+.carousel-cases .carousel-cases-slide-content h5,
+.carousel-cases .carousel-cases-slide-content h6 {
+  margin: 16px 0 0;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #fff;
+  text-transform: none;
+}
+
+/* "Read case" link paragraph */
+.carousel-cases .carousel-cases-slide-content p {
+  margin: 32px 0 0;
+}
+
+/* Client label: eyebrow (first paragraph) */
+.carousel-cases .carousel-cases-slide-content p:first-child {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: var(--eyebrow-color, rgb(174 174 188));
+}
+
+.carousel-cases .carousel-cases-slide-content a:any-link {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #fff;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.carousel-cases .carousel-cases-slide-content a:hover {
+  text-decoration: underline;
+}
+
+/* Navigation — circular arrow controls below the track, bottom-left */
+.carousel-cases .carousel-cases-navigation-buttons {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  gap: 16px;
+  margin: 0;
+}
+
+.carousel-cases .carousel-cases-navigation-buttons button {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background-color: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.carousel-cases .carousel-cases-navigation-buttons button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.carousel-cases .carousel-cases-navigation-buttons button::after {
+  display: block;
+  content: '';
+  border: 2px solid currentcolor;
+  border-bottom: 0;
+  border-left: 0;
+  height: 9px;
+  width: 9px;
+  position: absolute;
+  top: 50%;
+  left: calc(50% + 2px);
+  transform: translate(-50%, -50%) rotate(-135deg);
+}
+
+.carousel-cases .carousel-cases-navigation-buttons button.slide-next::after {
+  transform: translate(-50%, -50%) rotate(45deg);
+  left: calc(50% - 2px);
+}
+
+@media (width >= 600px) {
+  .carousel-cases .carousel-cases-slide {
+    flex-basis: 45%;
+  }
+}
+
+@media (width >= 900px) {
+  .carousel-cases .carousel-cases-slide {
+    flex-basis: 30%;
+  }
+}

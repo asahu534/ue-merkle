@@ -50,7 +50,13 @@
         "hero",
         "cards",
         "columns",
-        "fragment"
+        "fragment",
+        "carousel-hero",
+        "cards-feature",
+        "cards-icon",
+        "video-centered",
+        "carousel-cases",
+        "cta-buttons"
       ]
     }
   ]

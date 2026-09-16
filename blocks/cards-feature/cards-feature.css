@@ -1,0 +1,113 @@
+/* cards-feature — editorial promo cards (merkle "Our latest and greatest").
+ * Dark cards, white text, rounded corners, equal height.
+ * First card is wide (image beside text); the rest are narrow (image below text).
+ * Mobile-first: single column, text on top of image. */
+
+.cards-feature > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.cards-feature > ul > li {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse; /* DOM is [image, body] → body on top, image below */
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: #000;
+  color: #fff;
+  min-height: 380px;
+}
+
+/* image fills the remaining card area */
+.cards-feature .cards-feature-card-image {
+  line-height: 0;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.cards-feature .cards-feature-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cards-feature .cards-feature-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+}
+
+/* Category eyebrow: first paragraph — muted grey, bold, uppercase */
+.cards-feature .cards-feature-card-body p:first-child {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--muted-text-color);
+  margin: 0;
+}
+
+.cards-feature .cards-feature-card-body h1,
+.cards-feature .cards-feature-card-body h2,
+.cards-feature .cards-feature-card-body h3,
+.cards-feature .cards-feature-card-body h4,
+.cards-feature .cards-feature-card-body h5,
+.cards-feature .cards-feature-card-body h6 {
+  margin: 0;
+  color: #fff;
+  font-size: 22px;
+  line-height: 1.15;
+}
+
+/* "Learn more" (last link paragraph) pushes to the bottom of the text area */
+.cards-feature .cards-feature-card-body p:last-child {
+  margin: 8px 0 0;
+}
+
+.cards-feature .cards-feature-card-body a:any-link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.cards-feature .cards-feature-card-body a:hover {
+  text-decoration: underline;
+}
+
+@media (width >= 900px) {
+  .cards-feature > ul {
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: stretch;
+    gap: 24px;
+  }
+
+  .cards-feature > ul > li {
+    min-height: 600px;
+  }
+
+  /* First (featured) card: image on the right, text on the left */
+  .cards-feature > ul > li:first-child {
+    flex-direction: row-reverse;
+  }
+
+  .cards-feature > ul > li:first-child .cards-feature-card-image {
+    flex: 1 1 55%;
+  }
+
+  .cards-feature > ul > li:first-child .cards-feature-card-body {
+    flex: 1 1 45%;
+    padding: 32px;
+  }
+
+  /* keep the "Learn more" link anchored to the bottom of the featured card */
+  .cards-feature > ul > li:first-child .cards-feature-card-body p:last-child {
+    margin-top: auto;
+  }
+}

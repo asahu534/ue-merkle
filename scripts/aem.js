@@ -327,6 +327,14 @@ function createOptimizedPicture(
   eager = false,
   breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }],
 ) {
+  // --- BEGIN DM dispatch (excat-generated) ---
+  // eslint-disable-next-line no-underscore-dangle
+  if (typeof window.__dmRender__ === 'function') {
+    // eslint-disable-next-line no-underscore-dangle
+    const dmPicture = window.__dmRender__(src, alt);
+    if (dmPicture) return dmPicture;
+  }
+  // --- END DM dispatch (excat-generated) ---
   const url = !src.startsWith('http') ? new URL(src, window.location.href) : new URL(src);
   const picture = document.createElement('picture');
   const { origin, pathname } = url;

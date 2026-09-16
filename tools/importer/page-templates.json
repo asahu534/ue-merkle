@@ -1,0 +1,88 @@
+{
+  "metadata": {
+    "projectType": "xwalk"
+  },
+  "templates": [
+    {
+      "name": "home",
+      "urls": [
+        "https://www.merkle.com/"
+      ],
+      "representativeUrl": "https://www.merkle.com/",
+      "description": "Merkle home page",
+      "urlPattern": "/",
+      "blocks": [
+        {
+          "name": "carousel-hero",
+          "instances": [
+            ".teasercarousel.carousel"
+          ]
+        },
+        {
+          "name": "cards-feature",
+          "instances": [
+            ".teasergallerylist.list.mer-featured-tgl"
+          ]
+        },
+        {
+          "name": "cards-icon",
+          "instances": [
+            ".container.responsivegrid.text-left"
+          ]
+        },
+        {
+          "name": "video-centered",
+          "instances": [
+            ".video.centered"
+          ]
+        },
+        {
+          "name": "carousel-cases",
+          "instances": [
+            ".listcards.teasergallerylist.list"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "rc2",
+          "name": "Hero",
+          "selector": [
+            ".container.responsivegrid.blue-black-background.full-bleed:nth-of-type(1)"
+          ],
+          "style": "dark",
+          "blocks": [
+            "carousel-hero"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc3",
+          "name": "Latest and greatest",
+          "selector": [
+            ".container.responsivegrid.full-bleed > .cmp-container > .aem-Grid > .container.responsivegrid:nth-of-type(2)"
+          ],
+          "style": null,
+          "blocks": [
+            "cards-feature"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc4",
+          "name": "Experience economy",
+          "selector": [
+            ".container.responsivegrid.blue-black-background.full-bleed:nth-of-type(3)"
+          ],
+          "style": "dark",
+          "blocks": [
+            "cards-icon",
+            "video-centered",
+            "carousel-cases"
+          ],
+          "defaultContent": []
+        }
+      ]
+    }
+  ]
+}

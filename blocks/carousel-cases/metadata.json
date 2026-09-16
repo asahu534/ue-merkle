@@ -1,0 +1,17 @@
+{
+  "variantName": "carousel-cases",
+  "baseBlock": "carousel",
+  "canonicalModel": "container-items",
+  "visualCharacteristics": {
+    "layout": "horizontal rotator with multiple partially-visible cards per view",
+    "theme": "dark",
+    "cardStructure": "background image + client label + title + 'Read case' link",
+    "navigation": "prev/next arrow controls"
+  },
+  "contentPattern": "Each card: background image, client label, title, and a 'Read case' link. Multiple cards scroll horizontally.",
+  "usage": "'Our work / case studies' rotators. Reusable across the site.",
+  "options": [],
+  "memberVariantIds": [
+    "carousel-cases"
+  ]
+}
