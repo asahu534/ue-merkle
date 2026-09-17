@@ -3,12 +3,12 @@
   "baseBlock": "cards",
   "canonicalModel": "container-items",
   "visualCharacteristics": {
-    "layout": "row of mixed-size feature cards; first card wider/featured",
+    "layout": "flex-wrap row of feature cards; each card's width is author-set via a Width field (100/75/66/50/40/33/30/25%), so rows like 50/25/25 or 40/30/30 are possible",
     "theme": "light",
     "cardStructure": "category eyebrow + heading + image + link",
-    "imageTreatment": "4:3 cover"
+    "imageTreatment": "16:9 cover — fixed aspect ratio so images crop-fill without distortion at any card width"
   },
-  "contentPattern": "Each card: category eyebrow, heading, image, and a link. Cards vary in width.",
+  "contentPattern": "Each card: category eyebrow, heading, image, a link, and a Card Width. Cards flow left-to-right and wrap; set widths so a row sums to ~100%.",
   "usage": "Editorial 'latest content / featured' promo rows on light backgrounds. Reusable across the site.",
   "options": [],
   "memberVariantIds": [
