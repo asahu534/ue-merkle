@@ -23,23 +23,35 @@ const SORTS = {
 
 /**
  * Read the single-value config fields the block model renders as rows.
+ * The parent-page cell (aem-content) renders as an anchor whose href is the
+ * clean delivery path (/merkle-now) but whose text is the AEM content path
+ * (/content/universal-editor-merkle/merkle-now). The query index uses the clean
+ * path on EDS hosts and the content path on the author instance, so we keep both
+ * as candidate parents and match a descendant against either — that's what makes
+ * the list populate in Universal Editor on author as well as on EDS preview.
  * @param {Element} block the block element
- * @returns {{parent:string, heading:string, defaultSort:string, pageSize:number}}
+ * @returns {{parents:string[], heading:string, defaultSort:string, pageSize:number}}
  */
 function readConfig(block) {
   const rows = [...block.children];
   const value = (i) => (rows[i] ? rows[i].textContent.trim() : '');
   const linkAt = (i) => (rows[i] ? rows[i].querySelector('a') : null);
 
-  // parent may be an anchor (aem-content) or plain path text.
   const parentLink = linkAt(0);
-  const parent = (parentLink ? parentLink.getAttribute('href') : value(0)) || '';
+  const parents = [];
+  if (parentLink) {
+    if (parentLink.getAttribute('href')) parents.push(parentLink.getAttribute('href'));
+    if (parentLink.textContent.trim()) parents.push(parentLink.textContent.trim());
+  } else if (value(0)) {
+    parents.push(value(0));
+  }
+
   const heading = value(1);
   const defaultSort = value(2) || 'newest';
   const pageSize = parseInt(value(3), 10) || DEFAULT_PAGE_SIZE;
 
   return {
-    parent, heading, defaultSort, pageSize,
+    parents, heading, defaultSort, pageSize,
   };
 }
 
@@ -243,7 +255,9 @@ export default async function decorate(block) {
   const config = readConfig(block);
   block.textContent = '';
 
-  const parent = normalisePath(config.parent);
+  // Candidate parent paths (clean delivery path + AEM content path), normalised
+  // and de-duped. A descendant matches if it lives under ANY candidate.
+  const parents = [...new Set(config.parents.map(normalisePath).filter(Boolean))];
 
   // Optional heading.
   if (config.heading) {
@@ -290,7 +304,7 @@ export default async function decorate(block) {
 
   block.append(toolbar, results, loadMore);
 
-  if (!parent) {
+  if (!parents.length) {
     const msg = document.createElement('p');
     msg.classList.add('blog-list-empty');
     msg.textContent = 'No parent page configured.';
@@ -298,12 +312,13 @@ export default async function decorate(block) {
     return;
   }
 
+  // A row is a descendant if its path sits under any candidate parent.
+  const isDescendant = (path) => parents.some((p) => path.startsWith(`${p}/`) && path !== p);
+
   let allRows;
   try {
     const index = await fetchIndex();
-    allRows = index.filter((row) => row.path
-      && row.path.startsWith(`${parent}/`)
-      && row.path !== parent);
+    allRows = index.filter((row) => row.path && isDescendant(row.path));
   } catch {
     allRows = [];
   }
