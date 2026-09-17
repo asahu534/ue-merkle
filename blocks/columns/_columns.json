@@ -3,6 +3,7 @@
     {
       "title": "Columns",
       "id": "columns",
+      "description": "Basic multi-column layout with equal-width columns. For author-controlled width ratios (e.g. 40/30/30), use Columns Control instead.",
       "plugins": {
         "xwalk": {
           "page": {
