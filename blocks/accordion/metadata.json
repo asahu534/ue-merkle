@@ -1,0 +1,16 @@
+{
+  "variantName": "accordion",
+  "baseBlock": "accordion",
+  "canonicalModel": "container-items",
+  "visualCharacteristics": {
+    "layout": "stacked full-width collapsible panels with a header button and chevron",
+    "theme": "inherits from section",
+    "itemStructure": "title (header bar) + rich-text content (revealed panel)"
+  },
+  "contentPattern": "Each item: a title (the collapsible header, e.g. a year range) and rich-text content shown when expanded. Multiple items can be open.",
+  "usage": "Collapsible content groups such as FAQs or year-grouped lists (e.g. 'Our growing family' acquisitions). Reusable across the site.",
+  "options": [],
+  "memberVariantIds": [
+    "accordion"
+  ]
+}

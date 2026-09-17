@@ -200,6 +200,27 @@
     ]
   },
   {
+    "id": "accordion-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "value": "",
+        "label": "Title",
+        "description": "The panel heading shown on the collapsible bar (e.g. a year range)."
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "value": "",
+        "label": "Content",
+        "valueType": "string",
+        "description": "The panel body revealed when the item is expanded."
+      }
+    ]
+  },
+  {
     "id": "blog-list",
     "fields": [
       {

@@ -1,0 +1,73 @@
+/* Accordion — collapsible panels (e.g. year-grouped acquisitions). Each item is
+ * a full-width header button with a chevron; clicking reveals its panel. */
+
+.accordion {
+  max-width: 1264px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.accordion .accordion-item {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.accordion .accordion-item:first-child {
+  border-top: 1px solid #e0e0e0;
+}
+
+.accordion .accordion-item-header {
+  margin: 0;
+}
+
+.accordion .accordion-item-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  margin: 0;
+  padding: 20px 8px;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+}
+
+.accordion .accordion-item-button:hover,
+.accordion .accordion-item-button:focus-visible {
+  color: var(--accent-color);
+}
+
+/* Chevron indicator (rotates when open) */
+.accordion .accordion-item-button::after {
+  content: '';
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border: 2px solid currentcolor;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.accordion .accordion-item-button[aria-expanded='true']::after {
+  transform: rotate(-135deg);
+}
+
+.accordion .accordion-item-panel {
+  padding: 0 8px 20px;
+}
+
+.accordion .accordion-item-panel[hidden] {
+  display: none;
+}
+
+.accordion .accordion-item-panel p {
+  margin: 0 0 8px;
+  line-height: 1.6;
+}

@@ -61,7 +61,8 @@
         "video-centered",
         "carousel-cases",
         "cta-buttons",
-        "blog-list"
+        "blog-list",
+        "accordion"
       ]
     }
   ]
