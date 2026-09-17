@@ -1,5 +1,3 @@
-import { createOptimizedPicture } from '../../scripts/aem.js';
-
 // Default number of cards to reveal per page / "Load more" click.
 const DEFAULT_PAGE_SIZE = 12;
 
@@ -55,10 +53,18 @@ function readConfig(block) {
   };
 }
 
+// AEM content-root prefixes to strip so author paths
+// (/content/<site>/merkle-now) compare equal to EDS delivery paths
+// (/merkle-now). Any "/content/<something>" leading segment pair is removed.
+const CONTENT_ROOT_RE = /^\/content\/[^/]+/;
+
 /**
- * Normalise a parent path: strip origin, trailing slash, and any extension.
- * @param {string} raw the raw picker value
- * @returns {string} a root-relative path with no trailing slash
+ * Normalise a path to its clean, comparable form: strip origin, any AEM
+ * content-root prefix (/content/<site>), trailing slash, and .html extension.
+ * This makes parent and row paths comparable across environments — the query
+ * index uses clean paths on EDS hosts and /content/<site>/... on author.
+ * @param {string} raw the raw path or URL
+ * @returns {string} a clean root-relative path with no trailing slash
  */
 function normalisePath(raw) {
   if (!raw) return '';
@@ -68,7 +74,8 @@ function normalisePath(raw) {
   } catch {
     /* already a path */
   }
-  return path.replace(/\.html?$/, '').replace(/\/$/, '');
+  path = path.replace(/\.html?$/, '').replace(/\/$/, '');
+  return path.replace(CONTENT_ROOT_RE, '');
 }
 
 /**
@@ -112,14 +119,6 @@ async function fetchIndex() {
 function buildCard(row) {
   const card = document.createElement('li');
   card.classList.add('blog-list-card');
-
-  if (row.image) {
-    const imageWrap = document.createElement('div');
-    imageWrap.classList.add('blog-list-card-image');
-    const pic = createOptimizedPicture(row.image, row.imageAlt || row.title || '', false, [{ width: '750' }]);
-    imageWrap.append(pic);
-    card.append(imageWrap);
-  }
 
   const body = document.createElement('div');
   body.classList.add('blog-list-card-body');
@@ -312,8 +311,13 @@ export default async function decorate(block) {
     return;
   }
 
-  // A row is a descendant if its path sits under any candidate parent.
-  const isDescendant = (path) => parents.some((p) => path.startsWith(`${p}/`) && path !== p);
+  // A row is a descendant if its (normalised) path sits under any candidate
+  // parent. Normalising the row path too strips the /content/<site> prefix the
+  // author index adds, so it compares equal to the clean parent path.
+  const isDescendant = (rawPath) => {
+    const path = normalisePath(rawPath);
+    return parents.some((p) => path.startsWith(`${p}/`) && path !== p);
+  };
 
   let allRows;
   try {

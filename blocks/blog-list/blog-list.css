@@ -186,14 +186,6 @@
   display: none;
 }
 
-.blog-list .blog-list-card-image img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-}
-
 .blog-list .blog-list-card-body {
   position: relative;
   z-index: 2;
