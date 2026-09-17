@@ -21,6 +21,11 @@ export default function transform(hookName, element, payload) {
       // raw text; strip the wrappers before the importer can re-parse them into
       // <img> content on the listing pages.
       'noscript',
+      // .masonry is the source's interactive "Find something specific" filter +
+      // query-driven results widget. It is not imported as a block — the
+      // authorable blog-list block (query-index driven) replaces it in-editor —
+      // so drop it, leaving only the section's intro teaser text.
+      '.masonry',
     ]);
   }
 

@@ -8,9 +8,6 @@
           "page": {
             "resourceType": "core/franklin/components/columns/v1/columns",
             "template": {
-              "name": "Column Control",
-              "model": "column-control",
-              "filter": "column-control",
               "columns": "2",
               "rows": "1"
             }

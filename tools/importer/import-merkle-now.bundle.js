@@ -95,64 +95,6 @@ var CustomImportScript = (() => {
     element.replaceWith(...blocks);
   }
 
-  // tools/importer/parsers/content-filter.js
-  function fieldCell(document2, fieldName, nodes) {
-    const frag = document2.createDocumentFragment();
-    frag.appendChild(document2.createComment(` field:${fieldName} `));
-    (Array.isArray(nodes) ? nodes : [nodes]).forEach((n) => {
-      if (n) frag.appendChild(n);
-    });
-    return frag;
-  }
-  function toTitleCase(str) {
-    return str.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
-  }
-  function parse2(element, { document: document2, url }) {
-    const items = Array.from(element.querySelectorAll("li.masonry-result-item"));
-    const cells = [];
-    const isWork = /\/work(\.html|\/|$)/i.test(url || "");
-    items.forEach((item) => {
-      const subtitle = item.querySelector(".masonry-result-item-subtitle");
-      const title = item.querySelector(".masonry-result-item-title, h1, h2, h3, h4");
-      const linkEl = item.querySelector(".masonry-result-item-link") || item.querySelector(".masonry-result-item-title-link, a[href]");
-      const img = item.querySelector("picture img, img");
-      if (!title && !subtitle && !linkEl) return;
-      const label = subtitle ? toTitleCase(subtitle.textContent.trim()) : "";
-      const textNodes = [];
-      if (subtitle) {
-        const p = document2.createElement("p");
-        p.textContent = label;
-        textNodes.push(p);
-      }
-      if (title) {
-        const h = document2.createElement("h3");
-        h.textContent = title.textContent.trim();
-        textNodes.push(h);
-      }
-      if (linkEl && linkEl.getAttribute("href")) {
-        const a = document2.createElement("a");
-        a.setAttribute("href", linkEl.getAttribute("href"));
-        a.textContent = "Read more";
-        textNodes.push(a);
-      }
-      const contentType = isWork ? "Case Study" : label;
-      const tags = document2.createElement("p");
-      tags.textContent = contentType ? `Content Type: ${contentType}` : "";
-      const imageContent = img ? img.closest("picture") || img : null;
-      cells.push([
-        imageContent ? fieldCell(document2, "image", imageContent) : fieldCell(document2, "image", null),
-        textNodes.length ? fieldCell(document2, "text", textNodes) : fieldCell(document2, "text", null),
-        fieldCell(document2, "tags", tags)
-      ]);
-    });
-    if (cells.length === 0) {
-      element.replaceWith(...element.childNodes);
-      return;
-    }
-    const block = WebImporter.Blocks.createBlock(document2, { name: "content-filter", cells });
-    element.replaceWith(block);
-  }
-
   // tools/importer/transformers/merkle-cleanup.js
   var TransformHook = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
   function transform(hookName, element, payload) {
@@ -163,7 +105,12 @@ var CustomImportScript = (() => {
         // <noscript> holds analytics/tracking pixels (Bing UET, Meta Pixel) as
         // raw text; strip the wrappers before the importer can re-parse them into
         // <img> content on the listing pages.
-        "noscript"
+        "noscript",
+        // .masonry is the source's interactive "Find something specific" filter +
+        // query-driven results widget. It is not imported as a block — the
+        // authorable blog-list block (query-index driven) replaces it in-editor —
+        // so drop it, leaving only the section's intro teaser text.
+        ".masonry"
       ]);
     }
     if (hookName === TransformHook.afterTransform) {
@@ -280,8 +227,7 @@ var CustomImportScript = (() => {
 
   // tools/importer/import-merkle-now.js
   var parsers = {
-    "column-control": parse,
-    "content-filter": parse2
+    "column-control": parse
   };
   var PAGE_TEMPLATE = {
     name: "merkle-now",
@@ -293,10 +239,6 @@ var CustomImportScript = (() => {
       {
         name: "column-control",
         instances: [".teasergallerylist.list.mer-featured-tgl"]
-      },
-      {
-        name: "content-filter",
-        instances: [".masonry"]
       }
     ],
     sections: [
@@ -321,7 +263,7 @@ var CustomImportScript = (() => {
         name: "Find something specific",
         selector: ["#container-7f3660d720 > div.aem-Grid > div.teaser.cmp-teaser-layout-large.content-center:nth-of-type(3)"],
         style: null,
-        blocks: ["content-filter"],
+        blocks: [],
         defaultContent: ["title", "text"]
       }
     ]
