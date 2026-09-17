@@ -1,17 +1,17 @@
 {
-  "variantName": "content-filter",
+  "variantName": "blog-list",
   "baseBlock": "cards",
-  "canonicalModel": "container-items",
+  "canonicalModel": "standalone",
   "visualCharacteristics": {
-    "layout": "FILTERS toggle + faceted checkbox panel above a responsive result-card grid, with a Load more button",
+    "layout": "FILTERS toggle + Sort control + faceted checkbox panel above a responsive result-card grid, with a Load more button",
     "theme": "light",
-    "cardStructure": "optional image + content-type label + title + 'Read more' link on a light-grey tile",
-    "controls": "Filters toggle, Show All (clear), Apply Filter, Load more"
+    "cardStructure": "optional image + content-type label + title + 'Read more' link on a light-grey clickable tile",
+    "controls": "Filters toggle, Sort (Newest/Oldest/Title A–Z/Z–A), Show All (clear), Apply Filter, Load more"
   },
-  "contentPattern": "Each item: optional image, a text block (content-type label + title + link), and a Facet Tags string categorising it by Content Type / Industries / Capabilities / Partners / Country. The block derives the filter panel from the union of item tags and filters client-side.",
-  "usage": "'Find something specific' faceted content/case-study archives (e.g. Merkle Now, Work). Reusable across the site for any authored, checkbox-filtered listing.",
+  "contentPattern": "The author picks a parent page; the block lists all descendant pages from /query-index.json as tiles. Facets are built from indexed page metadata (content-type, industry, capability, partner, country); sorting uses lastModified and title. Filtering, sorting, and pagination are client-side.",
+  "usage": "'Find something specific' faceted content/case-study/blog archives driven by a parent page's descendants. Reusable across the site.",
   "options": [],
   "memberVariantIds": [
-    "content-filter"
+    "blog-list"
   ]
 }

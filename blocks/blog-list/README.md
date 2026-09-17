@@ -1,56 +1,47 @@
-# Content Filter
+# Blog List
 
-A faceted, client-side content archive. Authors add result cards (each with an
-optional image, a content-type label, a title, a "Read more" link, and a set of
-facet tags). The block builds a filter panel from the union of tags across all
-cards, filters the grid in-browser, and paginates the results with a "Load more"
-button.
+A faceted, sortable page archive. The author selects a **parent page**; the
+block lists **all descendant pages** of that parent (any depth) by reading
+`/query-index.json` at render time, then presents them as clickable tiles with a
+filter panel, a sort control, a live result count, and a "Load more" button.
 
-## Why client-side
+## Data source
 
-Edge Delivery Services has no live backend feed for this section. Instead of a
-query index, the listing items are **authored content**. Facets are derived from
-the tags on those items, so the filter panel always matches the content present.
+Rows come from the site's query index (`/query-index.json`). The block keeps
+every row whose `path` starts with the selected parent path (excluding the
+parent itself). Facets and sort values are read from indexed page metadata, so
+the archive stays in sync with the actual published pages — no per-item
+authoring.
 
-## Authoring model (container + items)
+## Authoring model
 
-- **Content Filter** (container) — insert the block, then add **Filter Item**
-  children.
-- **Filter Item**:
-  - **Image** (optional) — asset reference for the card thumbnail.
-  - **Image Alt** — alt text for the image.
-  - **Text** (richtext) — the content-type label, the title (heading), and a
-    "Read more" link, e.g.
+Insert **Blog List** and set:
 
-    ```
-    Blog Post
-    ## Retail's AI Window Is Open
-    [Read more](/en/merkle-now/articles-blogs/…)
-    ```
+- **Parent Page** (page picker) — the page whose descendants are listed.
+- **Heading** (optional) — shown above the list (e.g. "Find something specific").
+- **Default Sort** — Newest first / Oldest first / Title (A–Z) / Title (Z–A).
+- **Page Size** — how many cards to reveal per "Load more" (default 12).
 
-  - **Facet Tags** (text) — semicolon-separated groups, comma-separated values:
+## Facets
 
-    ```
-    Content Type: Blog Post; Industries: Retail & Consumer Goods; Partners: Adobe
-    ```
-
-    Supported groups: `Content Type`, `Industries`, `Capabilities`, `Partners`,
-    `Country`. Any value present on at least one item appears as a checkbox in
-    that group. The visible content-type label is automatically treated as a
-    `Content Type` value if the tags omit one.
+Built from these indexed query-index properties (a group is hidden if no page
+has a value): `content-type`, `industry`, `capability`, `partner`, `country`.
+For facets to populate, child pages must carry that metadata and the query index
+must be rebuilt (see `helix-query.yaml`).
 
 ## Behaviour
 
 - **Filters** toggle opens/closes the facet panel.
 - Checking options filters the grid (AND across groups, OR within a group).
+- **Sort** reorders the results (Newest/Oldest use `lastModified`; Title uses
+  the page title).
 - **Show All** clears the selection; **Apply Filter** closes the panel.
 - Result count ("Showing X of Y") updates live.
-- **Load more** reveals the next page (12 cards) of the current result set.
-- With JavaScript disabled the raw cards render as a plain list (graceful
-  fallback).
+- **Load more** reveals the next page of the current result set.
+- If no parent is set or the fetch fails, a short message is shown.
 
 ## Files
 
-- `content-filter.js` — decoration, tag parsing, filtering, pagination.
-- `content-filter.css` — toolbar, filter panel, responsive card grid.
-- `_content-filter.json` — Universal Editor component definition, model, filter.
+- `blog-list.js` — config read, query-index fetch, filtering, sorting, pagination.
+- `blog-list.css` — toolbar, sort, filter panel, responsive card grid.
+- `_blog-list.json` — Universal Editor component definition and model.
