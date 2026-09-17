@@ -1,7 +1,8 @@
 /* cards-feature — editorial promo cards (merkle "Our latest and greatest").
- * Dark cards, white text, rounded corners. Each card's width is author-set via
- * the Width field (cardw-* class); cards flow left-to-right and wrap.
- * Mobile-first: single column, full-width cards, text on top of image. */
+ * The image fills the whole card; the label/title/link are overlaid on top with
+ * a dark gradient for legibility. Cards without an image show a solid dark
+ * background. Each card's width is author-set via the Width field (cardw-*
+ * class); cards flow left-to-right and wrap. Mobile-first: single column. */
 
 .cards-feature > ul {
   list-style: none;
@@ -13,36 +14,40 @@
 }
 
 .cards-feature > ul > li {
-  position: relative;
-  display: flex;
-  flex-direction: column-reverse; /* DOM is [image, body] → body on top, image below */
+  position: relative; /* positioning context for the full-bleed image */
   overflow: hidden;
   border-radius: 16px;
-  background-color: #000;
+  background-color: #000; /* shows through on cards with no image */
   color: #fff;
+  min-height: 380px;
 
   /* Mobile: every card is full width regardless of its cardw-* class. */
   flex: 0 0 100%;
 }
 
-/* Image: fixed aspect ratio + cover so it crop-fills at any card width without
- * stretching or distortion. */
+/* Image fills the entire card (no distortion via cover). */
 .cards-feature .cards-feature-card-image {
+  position: absolute;
+  inset: 0;
   line-height: 0;
 }
 
 .cards-feature .cards-feature-card-image img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 100%;
   object-fit: cover;
 }
 
+/* Text overlays the image; a top-anchored dark gradient keeps it legible. */
 .cards-feature .cards-feature-card-body {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 12px;
   padding: 24px;
+  background: linear-gradient(180deg, rgb(0 0 0 / 75%) 0%, rgb(0 0 0 / 45%) 40%, rgb(0 0 0 / 0%) 100%);
 }
 
 /* Category eyebrow: first paragraph — muted grey, bold, uppercase */
