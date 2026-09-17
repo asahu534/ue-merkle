@@ -1,15 +1,12 @@
 // Default number of cards to reveal per page / "Load more" click.
 const DEFAULT_PAGE_SIZE = 12;
 
-// Facet groups, keyed by the query-index column that carries the value.
-// label = panel heading; key = property on each query-index row.
-const FACET_GROUPS = [
-  { label: 'Content Type', key: 'content-type' },
-  { label: 'Industries', key: 'industry' },
-  { label: 'Capabilities', key: 'capability' },
-  { label: 'Partners', key: 'partner' },
-  { label: 'Country', key: 'country' },
-];
+// The facet panel is built from the query-index `keywords` column (a default
+// EDS index column, so no helix-query.yaml is needed). Every distinct keyword
+// across the listed pages becomes one checkbox; selecting keywords filters the
+// list (OR across selected values).
+const FACET_KEY = 'keywords';
+const FACET_HEADING = 'Filter by';
 
 // Sort options: value -> { label, compare }.
 const SORTS = {
@@ -112,7 +109,8 @@ async function fetchIndex() {
 }
 
 /**
- * Build one result tile from a query-index row.
+ * Build one result tile from a query-index row. The eyebrow label uses the
+ * first keyword (if any).
  * @param {object} row the index row
  * @returns {Element} the <li> tile
  */
@@ -123,7 +121,7 @@ function buildCard(row) {
   const body = document.createElement('div');
   body.classList.add('blog-list-card-body');
 
-  const label = splitValues(row['content-type'])[0] || '';
+  const label = splitValues(row[FACET_KEY])[0] || '';
   if (label) {
     const p = document.createElement('p');
     p.classList.add('blog-list-card-label');
@@ -153,12 +151,23 @@ function buildCard(row) {
 }
 
 /**
- * Build the facet panel from the union of metadata values across all rows.
+ * Collect the sorted, de-duped set of keyword values across all rows.
  * @param {Array<object>} rows the descendant rows
+ * @returns {string[]} keyword values
+ */
+function collectKeywords(rows) {
+  const values = new Set();
+  rows.forEach((row) => splitValues(row[FACET_KEY]).forEach((v) => values.add(v)));
+  return [...values].sort((a, b) => a.localeCompare(b));
+}
+
+/**
+ * Build the keyword facet panel. Only called when there is at least one value.
+ * @param {string[]} keywords the sorted keyword values
  * @param {Function} onChange callback invoked whenever the selection changes
  * @returns {{panel:Element, getSelection:Function, clear:Function}} panel API
  */
-function buildFilterPanel(rows, onChange) {
+function buildFilterPanel(keywords, onChange) {
   const panel = document.createElement('div');
   panel.classList.add('blog-list-panel');
   panel.hidden = true;
@@ -166,39 +175,32 @@ function buildFilterPanel(rows, onChange) {
   const groupsWrap = document.createElement('div');
   groupsWrap.classList.add('blog-list-groups');
 
-  FACET_GROUPS.forEach(({ label, key }) => {
-    const values = new Set();
-    rows.forEach((row) => splitValues(row[key]).forEach((v) => values.add(v)));
-    if (values.size === 0) return; // hide empty groups
+  const fieldset = document.createElement('fieldset');
+  fieldset.classList.add('blog-list-group');
+  const legend = document.createElement('legend');
+  legend.classList.add('blog-list-group-title');
+  legend.textContent = FACET_HEADING;
+  fieldset.append(legend);
 
-    const fieldset = document.createElement('fieldset');
-    fieldset.classList.add('blog-list-group');
-    const legend = document.createElement('legend');
-    legend.classList.add('blog-list-group-title');
-    legend.textContent = label;
-    fieldset.append(legend);
-
-    const list = document.createElement('div');
-    list.classList.add('blog-list-options');
-    [...values].sort((a, b) => a.localeCompare(b)).forEach((value) => {
-      const id = `bl-${key}-${value}`.replace(/[^a-z0-9]+/gi, '-').toLowerCase();
-      const wrap = document.createElement('label');
-      wrap.classList.add('blog-list-option');
-      wrap.setAttribute('for', id);
-      const input = document.createElement('input');
-      input.type = 'checkbox';
-      input.id = id;
-      input.dataset.key = key;
-      input.value = value;
-      input.addEventListener('change', onChange);
-      const span = document.createElement('span');
-      span.textContent = value;
-      wrap.append(input, span);
-      list.append(wrap);
-    });
-    fieldset.append(list);
-    groupsWrap.append(fieldset);
+  const list = document.createElement('div');
+  list.classList.add('blog-list-options');
+  keywords.forEach((value) => {
+    const id = `bl-kw-${value}`.replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+    const wrap = document.createElement('label');
+    wrap.classList.add('blog-list-option');
+    wrap.setAttribute('for', id);
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.id = id;
+    input.value = value;
+    input.addEventListener('change', onChange);
+    const span = document.createElement('span');
+    span.textContent = value;
+    wrap.append(input, span);
+    list.append(wrap);
   });
+  fieldset.append(list);
+  groupsWrap.append(fieldset);
 
   const actions = document.createElement('div');
   actions.classList.add('blog-list-actions');
@@ -214,14 +216,7 @@ function buildFilterPanel(rows, onChange) {
 
   panel.append(groupsWrap, actions);
 
-  const getSelection = () => {
-    const sel = {};
-    panel.querySelectorAll('input:checked').forEach((input) => {
-      const { key } = input.dataset;
-      sel[key] = (sel[key] || []).concat(input.value);
-    });
-    return sel;
-  };
+  const getSelection = () => [...panel.querySelectorAll('input:checked')].map((input) => input.value);
 
   const clear = () => {
     panel.querySelectorAll('input:checked').forEach((input) => { input.checked = false; });
@@ -234,16 +229,15 @@ function buildFilterPanel(rows, onChange) {
 }
 
 /**
- * Does a row satisfy the current selection? AND across groups, OR within a group.
+ * Does a row satisfy the current keyword selection? OR across selected values.
  * @param {object} row the index row
- * @param {Object<string,string[]>} selection selected values per group key
- * @returns {boolean} true if the row matches
+ * @param {string[]} selected selected keyword values
+ * @returns {boolean} true if the row matches (or nothing is selected)
  */
-function matches(row, selection) {
-  return Object.entries(selection).every(([key, values]) => {
-    const rowValues = splitValues(row[key]);
-    return values.some((v) => rowValues.includes(v));
-  });
+function matches(row, selected) {
+  if (!selected.length) return true;
+  const rowValues = splitValues(row[FACET_KEY]);
+  return selected.some((v) => rowValues.includes(v));
 }
 
 /**
@@ -265,15 +259,10 @@ export default async function decorate(block) {
     block.append(h);
   }
 
-  // Toolbar: FILTERS toggle + sort + live count.
+  // Toolbar: (optional) FILTERS toggle + sort + live count. The Filters toggle
+  // is added later only when there are keyword values to filter by.
   const toolbar = document.createElement('div');
   toolbar.classList.add('blog-list-toolbar');
-
-  const filtersToggle = document.createElement('button');
-  filtersToggle.type = 'button';
-  filtersToggle.classList.add('blog-list-toggle');
-  filtersToggle.setAttribute('aria-expanded', 'false');
-  filtersToggle.textContent = 'Filters';
 
   const sortWrap = document.createElement('label');
   sortWrap.classList.add('blog-list-sort');
@@ -290,7 +279,7 @@ export default async function decorate(block) {
 
   const count = document.createElement('p');
   count.classList.add('blog-list-count');
-  toolbar.append(filtersToggle, sortWrap, count);
+  toolbar.append(sortWrap, count);
 
   const results = document.createElement('ul');
   results.classList.add('blog-list-results');
@@ -341,13 +330,17 @@ export default async function decorate(block) {
     row.title = row.title || row.path;
   });
 
+  // Build the keyword facet only if the listed pages carry any keywords;
+  // otherwise the Filters control is omitted entirely.
+  const keywords = collectKeywords(allRows);
+  let filterPanel = null;
+
   let visibleLimit = config.pageSize;
-  let filterPanel;
 
   const render = () => {
-    const selection = filterPanel.getSelection();
+    const selected = filterPanel ? filterPanel.getSelection() : [];
     const filtered = allRows
-      .filter((row) => matches(row, selection))
+      .filter((row) => matches(row, selected))
       .sort(SORTS[sortSelect.value].compare);
 
     results.textContent = '';
@@ -358,16 +351,28 @@ export default async function decorate(block) {
     loadMore.hidden = visibleLimit >= filtered.length;
   };
 
-  filterPanel = buildFilterPanel(allRows, () => {
-    visibleLimit = config.pageSize;
-    render();
-  });
+  if (keywords.length) {
+    const filtersToggle = document.createElement('button');
+    filtersToggle.type = 'button';
+    filtersToggle.classList.add('blog-list-toggle');
+    filtersToggle.setAttribute('aria-expanded', 'false');
+    filtersToggle.textContent = 'Filters';
+    toolbar.prepend(filtersToggle);
 
-  filtersToggle.addEventListener('click', () => {
-    const open = filterPanel.panel.hidden;
-    filterPanel.panel.hidden = !open;
-    filtersToggle.setAttribute('aria-expanded', String(open));
-  });
+    filterPanel = buildFilterPanel(keywords, () => {
+      visibleLimit = config.pageSize;
+      render();
+    });
+
+    filtersToggle.addEventListener('click', () => {
+      const open = filterPanel.panel.hidden;
+      filterPanel.panel.hidden = !open;
+      filtersToggle.setAttribute('aria-expanded', String(open));
+    });
+
+    // Insert the filter panel just after the toolbar.
+    toolbar.after(filterPanel.panel);
+  }
 
   sortSelect.addEventListener('change', () => {
     visibleLimit = config.pageSize;
@@ -378,9 +383,6 @@ export default async function decorate(block) {
     visibleLimit += config.pageSize;
     render();
   });
-
-  // Insert the filter panel just after the toolbar.
-  toolbar.after(filterPanel.panel);
 
   render();
 }

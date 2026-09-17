@@ -24,15 +24,19 @@ Insert **Blog List** and set:
 
 ## Facets
 
-Built from these indexed query-index properties (a group is hidden if no page
-has a value): `content-type`, `industry`, `capability`, `partner`, `country`.
-For facets to populate, child pages must carry that metadata and the query index
-must be rebuilt (see `helix-query.yaml`).
+Built from the default `keywords` query-index column — every distinct keyword
+across the listed pages becomes one checkbox. For facets to appear, child pages
+must carry `<meta name="keywords" content="…">` (comma-separated) and be
+published, so the query index (owned by the EDS Configuration Service) exposes
+them. When the listed pages carry no keywords, the **Filters** control is hidden
+entirely — only Sort and the list are shown.
 
 ## Behaviour
 
-- **Filters** toggle opens/closes the facet panel.
-- Checking options filters the grid (AND across groups, OR within a group).
+- **Filters** toggle opens/closes the keyword facet panel (shown only when the
+  listed pages have keywords).
+- Checking keywords filters the grid (a page matches if it has any selected
+  keyword — OR).
 - **Sort** reorders the results (Newest/Oldest use `lastModified`; Title uses
   the page title).
 - **Show All** clears the selection; **Apply Filter** closes the panel.
