@@ -1,0 +1,83 @@
+/* Columns Control — responsive multi-column container with an author-selected
+ * ratio. Mobile-first: columns stack; from 900px they sit side by side using
+ * the ratio set on the block (layout-50-50, layout-75-25, layout-25-75,
+ * layout-40-30-30, layout-50-25-25, layout-25-25-50, layout-25-25-25-25). */
+
+.columns-control > div {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.columns-control .columns-control-col {
+  min-width: 0;
+}
+
+.columns-control img {
+  width: 100%;
+  display: block;
+}
+
+/* ===== Desktop: side-by-side columns with the selected ratio ===== */
+@media (width >= 900px) {
+  .columns-control > div {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 24px;
+  }
+
+  .columns-control .columns-control-col {
+    flex: 1 1 0;
+  }
+
+  /* Each column's flex-basis carries its share of the ratio; flex-grow:0 and
+     flex-shrink:1 let the 24px gaps be absorbed proportionally. Base per-layout
+     bases come first, then the positional overrides for the "wider" columns. */
+  .columns-control[class*='layout-'] > div > .columns-control-col {
+    flex-grow: 0;
+    flex-shrink: 1;
+  }
+
+  .columns-control.layout-50-50 > div > .columns-control-col {
+    flex-basis: 50%;
+  }
+
+  .columns-control.layout-40-30-30 > div > .columns-control-col {
+    flex-basis: 30%;
+  }
+
+  .columns-control.layout-50-25-25 > div > .columns-control-col,
+  .columns-control.layout-25-25-50 > div > .columns-control-col,
+  .columns-control.layout-25-25-25-25 > div > .columns-control-col {
+    flex-basis: 25%;
+  }
+
+  /* Positional overrides (wider columns) */
+  .columns-control.layout-75-25 > div > .columns-control-col:first-child {
+    flex-basis: 75%;
+  }
+
+  .columns-control.layout-75-25 > div > .columns-control-col:nth-child(2) {
+    flex-basis: 25%;
+  }
+
+  .columns-control.layout-25-75 > div > .columns-control-col:first-child {
+    flex-basis: 25%;
+  }
+
+  .columns-control.layout-25-75 > div > .columns-control-col:nth-child(2) {
+    flex-basis: 75%;
+  }
+
+  .columns-control.layout-40-30-30 > div > .columns-control-col:first-child {
+    flex-basis: 40%;
+  }
+
+  .columns-control.layout-50-25-25 > div > .columns-control-col:first-child {
+    flex-basis: 50%;
+  }
+
+  .columns-control.layout-25-25-50 > div > .columns-control-col:last-child {
+    flex-basis: 50%;
+  }
+}

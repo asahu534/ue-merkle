@@ -1,4 +1,4 @@
-# Column Control
+# Columns Control
 
 A responsive columns container that lets the author choose the column ratio and
 fill each column with default content **or another block**.
@@ -22,7 +22,7 @@ ratio.
 
 ## Authoring model
 
-- Insert **Column Control**, pick a **Layout**.
+- Insert **Columns Control**, pick a **Layout**.
 - Add **Column** children (two for 50/50, three for 40/30/30).
 - Into each column, drop text, images, buttons, titles, or any of the site
   blocks (carousel-hero, cards-feature, cards-icon, video-centered,
@@ -34,8 +34,8 @@ pick.
 
 ## Files
 
-- `column-control.js` — flags image-only columns, applies a column-count class.
-- `column-control.css` — mobile-stacked → desktop ratio layouts.
-- `_column-control.json` — Universal Editor definition, model (Layout select),
+- `columns-control.js` — flags image-only columns, applies a column-count class.
+- `columns-control.css` — mobile-stacked → desktop ratio layouts.
+- `_columns-control.json` — Universal Editor definition, model (Layout select),
   and filter. It reuses the shared `column` child, whose accepted components are
   declared in `blocks/columns/_columns.json`.

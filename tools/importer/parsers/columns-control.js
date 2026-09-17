@@ -1,15 +1,15 @@
 /* eslint-disable */
 /* global WebImporter */
 /**
- * Parser for the merkle-now featured gallery -> column-control blocks.
+ * Parser for the merkle-now featured gallery -> columns-control blocks.
  * Source: https://www.merkle.com/en/merkle-now.html (.teasergallerylist.mer-featured-tgl)
- * Block: blocks/column-control/ (base: Franklin columns)
+ * Block: blocks/columns-control/ (base: Franklin columns)
  *
  * The source renders 6 featured tiles in a masonry where the first tile of row 1
  * is wider and the last tile of row 2 is wider. We reproduce that with two
- * Column Control blocks:
- *   - row 1 -> "Column Control (layout-40-30-30)"  (wide first column)
- *   - row 2 -> "Column Control (layout-25-25-50)"  (wide last column)
+ * Columns Control blocks:
+ *   - row 1 -> "Columns Control (layout-40-30-30)"  (wide first column)
+ *   - row 2 -> "Columns Control (layout-25-25-50)"  (wide last column)
  * Each column holds the tile's image + label + title + link as default content,
  * so every field stays editable in Universal Editor.
  *
@@ -62,7 +62,7 @@ export default function parse(element, { document }) {
     return;
   }
 
-  // Split tiles into rows of three; each row becomes one Column Control block.
+  // Split tiles into rows of three; each row becomes one Columns Control block.
   // First row is wide-first (40/30/30), alternating rows are wide-last (25/25/50).
   const perRow = 3;
   const blocks = [];
@@ -72,7 +72,7 @@ export default function parse(element, { document }) {
     const rowIndex = i / perRow;
     const layout = rowIndex % 2 === 0 ? 'layout-40-30-30' : 'layout-25-25-50';
     const block = WebImporter.Blocks.createBlock(document, {
-      name: 'column-control',
+      name: 'columns-control',
       variants: [layout],
       cells: [columns],
     });

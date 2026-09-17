@@ -23,7 +23,7 @@
       "carousel-cases",
       "cta-buttons",
       "blog-list",
-      "column-control"
+      "columns-control"
     ]
   },
   {
@@ -57,7 +57,7 @@
     ]
   },
   {
-    "id": "column-control",
+    "id": "columns-control",
     "components": [
       "column"
     ]

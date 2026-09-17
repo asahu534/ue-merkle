@@ -303,7 +303,7 @@
     ]
   },
   {
-    "id": "column-control",
+    "id": "columns-control",
     "fields": [
       {
         "component": "select",

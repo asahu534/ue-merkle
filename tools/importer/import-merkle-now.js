@@ -2,7 +2,7 @@
 /* global WebImporter */
 
 // PARSER IMPORTS
-import columnControlParser from './parsers/column-control.js';
+import columnsControlParser from './parsers/columns-control.js';
 
 // TRANSFORMER IMPORTS
 import cleanupTransformer from './transformers/merkle-cleanup.js';
@@ -11,7 +11,7 @@ import sectionsTransformer from './transformers/merkle-sections.js';
 
 // PARSER REGISTRY
 const parsers = {
-  'column-control': columnControlParser,
+  'columns-control': columnsControlParser,
 };
 
 // PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json
@@ -23,7 +23,7 @@ const PAGE_TEMPLATE = {
   ],
   blocks: [
     {
-      name: 'column-control',
+      name: 'columns-control',
       instances: ['.teasergallerylist.list.mer-featured-tgl'],
     },
   ],
@@ -41,7 +41,7 @@ const PAGE_TEMPLATE = {
       name: 'Featured content',
       selector: ['#container-7f3660d720 > div.aem-Grid > div.teasergallerylist.list.mer-featured-tgl:nth-of-type(2)'],
       style: null,
-      blocks: ['column-control'],
+      blocks: ['columns-control'],
       defaultContent: [],
     },
     {

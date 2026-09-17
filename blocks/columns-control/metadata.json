@@ -1,5 +1,5 @@
 {
-  "variantName": "column-control",
+  "variantName": "columns-control",
   "baseBlock": "columns",
   "canonicalModel": "container-items",
   "visualCharacteristics": {
@@ -14,6 +14,6 @@
     "layout-40-30-30"
   ],
   "memberVariantIds": [
-    "column-control"
+    "columns-control"
   ]
 }

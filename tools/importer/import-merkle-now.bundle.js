@@ -41,7 +41,7 @@ var CustomImportScript = (() => {
     default: () => import_merkle_now_default
   });
 
-  // tools/importer/parsers/column-control.js
+  // tools/importer/parsers/columns-control.js
   function columnContent(card, document2) {
     const img = card.querySelector(".cmp-teaser__image img, img.cmp-image__image, picture img, img");
     const pretitle = card.querySelector(".cmp-teaser__pretitle");
@@ -86,7 +86,7 @@ var CustomImportScript = (() => {
       const rowIndex = i / perRow;
       const layout = rowIndex % 2 === 0 ? "layout-40-30-30" : "layout-25-25-50";
       const block = WebImporter.Blocks.createBlock(document2, {
-        name: "column-control",
+        name: "columns-control",
         variants: [layout],
         cells: [columns]
       });
@@ -227,7 +227,7 @@ var CustomImportScript = (() => {
 
   // tools/importer/import-merkle-now.js
   var parsers = {
-    "column-control": parse
+    "columns-control": parse
   };
   var PAGE_TEMPLATE = {
     name: "merkle-now",
@@ -237,7 +237,7 @@ var CustomImportScript = (() => {
     ],
     blocks: [
       {
-        name: "column-control",
+        name: "columns-control",
         instances: [".teasergallerylist.list.mer-featured-tgl"]
       }
     ],
@@ -255,7 +255,7 @@ var CustomImportScript = (() => {
         name: "Featured content",
         selector: ["#container-7f3660d720 > div.aem-Grid > div.teasergallerylist.list.mer-featured-tgl:nth-of-type(2)"],
         style: null,
-        blocks: ["column-control"],
+        blocks: ["columns-control"],
         defaultContent: []
       },
       {
