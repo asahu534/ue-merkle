@@ -7,6 +7,19 @@
   width: 100%;
 }
 
+/* ===== Ratio-layout image treatment (all widths) =====
+ * In ratio layouts the columns act as tiles, so give their images a uniform
+ * aspect ratio, cover-crop, and rounded corners so they line up in the row
+ * regardless of each source image's native dimensions. Scoped to layout-* so
+ * plain equal Columns are unaffected. */
+.columns[class*='layout-'] img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
 .columns > div > div {
   order: 1;
 }
@@ -29,6 +42,12 @@
   .columns > div > div {
     flex: 1;
     order: unset;
+  }
+
+  /* Ratio layouts: top-align the columns (tiles) instead of vertical-centering,
+     so their images sit on the same top line as in the source design. */
+  .columns[class*='layout-'] > div {
+    align-items: start;
   }
 
   /* ===== Layout ratios =====
