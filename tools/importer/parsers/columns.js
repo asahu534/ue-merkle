@@ -1,23 +1,26 @@
 /* eslint-disable */
 /* global WebImporter */
 /**
- * Parser for the merkle-now featured gallery -> columns-control blocks.
+ * Parser for the merkle-now featured gallery -> core Columns blocks.
  * Source: https://www.merkle.com/en/merkle-now.html (.teasergallerylist.mer-featured-tgl)
- * Block: blocks/columns-control/ (base: Franklin columns)
+ * Block: blocks/columns/ (Franklin columns, with the Layout ratio class)
+ *
+ * Columns block table convention:
+ *   - Row 1: block name + optional variant, e.g. "Columns (layout-40-30-30)"
+ *   - Row 2: one cell per column (here 3 cells); each cell holds that column's
+ *     content (image + label + title + link) as default content.
  *
  * The source renders 6 featured tiles in a masonry where the first tile of row 1
  * is wider and the last tile of row 2 is wider. We reproduce that with two
- * Columns Control blocks:
- *   - row 1 -> "Columns Control (layout-40-30-30)"  (wide first column)
- *   - row 2 -> "Columns Control (layout-25-25-50)"  (wide last column)
- * Each column holds the tile's image + label + title + link as default content,
- * so every field stays editable in Universal Editor.
+ * Columns blocks:
+ *   - row 1 -> "Columns (layout-40-30-30)"  (wide first column)
+ *   - row 2 -> "Columns (layout-25-25-50)"  (wide last column)
  *
  * Scene7/DM note: card images are Scene7 <img> tags; the DM transformer rewrites
  * them to DAM paths BEFORE parsers run, so we place the natural <img> here.
  */
 
-// Build one column's content (image, label, title, link) for a source card.
+// Build one column cell's content (image, label, title, link) for a source card.
 function columnContent(card, document) {
   const img = card.querySelector('.cmp-teaser__image img, img.cmp-image__image, picture img, img');
   const pretitle = card.querySelector('.cmp-teaser__pretitle');
@@ -62,19 +65,21 @@ export default function parse(element, { document }) {
     return;
   }
 
-  // Split tiles into rows of three; each row becomes one Columns Control block.
-  // First row is wide-first (40/30/30), alternating rows are wide-last (25/25/50).
+  // Split tiles into rows of three; each group becomes one Columns block whose
+  // single content row has one cell per tile (column). First group is wide-first
+  // (40/30/30), alternating groups are wide-last (25/25/50).
   const perRow = 3;
   const blocks = [];
   for (let i = 0; i < cards.length; i += perRow) {
     const rowCards = cards.slice(i, i + perRow);
-    const columns = rowCards.map((card) => columnContent(card, document));
+    // one row, one cell per column
+    const cellRow = rowCards.map((card) => columnContent(card, document));
     const rowIndex = i / perRow;
     const layout = rowIndex % 2 === 0 ? 'layout-40-30-30' : 'layout-25-25-50';
     const block = WebImporter.Blocks.createBlock(document, {
-      name: 'columns-control',
+      name: 'columns',
       variants: [layout],
-      cells: [columns],
+      cells: [cellRow],
     });
     blocks.push(block);
   }

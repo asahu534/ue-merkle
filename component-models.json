@@ -303,19 +303,19 @@
     ]
   },
   {
-    "id": "columns-control",
+    "id": "columns",
     "fields": [
       {
         "component": "select",
         "name": "classes",
-        "value": "layout-50-50",
+        "value": "",
         "label": "Layout",
         "valueType": "string",
-        "description": "Column ratio. The number of columns you add must match the ratio: two columns for 50/50, 75/25, 25/75; three for 40/30/30, 50/25/25, 25/25/50; four for 25/25/25/25.",
+        "description": "Column width ratio. 'Equal' splits all columns evenly. When you pick a ratio, set the Columns field to match: 2 for 75/25 and 25/75; 3 for the three-part ratios.",
         "options": [
           {
-            "name": "50 / 50 (two equal columns)",
-            "value": "layout-50-50"
+            "name": "Equal (default)",
+            "value": ""
           },
           {
             "name": "75 / 25 (two columns)",
@@ -338,16 +338,11 @@
             "value": "layout-25-25-50"
           },
           {
-            "name": "25 / 25 / 25 / 25 (four equal columns)",
-            "value": "layout-25-25-25-25"
+            "name": "25 / 50 / 25 (three columns)",
+            "value": "layout-25-50-25"
           }
         ]
-      }
-    ]
-  },
-  {
-    "id": "columns",
-    "fields": [
+      },
       {
         "component": "text",
         "valueType": "number",

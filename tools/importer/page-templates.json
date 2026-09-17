@@ -94,7 +94,7 @@
       "urlPattern": "/en/merkle-now",
       "blocks": [
         {
-          "name": "columns-control",
+          "name": "columns",
           "instances": [
             ".teasergallerylist.list.mer-featured-tgl"
           ]
@@ -122,7 +122,7 @@
           ],
           "style": null,
           "blocks": [
-            "columns-control"
+            "columns"
           ],
           "defaultContent": []
         },

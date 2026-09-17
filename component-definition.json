@@ -248,26 +248,9 @@
           }
         },
         {
-          "title": "Columns Control (ratio layouts)",
-          "id": "columns-control",
-          "description": "Multi-column container with a selectable width ratio (50/50, 75/25, 25/75, 40/30/30, 50/25/25, 25/25/50, 25/25/25/25). Unlike the plain Columns block, each column's relative width is author-controlled via the Layout dropdown.",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/columns/v1/columns",
-                "template": {
-                  "model": "columns-control",
-                  "columns": "2",
-                  "rows": "1"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Columns",
           "id": "columns",
-          "description": "Basic multi-column layout with equal-width columns. For author-controlled width ratios (e.g. 40/30/30), use Columns Control instead.",
+          "description": "Multi-column layout. Leave Layout as Equal for evenly-split columns, or pick a width ratio (e.g. 40/30/30) and set Columns to the matching count.",
           "plugins": {
             "xwalk": {
               "page": {

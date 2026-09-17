@@ -22,8 +22,7 @@
       "video-centered",
       "carousel-cases",
       "cta-buttons",
-      "blog-list",
-      "columns-control"
+      "blog-list"
     ]
   },
   {
@@ -54,12 +53,6 @@
     "id": "carousel-hero",
     "components": [
       "carousel-hero-item"
-    ]
-  },
-  {
-    "id": "columns-control",
-    "components": [
-      "column"
     ]
   },
   {
