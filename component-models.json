@@ -251,6 +251,49 @@
     ]
   },
   {
+    "id": "column-control",
+    "fields": [
+      {
+        "component": "select",
+        "name": "classes",
+        "value": "layout-50-50",
+        "label": "Layout",
+        "valueType": "string",
+        "description": "Column ratio. The number of columns you add must match the ratio: two columns for 50/50, 75/25, 25/75; three for 40/30/30, 50/25/25, 25/25/50; four for 25/25/25/25.",
+        "options": [
+          {
+            "name": "50 / 50 (two equal columns)",
+            "value": "layout-50-50"
+          },
+          {
+            "name": "75 / 25 (two columns)",
+            "value": "layout-75-25"
+          },
+          {
+            "name": "25 / 75 (two columns)",
+            "value": "layout-25-75"
+          },
+          {
+            "name": "40 / 30 / 30 (three columns)",
+            "value": "layout-40-30-30"
+          },
+          {
+            "name": "50 / 25 / 25 (three columns)",
+            "value": "layout-50-25-25"
+          },
+          {
+            "name": "25 / 25 / 50 (three columns)",
+            "value": "layout-25-25-50"
+          },
+          {
+            "name": "25 / 25 / 25 / 25 (four equal columns)",
+            "value": "layout-25-25-25-25"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "columns",
     "fields": [
       {

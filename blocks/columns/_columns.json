@@ -50,7 +50,14 @@
         "text",
         "image",
         "button",
-        "title"
+        "title",
+        "carousel-hero",
+        "cards-feature",
+        "cards-icon",
+        "video-centered",
+        "carousel-cases",
+        "cta-buttons",
+        "content-filter"
       ]
     }
   ]

@@ -57,7 +57,8 @@
         "video-centered",
         "carousel-cases",
         "cta-buttons",
-        "content-filter"
+        "content-filter",
+        "column-control"
       ]
     }
   ]

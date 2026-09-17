@@ -22,7 +22,8 @@
       "video-centered",
       "carousel-cases",
       "cta-buttons",
-      "content-filter"
+      "content-filter",
+      "column-control"
     ]
   },
   {
@@ -56,6 +57,12 @@
     ]
   },
   {
+    "id": "column-control",
+    "components": [
+      "column"
+    ]
+  },
+  {
     "id": "columns",
     "components": [
       "column"
@@ -67,7 +74,14 @@
       "text",
       "image",
       "button",
-      "title"
+      "title",
+      "carousel-hero",
+      "cards-feature",
+      "cards-icon",
+      "video-centered",
+      "carousel-cases",
+      "cta-buttons",
+      "content-filter"
     ]
   },
   {
