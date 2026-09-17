@@ -26,7 +26,7 @@ ratio.
 - Add **Column** children (two for 50/50, three for 40/30/30).
 - Into each column, drop text, images, buttons, titles, or any of the site
   blocks (carousel-hero, cards-feature, cards-icon, video-centered,
-  carousel-cases, cta-buttons, content-filter).
+  carousel-cases, cta-buttons, blog-list).
 
 The Layout selection is emitted as a `layout-*` class on the block; the CSS uses
 it to size the columns. The number of columns you add should match the ratio you

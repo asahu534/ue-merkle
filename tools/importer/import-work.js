@@ -3,7 +3,6 @@
 
 // PARSER IMPORTS
 import carouselCasesParser from './parsers/carousel-cases.js';
-import contentFilterParser from './parsers/content-filter.js';
 
 // TRANSFORMER IMPORTS
 import cleanupTransformer from './transformers/merkle-cleanup.js';
@@ -13,7 +12,6 @@ import sectionsTransformer from './transformers/merkle-sections.js';
 // PARSER REGISTRY
 const parsers = {
   'carousel-cases': carouselCasesParser,
-  'content-filter': contentFilterParser,
 };
 
 // PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json
@@ -27,10 +25,6 @@ const PAGE_TEMPLATE = {
     {
       name: 'carousel-cases',
       instances: ['.listcards.teasergallerylist.list.mer-featured-lc'],
-    },
-    {
-      name: 'content-filter',
-      instances: ['.masonry'],
     },
   ],
   sections: [
@@ -55,7 +49,7 @@ const PAGE_TEMPLATE = {
       name: 'Find something specific',
       selector: ['#container-8d1cb3406c > div.aem-Grid > div.teaser.cmp-teaser-layout-large.content-center:nth-of-type(2)'],
       style: null,
-      blocks: ['content-filter'],
+      blocks: [],
       defaultContent: ['title', 'text'],
     },
   ],

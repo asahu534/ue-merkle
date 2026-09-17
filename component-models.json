@@ -142,6 +142,58 @@
     ]
   },
   {
+    "id": "blog-list",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "parent",
+        "label": "Parent Page",
+        "description": "The page whose descendant pages are listed. All pages below this path (any depth) are shown."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "value": "",
+        "label": "Heading",
+        "description": "Optional heading shown above the list (e.g. 'Find something specific')."
+      },
+      {
+        "component": "select",
+        "name": "defaultSort",
+        "value": "newest",
+        "label": "Default Sort",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Newest first",
+            "value": "newest"
+          },
+          {
+            "name": "Oldest first",
+            "value": "oldest"
+          },
+          {
+            "name": "Title (A–Z)",
+            "value": "title-asc"
+          },
+          {
+            "name": "Title (Z–A)",
+            "value": "title-desc"
+          }
+        ]
+      },
+      {
+        "component": "number",
+        "name": "pageSize",
+        "value": "12",
+        "label": "Page Size",
+        "valueType": "number",
+        "description": "How many cards to reveal per 'Load more' click."
+      }
+    ]
+  },
+  {
     "id": "cards-feature-item",
     "fields": [
       {
@@ -309,41 +361,6 @@
         "name": "rows",
         "value": "",
         "label": "Rows"
-      }
-    ]
-  },
-  {
-    "id": "content-filter-item",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "value": "",
-        "label": "Image Alt"
-      },
-      {
-        "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
-        "valueType": "string",
-        "description": "Content-type label, title, and a 'Read more' link."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "tags",
-        "value": "",
-        "label": "Facet Tags",
-        "description": "Semicolon-separated facet groups, e.g. 'Content Type: Blog Post; Industries: Retail, Healthcare; Partners: Adobe'. Supported groups: Content Type, Industries, Capabilities, Partners, Country."
       }
     ]
   },

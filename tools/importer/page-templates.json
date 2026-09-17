@@ -98,12 +98,6 @@
           "instances": [
             ".teasergallerylist.list.mer-featured-tgl"
           ]
-        },
-        {
-          "name": "content-filter",
-          "instances": [
-            ".masonry"
-          ]
         }
       ],
       "sections": [
@@ -139,9 +133,7 @@
             "#container-7f3660d720 > div.aem-Grid > div.teaser.cmp-teaser-layout-large.content-center:nth-of-type(3)"
           ],
           "style": null,
-          "blocks": [
-            "content-filter"
-          ],
+          "blocks": [],
           "defaultContent": [
             "title",
             "text"
@@ -162,12 +154,6 @@
           "name": "carousel-cases",
           "instances": [
             ".listcards.teasergallerylist.list.mer-featured-lc"
-          ]
-        },
-        {
-          "name": "content-filter",
-          "instances": [
-            ".masonry"
           ]
         }
       ],
@@ -204,9 +190,7 @@
             "#container-8d1cb3406c > div.aem-Grid > div.teaser.cmp-teaser-layout-large.content-center:nth-of-type(2)"
           ],
           "style": null,
-          "blocks": [
-            "content-filter"
-          ],
+          "blocks": [],
           "defaultContent": [
             "title",
             "text"
