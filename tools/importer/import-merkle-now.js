@@ -2,7 +2,7 @@
 /* global WebImporter */
 
 // PARSER IMPORTS
-import carouselCasesParser from './parsers/carousel-cases.js';
+import columnControlParser from './parsers/column-control.js';
 import contentFilterParser from './parsers/content-filter.js';
 
 // TRANSFORMER IMPORTS
@@ -12,7 +12,7 @@ import sectionsTransformer from './transformers/merkle-sections.js';
 
 // PARSER REGISTRY
 const parsers = {
-  'carousel-cases': carouselCasesParser,
+  'column-control': columnControlParser,
   'content-filter': contentFilterParser,
 };
 
@@ -25,7 +25,7 @@ const PAGE_TEMPLATE = {
   ],
   blocks: [
     {
-      name: 'carousel-cases',
+      name: 'column-control',
       instances: ['.teasergallerylist.list.mer-featured-tgl'],
     },
     {
@@ -47,7 +47,7 @@ const PAGE_TEMPLATE = {
       name: 'Featured content',
       selector: ['#container-7f3660d720 > div.aem-Grid > div.teasergallerylist.list.mer-featured-tgl:nth-of-type(2)'],
       style: null,
-      blocks: ['carousel-cases'],
+      blocks: ['column-control'],
       defaultContent: [],
     },
     {

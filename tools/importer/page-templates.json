@@ -94,7 +94,7 @@
       "urlPattern": "/en/merkle-now",
       "blocks": [
         {
-          "name": "carousel-cases",
+          "name": "column-control",
           "instances": [
             ".teasergallerylist.list.mer-featured-tgl"
           ]
@@ -128,7 +128,7 @@
           ],
           "style": null,
           "blocks": [
-            "carousel-cases"
+            "column-control"
           ],
           "defaultContent": []
         },

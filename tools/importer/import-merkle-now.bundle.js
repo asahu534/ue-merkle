@@ -41,55 +41,62 @@ var CustomImportScript = (() => {
     default: () => import_merkle_now_default
   });
 
-  // tools/importer/parsers/carousel-cases.js
-  function fieldCell(document2, fieldName, nodes) {
+  // tools/importer/parsers/column-control.js
+  function columnContent(card, document2) {
+    const img = card.querySelector(".cmp-teaser__image img, img.cmp-image__image, picture img, img");
+    const pretitle = card.querySelector(".cmp-teaser__pretitle");
+    const title = card.querySelector(".cmp-teaser__title, h1, h2, h3, h4");
+    let cta = card.querySelector(".mer-teaser__action-container a, a.cmp-teaser__action-link");
+    if (!cta) {
+      const wrapper = card.querySelector("a.mer-clickabkle-wrapper, a[href]");
+      const linkText = card.querySelector(".mer-link-text, .mer-teaser__action-container span, .mer-teaser__action-container");
+      if (wrapper && wrapper.getAttribute("href")) {
+        cta = document2.createElement("a");
+        cta.setAttribute("href", wrapper.getAttribute("href"));
+        cta.textContent = (linkText ? linkText.textContent : wrapper.textContent).trim() || "Read more";
+      }
+    }
     const frag = document2.createDocumentFragment();
-    frag.appendChild(document2.createComment(` field:${fieldName} `));
-    (Array.isArray(nodes) ? nodes : [nodes]).forEach((n) => {
-      if (n) frag.appendChild(n);
-    });
+    const imageContent = img ? img.closest("picture") || img : null;
+    if (imageContent) frag.appendChild(imageContent);
+    if (pretitle) {
+      const p = document2.createElement("p");
+      p.textContent = pretitle.textContent.trim();
+      frag.appendChild(p);
+    }
+    if (title) {
+      const h = document2.createElement("h3");
+      h.textContent = title.textContent.trim();
+      frag.appendChild(h);
+    }
+    if (cta) frag.appendChild(cta);
     return frag;
   }
   function parse(element, { document: document2 }) {
     const cards = Array.from(element.querySelectorAll("li.cmp-list__item, .featuredcard")).filter((el, i, arr) => !arr.some((other) => other !== el && other.contains(el)));
-    const cells = [];
-    cards.forEach((card) => {
-      const img = card.querySelector(".cmp-teaser__image img, img.cmp-image__image, picture img, img");
-      const pretitle = card.querySelector(".cmp-teaser__pretitle");
-      const title = card.querySelector(".cmp-teaser__title, h1, h2, h3, h4");
-      const description = card.querySelector(".cmp-teaser__description");
-      let cta = card.querySelector(".mer-teaser__action-container a, a.cmp-teaser__action-link");
-      if (!cta) {
-        const wrapper = card.querySelector("a.mer-clickabkle-wrapper, a[href]");
-        const linkText = card.querySelector(".mer-link-text, .mer-teaser__action-container span, .mer-teaser__action-container");
-        if (wrapper && wrapper.getAttribute("href")) {
-          cta = document2.createElement("a");
-          cta.setAttribute("href", wrapper.getAttribute("href"));
-          cta.textContent = (linkText ? linkText.textContent : wrapper.textContent).trim();
-        }
-      }
-      if (!img && !title && !pretitle && !description && !cta) return;
-      const textNodes = [];
-      if (pretitle) textNodes.push(pretitle);
-      if (title) textNodes.push(title);
-      if (description) textNodes.push(description);
-      if (cta) textNodes.push(cta);
-      const imageContent = img ? img.closest("picture") || img : null;
-      cells.push([
-        imageContent ? fieldCell(document2, "image", imageContent) : "",
-        textNodes.length ? fieldCell(document2, "text", textNodes) : ""
-      ]);
-    });
-    if (cells.length === 0) {
+    if (cards.length === 0) {
       element.replaceWith(...element.childNodes);
       return;
     }
-    const block = WebImporter.Blocks.createBlock(document2, { name: "carousel-cases", cells });
-    element.replaceWith(block);
+    const perRow = 3;
+    const blocks = [];
+    for (let i = 0; i < cards.length; i += perRow) {
+      const rowCards = cards.slice(i, i + perRow);
+      const columns = rowCards.map((card) => columnContent(card, document2));
+      const rowIndex = i / perRow;
+      const layout = rowIndex % 2 === 0 ? "layout-40-30-30" : "layout-25-25-50";
+      const block = WebImporter.Blocks.createBlock(document2, {
+        name: "column-control",
+        variants: [layout],
+        cells: [columns]
+      });
+      blocks.push(block);
+    }
+    element.replaceWith(...blocks);
   }
 
   // tools/importer/parsers/content-filter.js
-  function fieldCell2(document2, fieldName, nodes) {
+  function fieldCell(document2, fieldName, nodes) {
     const frag = document2.createDocumentFragment();
     frag.appendChild(document2.createComment(` field:${fieldName} `));
     (Array.isArray(nodes) ? nodes : [nodes]).forEach((n) => {
@@ -133,9 +140,9 @@ var CustomImportScript = (() => {
       tags.textContent = contentType ? `Content Type: ${contentType}` : "";
       const imageContent = img ? img.closest("picture") || img : null;
       cells.push([
-        imageContent ? fieldCell2(document2, "image", imageContent) : fieldCell2(document2, "image", null),
-        textNodes.length ? fieldCell2(document2, "text", textNodes) : fieldCell2(document2, "text", null),
-        fieldCell2(document2, "tags", tags)
+        imageContent ? fieldCell(document2, "image", imageContent) : fieldCell(document2, "image", null),
+        textNodes.length ? fieldCell(document2, "text", textNodes) : fieldCell(document2, "text", null),
+        fieldCell(document2, "tags", tags)
       ]);
     });
     if (cells.length === 0) {
@@ -273,7 +280,7 @@ var CustomImportScript = (() => {
 
   // tools/importer/import-merkle-now.js
   var parsers = {
-    "carousel-cases": parse,
+    "column-control": parse,
     "content-filter": parse2
   };
   var PAGE_TEMPLATE = {
@@ -284,7 +291,7 @@ var CustomImportScript = (() => {
     ],
     blocks: [
       {
-        name: "carousel-cases",
+        name: "column-control",
         instances: [".teasergallerylist.list.mer-featured-tgl"]
       },
       {
@@ -306,7 +313,7 @@ var CustomImportScript = (() => {
         name: "Featured content",
         selector: ["#container-7f3660d720 > div.aem-Grid > div.teasergallerylist.list.mer-featured-tgl:nth-of-type(2)"],
         style: null,
-        blocks: ["carousel-cases"],
+        blocks: ["column-control"],
         defaultContent: []
       },
       {
