@@ -7,6 +7,19 @@
   width: 100%;
 }
 
+/* ===== Ratio-layout image treatment (all widths) =====
+ * In ratio layouts the columns act as tiles, so give their images a uniform
+ * aspect ratio, cover-crop, and rounded corners so they line up in the row
+ * regardless of each source image's native dimensions. Scoped to layout-* so
+ * plain equal Columns are unaffected. */
+.columns[class*='layout-'] img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
 .columns > div > div {
   order: 1;
 }
@@ -29,5 +42,65 @@
   .columns > div > div {
     flex: 1;
     order: unset;
+  }
+
+  /* Ratio layouts: top-align the columns (tiles) instead of vertical-centering,
+     so their images sit on the same top line as in the source design. */
+  .columns[class*='layout-'] > div {
+    align-items: start;
+  }
+
+  /* ===== Layout ratios =====
+   * When a ratio class is set, columns take fixed proportional widths instead
+   * of the equal flex:1 default. flex-grow:0 / flex-shrink:1 let the 24px gap
+   * be absorbed proportionally. Base widths first, then positional overrides. */
+  .columns[class*='layout-'] > div > div {
+    flex-grow: 0;
+    flex-shrink: 1;
+  }
+
+  /* Base per-layout column share (single-class selectors first, so the
+     positional overrides below don't trip no-descending-specificity). */
+  .columns.layout-40-30-30 > div > div {
+    flex-basis: 30%;
+  }
+
+  .columns.layout-50-25-25 > div > div,
+  .columns.layout-25-25-50 > div > div,
+  .columns.layout-25-50-25 > div > div {
+    flex-basis: 25%;
+  }
+
+  /* Positional overrides — the wider column in each ratio */
+  .columns.layout-75-25 > div > div:first-child {
+    flex-basis: 75%;
+  }
+
+  .columns.layout-75-25 > div > div:nth-child(2) {
+    flex-basis: 25%;
+  }
+
+  .columns.layout-25-75 > div > div:first-child {
+    flex-basis: 25%;
+  }
+
+  .columns.layout-25-75 > div > div:nth-child(2) {
+    flex-basis: 75%;
+  }
+
+  .columns.layout-40-30-30 > div > div:first-child {
+    flex-basis: 40%;
+  }
+
+  .columns.layout-50-25-25 > div > div:first-child {
+    flex-basis: 50%;
+  }
+
+  .columns.layout-25-25-50 > div > div:last-child {
+    flex-basis: 50%;
+  }
+
+  .columns.layout-25-50-25 > div > div:nth-child(2) {
+    flex-basis: 50%;
   }
 }

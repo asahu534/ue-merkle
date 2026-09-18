@@ -1,0 +1,137 @@
+/* cards-feature — editorial promo cards (merkle "Our latest and greatest").
+ * The image fills the whole card; the label/title/link are overlaid on top with
+ * a dark gradient for legibility. Cards without an image show a solid dark
+ * background. Each card's width is author-set via the Width field (cardw-*
+ * class); cards flow left-to-right and wrap. Mobile-first: single column. */
+
+.cards-feature > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.cards-feature > ul > li {
+  position: relative; /* positioning context for the full-bleed image */
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: #000; /* shows through on cards with no image */
+  color: #fff;
+  min-height: 380px;
+
+  /* Mobile: every card is full width regardless of its cardw-* class. */
+  flex: 0 0 100%;
+}
+
+/* Image fills the entire card (no distortion via cover). */
+.cards-feature .cards-feature-card-image {
+  position: absolute;
+  inset: 0;
+  line-height: 0;
+}
+
+.cards-feature .cards-feature-card-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Text overlays the image; a top-anchored dark gradient keeps it legible. */
+.cards-feature .cards-feature-card-body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  background: linear-gradient(180deg, rgb(0 0 0 / 75%) 0%, rgb(0 0 0 / 45%) 40%, rgb(0 0 0 / 0%) 100%);
+}
+
+/* Category eyebrow: first paragraph — muted grey, bold, uppercase */
+.cards-feature .cards-feature-card-body p:first-child {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--muted-text-color);
+  margin: 0;
+}
+
+.cards-feature .cards-feature-card-body h1,
+.cards-feature .cards-feature-card-body h2,
+.cards-feature .cards-feature-card-body h3,
+.cards-feature .cards-feature-card-body h4,
+.cards-feature .cards-feature-card-body h5,
+.cards-feature .cards-feature-card-body h6 {
+  margin: 0;
+  color: #fff;
+  font-size: 22px;
+  line-height: 1.15;
+}
+
+/* "Learn more" (last link paragraph) pushes to the bottom of the text area */
+.cards-feature .cards-feature-card-body p:last-child {
+  margin: 8px 0 0;
+}
+
+.cards-feature .cards-feature-card-body a:any-link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.cards-feature .cards-feature-card-body a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Desktop: cards sit side by side at their author-set widths ===== */
+@media (width >= 900px) {
+  .cards-feature > ul {
+    align-items: stretch;
+  }
+
+  /* flex-basis carries each card's share of the row. Subtract a gap allowance
+   * (a row has up to ~3 × 24px gaps) from each basis so cards whose percentages
+   * sum to 100% still fit on one line instead of wrapping. flex-grow:0 keeps the
+   * proportions; the small subtraction is visually negligible. */
+  .cards-feature > ul > li {
+    flex: 0 1 calc(33.3333% - 18px);
+    min-height: 420px;
+  }
+
+  .cards-feature > ul > li.cardw-100 {
+    flex-basis: 100%;
+  }
+
+  .cards-feature > ul > li.cardw-75 {
+    flex-basis: calc(75% - 18px);
+  }
+
+  .cards-feature > ul > li.cardw-66 {
+    flex-basis: calc(66.6666% - 18px);
+  }
+
+  .cards-feature > ul > li.cardw-50 {
+    flex-basis: calc(50% - 18px);
+  }
+
+  .cards-feature > ul > li.cardw-40 {
+    flex-basis: calc(40% - 18px);
+  }
+
+  .cards-feature > ul > li.cardw-33 {
+    flex-basis: calc(33.3333% - 18px);
+  }
+
+  .cards-feature > ul > li.cardw-30 {
+    flex-basis: calc(30% - 18px);
+  }
+
+  .cards-feature > ul > li.cardw-25 {
+    flex-basis: calc(25% - 18px);
+  }
+}

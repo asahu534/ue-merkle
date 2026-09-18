@@ -33,6 +33,14 @@
             {
               "name": "Highlight",
               "value": "highlight"
+            },
+            {
+              "name": "Centered",
+              "value": "centered"
+            },
+            {
+              "name": "Dark",
+              "value": "theme-dark"
             }
           ]
         }
@@ -50,7 +58,16 @@
         "hero",
         "cards",
         "columns",
-        "fragment"
+        "fragment",
+        "carousel-hero",
+        "cards-feature",
+        "cards-icon",
+        "video-centered",
+        "carousel-cases",
+        "cta-buttons",
+        "blog-list",
+        "accordion",
+        "search"
       ]
     }
   ]

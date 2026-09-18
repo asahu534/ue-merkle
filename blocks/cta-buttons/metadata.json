@@ -1,0 +1,16 @@
+{
+  "variantName": "cta-buttons",
+  "baseBlock": "buttons",
+  "canonicalModel": "container-items",
+  "visualCharacteristics": {
+    "layout": "horizontal row of call-to-action buttons",
+    "buttonStyles": "primary (filled) and secondary (outline)",
+    "alignment": "inherits text-align from the containing section (centered in intros)"
+  },
+  "contentPattern": "One or more buttons, each a link with text and a style (primary/secondary).",
+  "usage": "Groups of call-to-action buttons, e.g. 'All Work' + 'About Us'. Reusable across the site.",
+  "options": [],
+  "memberVariantIds": [
+    "cta-buttons"
+  ]
+}

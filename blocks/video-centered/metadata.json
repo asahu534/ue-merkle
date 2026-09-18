@@ -1,0 +1,18 @@
+{
+  "variantName": "video-centered",
+  "baseBlock": "video",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {
+    "layout": "centered, width-constrained video",
+    "theme": "dark",
+    "poster": "poster/placeholder image with large circular play button"
+  },
+  "contentPattern": "A video link plus an optional poster/placeholder image. Click to play.",
+  "usage": "Centered promo/demo videos. Reusable across the site.",
+  "options": [
+    "autoplay"
+  ],
+  "memberVariantIds": [
+    "video-centered"
+  ]
+}

@@ -1,0 +1,27 @@
+/*
+ * Brand design tokens extracted from https://www.merkle.com/
+ * Source uses the commercial Adobe font "proxima-nova"; Montserrat is loaded
+ * as the closest free geometric-sans fallback.
+ */
+:root {
+  --heading-font-family: "Montserrat", "proxima-nova", sans-serif;
+  --body-font-family: "Montserrat", "proxima-nova", sans-serif;
+  --background-color: #fff;
+  --text-color: #000;
+  --link-color: #000;
+  --link-hover-color: #dd3039;
+
+  /* Brand */
+  --accent-color: #dd3039;
+  --dark-color: #000;
+  --light-color: #fff;
+  --muted-text-color: #aeaebc;
+  --section-padding: 64px;
+  --nav-height: 80px;
+  --heading-size-xxl: 44px;
+  --heading-size-xl: 44px;
+  --heading-size-l: 28px;
+  --heading-size-m: 22px;
+  --heading-size-s: 20px;
+  --heading-size-xs: 18px;
+}

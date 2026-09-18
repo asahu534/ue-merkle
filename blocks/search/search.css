@@ -1,0 +1,381 @@
+/* Search block — client-side search over /query-index.json with type-ahead
+ * suggestions, keyword facets, trending-topic chips, and paginated results.
+ * No page refresh: all interaction re-renders in place.
+ *
+ * Design mirrors merkle.com/en/search: a deep-navy hero band holds the search
+ * bar + trending topics (white text, underlined input); results and filters
+ * render below on white, with results as light-grey rounded tiles. */
+
+.search {
+  --search-navy: #040e4b;
+  --search-eyebrow: #0391f2;
+  --search-tile-bg: #f2f2f4;
+  --search-tile-bg-hover: #e5e5e9;
+}
+
+/* --- Blue hero band (full-bleed) --- */
+.search .search-hero {
+  background: var(--search-navy);
+  color: #fff;
+
+  /* Break out of the section's max-width so the navy spans the viewport. */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 48px 20px 56px;
+}
+
+.search .search-hero-inner {
+  max-width: 1264px;
+  margin: 0 auto;
+}
+
+.search .search-heading {
+  margin: 0 0 24px;
+  color: #fff;
+}
+
+/* --- Search bar --- */
+.search .search-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.search .search-input-wrap {
+  position: relative;
+  flex: 1 1 auto;
+}
+
+.search .search-input {
+  width: 100%;
+  margin: 0;
+  padding: 8px 40px 12px 0;
+  border: 0;
+  border-bottom: 2px solid #fff;
+  background: transparent;
+  font-family: inherit;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #fff;
+  outline: none;
+}
+
+.search .search-input::placeholder {
+  color: rgb(255 255 255 / 70%);
+}
+
+.search .search-input:focus {
+  border-bottom-color: var(--search-eyebrow);
+}
+
+/* Clear (×) button inside the input */
+.search .search-clear {
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 28px;
+  line-height: 1;
+  color: #fff;
+  cursor: pointer;
+}
+
+.search .search-clear:hover {
+  color: var(--search-eyebrow);
+}
+
+.search .search-submit {
+  flex: 0 0 auto;
+}
+
+/* --- Type-ahead suggestions --- */
+.search .search-suggestions {
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid #e5e5e9;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.search .search-suggestion {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.search .search-suggestion:hover,
+.search .search-suggestion.active {
+  background: #f4f4f6;
+}
+
+.search .search-suggestion-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--search-eyebrow);
+}
+
+.search .search-suggestion-title {
+  font-size: 16px;
+  line-height: 1.3;
+  color: #000;
+}
+
+/* --- Trending topics (in hero) --- */
+.search .search-trending {
+  margin-top: 40px;
+}
+
+.search .search-trending-title {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: normal;
+  color: #fff;
+}
+
+.search .search-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.search .search-chip {
+  margin: 0;
+  padding: 10px 20px;
+  border: 1px solid rgb(255 255 255 / 40%);
+  border-radius: 24px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 15px;
+  color: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.search .search-chip:hover,
+.search .search-chip:focus-visible {
+  border-color: #fff;
+  background: #fff;
+  color: var(--search-navy);
+}
+
+/* --- Results band (white, below hero) --- */
+.search .search-results-band {
+  padding-top: 40px;
+}
+
+.search .search-results-band[hidden] {
+  display: none;
+}
+
+.search .search-layout {
+  display: block;
+}
+
+.search .search-sidebar {
+  margin-bottom: 24px;
+}
+
+.search .search-sidebar[hidden] {
+  display: none;
+}
+
+/* Filters toggle is shown on mobile; on desktop the panel is always visible */
+.search .search-filters-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 10px 20px;
+  border: 1px solid #d0d0d8;
+  border-radius: 24px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.search .search-panel {
+  padding: 0;
+}
+
+.search .search-panel[hidden] {
+  display: none;
+}
+
+.search .search-group {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.search .search-group-title {
+  padding: 0;
+  font-size: 21px;
+  font-weight: 700;
+  color: #000;
+}
+
+.search .search-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.search .search-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.search .search-option input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--search-eyebrow);
+}
+
+.search .search-actions {
+  margin-top: 16px;
+}
+
+.search .search-clear-filters {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: underline;
+  color: #000;
+  cursor: pointer;
+}
+
+.search .search-clear-filters:hover {
+  color: var(--accent-color);
+}
+
+/* Count line */
+.search .search-count {
+  margin: 0 0 24px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #000;
+}
+
+/* Result tiles */
+.search .search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.search .search-result {
+  position: relative;
+  padding: 24px;
+  border-radius: 24px;
+  background: var(--search-tile-bg);
+  transition: background-color 0.25s ease-in-out;
+}
+
+/* Source hover effect: the tile background darkens slightly. */
+.search .search-result:hover {
+  background: var(--search-tile-bg-hover);
+}
+
+.search .search-result-label {
+  margin: 0 0 8px;
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: normal;
+  color: var(--search-eyebrow);
+}
+
+.search .search-result-title {
+  margin: 0 0 8px;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.23;
+  color: #000;
+}
+
+.search .search-result-desc {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.33;
+  color: #000;
+}
+
+/* Full-tile clickable overlay */
+.search .search-result-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  text-indent: -9999px;
+}
+
+.search .search-load-more {
+  margin-top: 24px;
+}
+
+/* The global .button rule sets display:inline-flex, which overrides the default
+ * [hidden] behavior — force it hidden so ≤pageSize result sets show no button. */
+.search .search-load-more[hidden] {
+  display: none;
+}
+
+/* --- Desktop: sidebar + results two-column --- */
+@media (width >= 900px) {
+  .search .search-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 48px;
+  }
+
+  /* No sidebar (query returned nothing) → results span the full width. */
+  .search .search-layout:has(.search-sidebar[hidden]) {
+    grid-template-columns: 1fr;
+  }
+
+  .search .search-sidebar {
+    margin-bottom: 0;
+  }
+
+  /* On desktop the panel is always visible; hide the toggle */
+  .search .search-filters-toggle {
+    display: none;
+  }
+
+  .search .search-input {
+    font-size: 37px;
+  }
+}

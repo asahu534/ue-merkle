@@ -1,0 +1,17 @@
+{
+  "variantName": "cards-icon",
+  "baseBlock": "cards",
+  "canonicalModel": "container-items",
+  "visualCharacteristics": {
+    "layout": "equal-size multi-column feature grid (up to 4 columns)",
+    "theme": "dark",
+    "cardStructure": "small icon + heading + description, no per-item CTA",
+    "imageTreatment": "small contained icon"
+  },
+  "contentPattern": "Each item: icon image, heading, and description text. No links.",
+  "usage": "'How we help / capabilities' feature grids. Reusable across the site on dark or light sections.",
+  "options": [],
+  "memberVariantIds": [
+    "cards-icon"
+  ]
+}
