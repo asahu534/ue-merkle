@@ -310,15 +310,6 @@
   background: var(--search-tile-bg-hover);
 }
 
-.search .search-result-label {
-  margin: 0 0 8px;
-  font-size: 15px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: normal;
-  color: var(--search-eyebrow);
-}
-
 .search .search-result-title {
   margin: 0 0 8px;
   font-size: 26px;

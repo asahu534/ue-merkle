@@ -124,14 +124,6 @@ function buildCard(row) {
   const body = document.createElement('div');
   body.classList.add('search-result-body');
 
-  const label = splitValues(row[FACET_KEY])[0] || '';
-  if (label) {
-    const p = document.createElement('p');
-    p.classList.add('search-result-label');
-    p.textContent = label;
-    body.append(p);
-  }
-
   const h = document.createElement('p');
   h.classList.add('search-result-title');
   h.textContent = row.title || row.path;
