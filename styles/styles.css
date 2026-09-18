@@ -342,6 +342,24 @@ main .section.highlight {
   padding: 40px 0;
 }
 
+/* Centered section — center all default content (headings, paragraphs, buttons) */
+main .section.centered .default-content-wrapper {
+  text-align: center;
+}
+
+main .section.centered .default-content-wrapper .button-container {
+  justify-content: center;
+}
+
+/* Per-block alignment (Title/Text "Alignment" field → classes) */
+main .align-center {
+  text-align: center;
+}
+
+main .align-right {
+  text-align: right;
+}
+
 /* dark sections — Merkle blue-black background with light text */
 main .section.dark {
   background-color: var(--dark-color);

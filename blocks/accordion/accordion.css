@@ -1,0 +1,86 @@
+/* Accordion — collapsible panels (e.g. year-grouped acquisitions). Each item is
+ * a full-width header button with a plus/minus icon; clicking reveals its panel.
+ * Styling mirrors the source: 2px light-grey bottom dividers, bold 20px black
+ * titles, a square plus icon on the right that becomes a minus when expanded. */
+
+.accordion {
+  max-width: 1264px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.accordion .accordion-item {
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e5e5e9;
+}
+
+.accordion .accordion-item-header {
+  margin: 0;
+}
+
+.accordion .accordion-item-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  margin: 0;
+  padding: 16px 0 0;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: left;
+  color: #000;
+  cursor: pointer;
+}
+
+/* Plus icon (right-aligned). Two bars form the plus; the vertical bar is hidden
+ * when expanded, leaving a minus. */
+.accordion .accordion-item-button-icon {
+  position: relative;
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+}
+
+.accordion .accordion-item-button-icon::before,
+.accordion .accordion-item-button-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: currentcolor;
+  transform: translate(-50%, -50%);
+}
+
+.accordion .accordion-item-button-icon::before {
+  width: 16px;
+  height: 2px;
+}
+
+.accordion .accordion-item-button-icon::after {
+  width: 2px;
+  height: 16px;
+}
+
+.accordion .accordion-item-button[aria-expanded='true'] .accordion-item-button-icon::after {
+  display: none;
+}
+
+.accordion .accordion-item-panel {
+  padding: 8px 0 0;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #000;
+}
+
+.accordion .accordion-item-panel[hidden] {
+  display: none;
+}
+
+.accordion .accordion-item-panel p {
+  margin: 0 0 8px;
+}

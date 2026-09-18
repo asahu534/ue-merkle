@@ -33,6 +33,10 @@
             {
               "name": "Highlight",
               "value": "highlight"
+            },
+            {
+              "name": "Centered",
+              "value": "centered"
             }
           ]
         }
@@ -56,7 +60,9 @@
         "cards-icon",
         "video-centered",
         "carousel-cases",
-        "cta-buttons"
+        "cta-buttons",
+        "blog-list",
+        "accordion"
       ]
     }
   ]

@@ -3,6 +3,7 @@
     {
       "title": "Columns",
       "id": "columns",
+      "description": "Multi-column layout. Leave Layout as Equal for evenly-split columns, or pick a width ratio (e.g. 40/30/30) and set Columns to the matching count.",
       "plugins": {
         "xwalk": {
           "page": {
@@ -20,6 +21,44 @@
     {
       "id": "columns",
       "fields": [
+        {
+          "component": "select",
+          "name": "classes",
+          "value": "",
+          "label": "Layout",
+          "valueType": "string",
+          "description": "Column width ratio. 'Equal' splits all columns evenly. When you pick a ratio, set the Columns field to match: 2 for 75/25 and 25/75; 3 for the three-part ratios.",
+          "options": [
+            {
+              "name": "Equal (default)",
+              "value": ""
+            },
+            {
+              "name": "75 / 25 (two columns)",
+              "value": "layout-75-25"
+            },
+            {
+              "name": "25 / 75 (two columns)",
+              "value": "layout-25-75"
+            },
+            {
+              "name": "40 / 30 / 30 (three columns)",
+              "value": "layout-40-30-30"
+            },
+            {
+              "name": "50 / 25 / 25 (three columns)",
+              "value": "layout-50-25-25"
+            },
+            {
+              "name": "25 / 25 / 50 (three columns)",
+              "value": "layout-25-25-50"
+            },
+            {
+              "name": "25 / 50 / 25 (three columns)",
+              "value": "layout-25-50-25"
+            }
+          ]
+        },
         {
           "component": "text",
           "valueType": "number",
@@ -50,7 +89,14 @@
         "text",
         "image",
         "button",
-        "title"
+        "title",
+        "carousel-hero",
+        "cards-feature",
+        "cards-icon",
+        "video-centered",
+        "carousel-cases",
+        "cta-buttons",
+        "blog-list"
       ]
     }
   ]

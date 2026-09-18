@@ -77,6 +77,60 @@
             "value": "h6"
           }
         ]
+      },
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Alignment",
+        "valueType": "string",
+        "value": "",
+        "options": [
+          {
+            "name": "Left",
+            "value": ""
+          },
+          {
+            "name": "Center",
+            "value": "align-center"
+          },
+          {
+            "name": "Right",
+            "value": "align-right"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "text",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Alignment",
+        "valueType": "string",
+        "value": "",
+        "options": [
+          {
+            "name": "Left",
+            "value": ""
+          },
+          {
+            "name": "Center",
+            "value": "align-center"
+          },
+          {
+            "name": "Right",
+            "value": "align-right"
+          }
+        ]
       }
     ]
   },
@@ -136,8 +190,85 @@
           {
             "name": "Highlight",
             "value": "highlight"
+          },
+          {
+            "name": "Centered",
+            "value": "centered"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "accordion-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "value": "",
+        "label": "Title",
+        "description": "The panel heading shown on the collapsible bar (e.g. a year range)."
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "value": "",
+        "label": "Content",
+        "valueType": "string",
+        "description": "The panel body revealed when the item is expanded."
+      }
+    ]
+  },
+  {
+    "id": "blog-list",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "parent",
+        "label": "Parent Page",
+        "description": "The page whose descendant pages are listed. All pages below this path (any depth) are shown."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "value": "",
+        "label": "Heading",
+        "description": "Optional heading shown above the list (e.g. 'Find something specific')."
+      },
+      {
+        "component": "select",
+        "name": "defaultSort",
+        "value": "newest",
+        "label": "Default Sort",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Newest first",
+            "value": "newest"
+          },
+          {
+            "name": "Oldest first",
+            "value": "oldest"
+          },
+          {
+            "name": "Title (A–Z)",
+            "value": "title-asc"
+          },
+          {
+            "name": "Title (Z–A)",
+            "value": "title-desc"
+          }
+        ]
+      },
+      {
+        "component": "number",
+        "name": "pageSize",
+        "value": "12",
+        "label": "Page Size",
+        "valueType": "number",
+        "description": "How many cards to reveal per 'Load more' click."
       }
     ]
   },
@@ -157,6 +288,48 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "width",
+        "value": "cardw-33",
+        "label": "Card Width",
+        "valueType": "string",
+        "description": "Card width within the row. Cards flow left-to-right and wrap; set widths so a row sums to ~100% (e.g. 50/25/25 = Half + Quarter + Quarter).",
+        "options": [
+          {
+            "name": "Full (100%)",
+            "value": "cardw-100"
+          },
+          {
+            "name": "Three-quarters (75%)",
+            "value": "cardw-75"
+          },
+          {
+            "name": "Two-thirds (66%)",
+            "value": "cardw-66"
+          },
+          {
+            "name": "Half (50%)",
+            "value": "cardw-50"
+          },
+          {
+            "name": "Wide (40%)",
+            "value": "cardw-40"
+          },
+          {
+            "name": "Third (33%)",
+            "value": "cardw-33"
+          },
+          {
+            "name": "Narrow (30%)",
+            "value": "cardw-30"
+          },
+          {
+            "name": "Quarter (25%)",
+            "value": "cardw-25"
+          }
+        ]
       }
     ]
   },
@@ -253,6 +426,44 @@
   {
     "id": "columns",
     "fields": [
+      {
+        "component": "select",
+        "name": "classes",
+        "value": "",
+        "label": "Layout",
+        "valueType": "string",
+        "description": "Column width ratio. 'Equal' splits all columns evenly. When you pick a ratio, set the Columns field to match: 2 for 75/25 and 25/75; 3 for the three-part ratios.",
+        "options": [
+          {
+            "name": "Equal (default)",
+            "value": ""
+          },
+          {
+            "name": "75 / 25 (two columns)",
+            "value": "layout-75-25"
+          },
+          {
+            "name": "25 / 75 (two columns)",
+            "value": "layout-25-75"
+          },
+          {
+            "name": "40 / 30 / 30 (three columns)",
+            "value": "layout-40-30-30"
+          },
+          {
+            "name": "50 / 25 / 25 (three columns)",
+            "value": "layout-50-25-25"
+          },
+          {
+            "name": "25 / 25 / 50 (three columns)",
+            "value": "layout-25-25-50"
+          },
+          {
+            "name": "25 / 50 / 25 (three columns)",
+            "value": "layout-25-50-25"
+          }
+        ]
+      },
       {
         "component": "text",
         "valueType": "number",
