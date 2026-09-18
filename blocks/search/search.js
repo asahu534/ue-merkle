@@ -232,12 +232,22 @@ export default async function decorate(block) {
   const config = readConfig(block);
   block.textContent = '';
 
+  // Blue hero band holds the heading, search bar, and trending topics — matching
+  // the source, where these sit on a deep-navy background and the results/filters
+  // render below on white.
+  const hero = document.createElement('div');
+  hero.classList.add('search-hero');
+  const heroInner = document.createElement('div');
+  heroInner.classList.add('search-hero-inner');
+  hero.append(heroInner);
+  block.append(hero);
+
   // Optional heading.
   if (config.heading) {
     const h = document.createElement('h2');
     h.classList.add('search-heading');
     h.textContent = config.heading;
-    block.append(h);
+    heroInner.append(h);
   }
 
   // --- Search bar (input + suggestions dropdown + clear) ---
@@ -274,7 +284,7 @@ export default async function decorate(block) {
   searchBtn.textContent = 'Search';
 
   bar.append(inputWrap, searchBtn);
-  block.append(bar);
+  heroInner.append(bar);
 
   // --- Trending topics (initial/empty state) ---
   let trendingWrap = null;
@@ -296,13 +306,12 @@ export default async function decorate(block) {
       chips.append(li);
     });
     trendingWrap.append(th, chips);
-    block.append(trendingWrap);
+    heroInner.append(trendingWrap);
   }
 
   // --- Results layout (sidebar + results) ---
   const layout = document.createElement('div');
   layout.classList.add('search-layout');
-  layout.hidden = true;
 
   const sidebar = document.createElement('div');
   sidebar.classList.add('search-sidebar');
@@ -324,7 +333,12 @@ export default async function decorate(block) {
 
   resultsCol.append(count, results, loadMore);
   layout.append(sidebar, resultsCol);
-  block.append(layout);
+
+  // Results/filters render below the hero on a white band.
+  const resultsBand = document.createElement('div');
+  resultsBand.classList.add('search-results-band');
+  resultsBand.append(layout);
+  block.append(resultsBand);
 
   // --- Data ---
   let allRows = [];
@@ -346,9 +360,15 @@ export default async function decorate(block) {
   const render = () => {
     const tokens = tokenize(currentQuery);
     const selected = filterPanel ? filterPanel.getSelection() : [];
-    const filtered = allRows
-      .filter((row) => matchesQuery(row, tokens))
-      .filter((row) => matchesFacets(row, selected));
+    // Query-only matches drive the sidebar's visibility; the facet-filtered set
+    // drives the rendered results.
+    const queryMatches = allRows.filter((row) => matchesQuery(row, tokens));
+    const filtered = queryMatches.filter((row) => matchesFacets(row, selected));
+
+    // Hide the whole filter sidebar when the query itself returns nothing —
+    // there is nothing to filter. It stays visible when a facet selection is
+    // what emptied the results, so the user can still adjust or clear it.
+    sidebar.hidden = queryMatches.length === 0;
 
     results.textContent = '';
     filtered.slice(0, visibleLimit).forEach((row) => results.append(buildCard(row)));
@@ -365,10 +385,10 @@ export default async function decorate(block) {
   // Show results view (hide trending); or restore the trending/empty state.
   const showResults = () => {
     if (trendingWrap) trendingWrap.hidden = true;
-    layout.hidden = false;
+    resultsBand.hidden = false;
   };
   const showEmpty = () => {
-    layout.hidden = true;
+    resultsBand.hidden = true;
     if (trendingWrap) trendingWrap.hidden = false;
   };
 
@@ -449,6 +469,13 @@ export default async function decorate(block) {
   input.addEventListener('input', () => {
     clearBtn.hidden = !input.value;
     clearTimeout(debounce);
+    // Emptying the field (backspace or the native clear control) returns the
+    // block to its initial state: no results shown, trending topics restored.
+    if (!input.value.trim()) {
+      if (filterPanel) filterPanel.clear();
+      runSearch('');
+      return;
+    }
     debounce = setTimeout(renderSuggestions, INPUT_DEBOUNCE);
   });
 
