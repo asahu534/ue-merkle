@@ -256,7 +256,6 @@ header nav .nav-tools .nav-cta a.button.primary:any-link:focus-visible {
 }
 
 /* hover states (placed after all base link rules to keep specificity order) */
-header nav .nav-sections ul > li > a:hover,
 header nav .nav-tools .nav-search > a:hover,
 header nav .nav-tools .nav-lang > ul > li > a:hover {
   color: var(--accent-color);
@@ -307,7 +306,34 @@ header nav .nav-tools .nav-lang > ul > li > a:hover {
     white-space: nowrap;
   }
 
-  /* header nav .nav-tools {
+  /* Primary nav links: red underline that wipes in left-to-right on hover
+   * (matches merkle.com). Text stays white; a 2px accent bar animates via a
+   * ::before that scales from 0 → 1. */
+  header nav .nav-sections ul > li > a {
+    position: relative;
+  }
+
+  header nav .nav-sections ul > li > a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent-color);
+    transform: scaleX(0);
+    transform-origin: right bottom;
+    transition: transform 0.25s ease-out;
+  }
+
+  header nav .nav-sections ul > li > a:hover::before,
+  header nav .nav-sections ul > li > a:focus-visible::before {
+    transform: scaleX(1);
+    transform-origin: left bottom;
+  }
+
+  /*
+  header nav .nav-tools {
     margin-left: 40px;
   } */
 
@@ -325,12 +351,6 @@ header nav .nav-tools .nav-lang > ul > li > a:hover {
   header nav .nav-tools .nav-cta,
   header nav .nav-tools .nav-cta a.button.primary:any-link {
     width: auto;
-  }
-
-  header nav .nav-tools .nav-cta a.button.primary:any-link {
-    background-color: transparent;
-    color: #fff;
-    border: 2px solid #dd3039;
   }
 
   /* language dropdown as absolute panel on desktop */

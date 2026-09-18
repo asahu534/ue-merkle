@@ -52,10 +52,6 @@ footer .footer a:any-link {
   text-decoration: none;
 }
 
-footer .footer a:hover {
-  text-decoration: underline;
-}
-
 /* brand logo */
 footer .footer-brand img {
   width: 32px;
@@ -79,7 +75,30 @@ footer .footer-links ul {
 }
 
 footer .footer-links a:any-link {
+  position: relative;
   font-size: 18px;
+}
+
+/* Legal/utility links: blue underline that wipes in left-to-right on hover
+ * (matches merkle.com). Text stays white; a 2px accent bar animates via a
+ * ::before that scales from 0 → 1. */
+footer .footer-links a:any-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background-color: #0391f2;
+  transform: scaleX(0);
+  transform-origin: right bottom;
+  transition: transform 0.25s ease-out;
+}
+
+footer .footer-links a:any-link:hover::before,
+footer .footer-links a:any-link:focus-visible::before {
+  transform: scaleX(1);
+  transform-origin: left bottom;
 }
 
 /* social icons — red-outlined rounded squares with red glyphs */
