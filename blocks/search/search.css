@@ -10,6 +10,7 @@
   --search-navy: #040e4b;
   --search-eyebrow: #0391f2;
   --search-tile-bg: #f2f2f4;
+  --search-tile-bg-hover: #e5e5e9;
 }
 
 /* --- Blue hero band (full-bleed) --- */
@@ -301,6 +302,12 @@
   padding: 24px;
   border-radius: 24px;
   background: var(--search-tile-bg);
+  transition: background-color 0.25s ease-in-out;
+}
+
+/* Source hover effect: the tile background darkens slightly. */
+.search .search-result:hover {
+  background: var(--search-tile-bg-hover);
 }
 
 .search .search-result-label {
@@ -334,10 +341,6 @@
   z-index: 1;
   overflow: hidden;
   text-indent: -9999px;
-}
-
-.search .search-result:hover .search-result-title {
-  color: var(--search-eyebrow);
 }
 
 .search .search-load-more {
