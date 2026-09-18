@@ -556,6 +556,43 @@
     ]
   },
   {
+    "id": "search",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "value": "",
+        "label": "Heading",
+        "description": "Optional heading shown above the search box."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "placeholder",
+        "value": "What can we help you search for?",
+        "label": "Placeholder",
+        "description": "Placeholder text shown inside the empty search box."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "trending",
+        "value": "Agentic AI, B2B Transformation, Modern CRM & Loyalty, Experience Design, Analytics & Insights, Scaling Enterprise Content",
+        "label": "Trending Topics",
+        "description": "Comma-separated quick-search chips shown before a search is run."
+      },
+      {
+        "component": "number",
+        "name": "pageSize",
+        "value": "6",
+        "label": "Results Per Page",
+        "valueType": "number",
+        "description": "How many results to reveal per 'Load more' click."
+      }
+    ]
+  },
+  {
     "id": "video-centered",
     "fields": [
       {
