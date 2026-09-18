@@ -1,5 +1,7 @@
 /* Accordion — collapsible panels (e.g. year-grouped acquisitions). Each item is
- * a full-width header button with a chevron; clicking reveals its panel. */
+ * a full-width header button with a plus/minus icon; clicking reveals its panel.
+ * Styling mirrors the source: 2px light-grey bottom dividers, bold 20px black
+ * titles, a square plus icon on the right that becomes a minus when expanded. */
 
 .accordion {
   max-width: 1264px;
@@ -8,11 +10,8 @@
 }
 
 .accordion .accordion-item {
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.accordion .accordion-item:first-child {
-  border-top: 1px solid #e0e0e0;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e5e5e9;
 }
 
 .accordion .accordion-item-header {
@@ -26,7 +25,7 @@
   gap: 16px;
   width: 100%;
   margin: 0;
-  padding: 20px 8px;
+  padding: 16px 0 0;
   border: 0;
   background: transparent;
   font-family: inherit;
@@ -34,33 +33,48 @@
   font-weight: 700;
   line-height: 1.2;
   text-align: left;
-  color: inherit;
+  color: #000;
   cursor: pointer;
 }
 
-.accordion .accordion-item-button:hover,
-.accordion .accordion-item-button:focus-visible {
-  color: var(--accent-color);
-}
-
-/* Chevron indicator (rotates when open) */
-.accordion .accordion-item-button::after {
-  content: '';
+/* Plus icon (right-aligned). Two bars form the plus; the vertical bar is hidden
+ * when expanded, leaving a minus. */
+.accordion .accordion-item-button-icon {
+  position: relative;
   flex: 0 0 auto;
-  width: 10px;
-  height: 10px;
-  border: 2px solid currentcolor;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  transition: transform 0.2s ease;
+  width: 16px;
+  height: 16px;
 }
 
-.accordion .accordion-item-button[aria-expanded='true']::after {
-  transform: rotate(-135deg);
+.accordion .accordion-item-button-icon::before,
+.accordion .accordion-item-button-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: currentcolor;
+  transform: translate(-50%, -50%);
+}
+
+.accordion .accordion-item-button-icon::before {
+  width: 16px;
+  height: 2px;
+}
+
+.accordion .accordion-item-button-icon::after {
+  width: 2px;
+  height: 16px;
+}
+
+.accordion .accordion-item-button[aria-expanded='true'] .accordion-item-button-icon::after {
+  display: none;
 }
 
 .accordion .accordion-item-panel {
-  padding: 0 8px 20px;
+  padding: 8px 0 0;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #000;
 }
 
 .accordion .accordion-item-panel[hidden] {
@@ -69,5 +83,4 @@
 
 .accordion .accordion-item-panel p {
   margin: 0 0 8px;
-  line-height: 1.6;
 }

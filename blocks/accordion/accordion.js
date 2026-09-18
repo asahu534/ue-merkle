@@ -30,7 +30,16 @@ export default function decorate(block) {
     button.classList.add('accordion-item-button');
     button.setAttribute('aria-expanded', 'false');
     button.setAttribute('aria-controls', id);
-    button.textContent = titleCell ? titleCell.textContent.trim() : '';
+
+    const label = document.createElement('span');
+    label.classList.add('accordion-item-button-label');
+    label.textContent = titleCell ? titleCell.textContent.trim() : '';
+
+    const icon = document.createElement('span');
+    icon.classList.add('accordion-item-button-icon');
+    icon.setAttribute('aria-hidden', 'true');
+
+    button.append(label, icon);
     header.append(button);
 
     // Panel body.
