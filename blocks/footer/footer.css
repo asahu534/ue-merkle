@@ -9,14 +9,20 @@ footer {
 }
 
 footer .footer {
-  max-width: none;
-  margin: 0;
+  max-width: 1440px;
+  margin: 0 auto;
   padding: 48px 20px 40px;
   display: flex;
   flex-direction: column;
   gap: 32px;
   position: relative;
   z-index: 1;
+}
+
+footer .footer > div {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
 }
 
 /* Decorative outlined blue "M" on the right (purely decorative brand chrome) */
