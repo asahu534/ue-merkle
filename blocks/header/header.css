@@ -189,16 +189,16 @@ header nav .nav-tools .nav-drop.nav-lang, header nav .nav-tools .nav-cta {
   display: none;
 }
 
+header nav .nav-tools .nav-cta {
+  width: 100%;
+}
+
 header nav[aria-expanded='true'] .nav-tools .nav-cta {
   display: block;
 }
 
 header nav[aria-expanded='true'] .nav-tools .nav-search {
   display: none;
-}
-
-header nav .nav-tools .nav-cta {
-  width: 100%;
 }
 
 header nav .nav-tools .nav-lang > a {
@@ -239,9 +239,9 @@ header nav .nav-tools .nav-cta a.button.primary:any-link {
   width: 100%;
   justify-content: center;
   padding: 14px 20px;
-  background-color: #ffffff;
-  color: #000000;
-  border: 2px solid #ffffff;
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #fff;
   border-radius: 16px;
   font-weight: 700;
   text-transform: uppercase;
@@ -329,7 +329,7 @@ header nav .nav-tools .nav-lang > ul > li > a:hover {
 
   header nav .nav-tools .nav-cta a.button.primary:any-link {
     background-color: transparent;
-    color: #ffffff;
+    color: #fff;
     border: 2px solid #dd3039;
   }
 
