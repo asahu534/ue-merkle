@@ -249,7 +249,8 @@ button.button.secondary:focus-visible {
 }
 
 /* On dark sections the secondary button text is white */
-main .section.dark a.button.secondary:any-link {
+main .section.dark a.button.secondary:any-link,
+main .section.theme-dark a.button.secondary:any-link {
   color: #fff;
 }
 
@@ -360,8 +361,11 @@ main .align-right {
   text-align: right;
 }
 
-/* dark sections — Merkle blue-black background with light text */
-main .section.dark {
+/* dark sections — Merkle blue-black background with light text.
+ * `.dark` is the internal/migration class; `.theme-dark` is the authorable
+ * Section "Style" → Dark option. Both share the same treatment. */
+main .section.dark,
+main .section.theme-dark {
   background-color: var(--dark-color);
   color: #fff;
   margin: 0;
@@ -373,22 +377,32 @@ main .section.dark h2,
 main .section.dark h3,
 main .section.dark h4,
 main .section.dark h5,
-main .section.dark h6 {
+main .section.dark h6,
+main .section.theme-dark h1,
+main .section.theme-dark h2,
+main .section.theme-dark h3,
+main .section.theme-dark h4,
+main .section.theme-dark h5,
+main .section.theme-dark h6 {
   color: #fff;
 }
 
-main .section.dark a:any-link {
+main .section.dark a:any-link,
+main .section.theme-dark a:any-link {
   color: #fff;
 }
 
 /* Primary buttons keep black text on dark sections (white fill needs dark text);
  * the generic dark-section white-link rule above must not override them. */
-main .section.dark a.button.primary:any-link {
+main .section.dark a.button.primary:any-link,
+main .section.theme-dark a.button.primary:any-link {
   color: #000;
 }
 
 main .section.dark a.button.primary:any-link:hover,
-main .section.dark a.button.primary:any-link:focus-visible {
+main .section.dark a.button.primary:any-link:focus-visible,
+main .section.theme-dark a.button.primary:any-link:hover,
+main .section.theme-dark a.button.primary:any-link:focus-visible {
   color: #fff;
 }
 

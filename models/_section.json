@@ -37,6 +37,10 @@
             {
               "name": "Centered",
               "value": "centered"
+            },
+            {
+              "name": "Dark",
+              "value": "theme-dark"
             }
           ]
         }
