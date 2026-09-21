@@ -4,8 +4,8 @@
  * as the closest free geometric-sans fallback.
  */
 :root {
-  --heading-font-family: "Montserrat", "proxima-nova", sans-serif;
-  --body-font-family: "Montserrat", "proxima-nova", sans-serif;
+  --heading-font-family:  "proxima-nova", sans-serif;
+  --body-font-family:  "proxima-nova", sans-serif;
   --background-color: #fff;
   --text-color: #000;
   --link-color: #000;

@@ -1,22 +1,25 @@
 /* Merkle footer — solid black, white text. Mobile-first. */
 
 footer {
-  background-color: #000;
-  color: #fff;
-  font-size: var(--body-font-size-xs);
-  position: relative;
-  overflow: hidden;
+    background-color: #000;
+    color: #fff;
+    font-size: var(--body-font-size-xs);
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-wrapper {
+    padding: 32px 30px;
 }
 
 footer .footer {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 48px 20px 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  position: relative;
-  z-index: 1;
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    position: relative;
+    z-index: 1;
 }
 
 footer .footer > div {
@@ -25,164 +28,180 @@ footer .footer > div {
     gap: 28px;
 }
 
-/* Decorative outlined blue "M" on the right (purely decorative brand chrome) */
+/* Decorative outlined blue "M" */
 footer .footer-decoration {
-  position: absolute;
-  top: 40px;
-  right: 0;
-  width: 420px;
-  max-width: 45%;
-  height: calc(100% - 40px);
-  z-index: 0;
-  pointer-events: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 400px;
+    max-width: 60%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    display: none;
 }
 
 footer .footer-decoration svg {
-  width: 100%;
-  height: 100%;
-  display: block;
+    width: 100%;
+    height: 100%;
+    display: none;
 }
 
 footer .footer p {
-  margin: 0;
+    margin: 0;
 }
 
 footer .footer a:any-link {
-  color: #fff;
-  text-decoration: none;
+    color: #fff;
+    text-decoration: none;
 }
 
-/* brand logo */
+/* Brand logo */
 footer .footer-brand img {
-  width: 32px;
-  height: auto;
-  display: block;
+    width: 32px;
+    height: auto;
+    display: block;
+    cursor: pointer;
 }
 
-/* legal / utility links — two columns, filled column-first to match source
- * (left: Legal Terms, Privacy Policy, Your Privacy Choices, Disclosure Policy;
- *  right: Cookie Notice, Email Preferences, Sitemap). */
+/* Legal / utility links */
 footer .footer-links ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(4, auto);
-  grid-auto-flow: column;
-  gap: 24px 48px;
-  max-width: 640px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: 640px;
 }
 
 footer .footer-links a:any-link {
-  position: relative;
-  font-size: 18px;
+    position: relative;
+    font-size: 18px;
 }
 
-/* Legal/utility links: blue underline that wipes in left-to-right on hover
- * (matches merkle.com). Text stays white; a 2px accent bar animates via a
- * ::before that scales from 0 → 1. */
+/* Legal / utility link hover */
 footer .footer-links a:any-link::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -4px;
-  width: 100%;
-  height: 2px;
-  background-color: #0391f2;
-  transform: scaleX(0);
-  transform-origin: right bottom;
-  transition: transform 0.25s ease-out;
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 2px;
+    background-color: #0391f2;
+    transform: scaleX(0);
+    transform-origin: right bottom;
+    transition: transform 0.25s ease-out;
 }
 
 footer .footer-links a:any-link:hover::before,
 footer .footer-links a:any-link:focus-visible::before {
-  transform: scaleX(1);
-  transform-origin: left bottom;
+    transform: scaleX(1);
+    transform-origin: left bottom;
 }
 
-/* social icons — red-outlined rounded squares with red glyphs */
+/* Social icons */
 footer .footer-social ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  gap: 16px;
-  align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 16px;
+    align-items: center;
 }
 
 footer .footer-social a:any-link {
-  border: 2px solid #dd3039;
-  border-radius: 8px;
-  box-sizing: border-box;
-  display: block;
-  height: 40px;
-  position: relative;
-  width: 42px;
-  color: var(--accent-color, #dd3039);
-  transition: background-color 0.2s, color 0.2s;
+    border: 2px solid #dd3039;
+    border-radius: 8px;
+    box-sizing: border-box;
+    display: block;
+    height: 40px;
+    position: relative;
+    width: 42px;
+    color: #fff;
+    transition:
+        background-color 0.2s,
+        color 0.2s;
 }
 
 footer .footer-social a:hover {
-  background-color: var(--accent-color, #dd3039);
-  color: #fff;
-  text-decoration: none;
+    background-color: var(--accent-color, #dd3039);
+    color: #fff;
+    text-decoration: none;
 }
 
 footer .footer-social svg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    transform: translate(-50%, -50%);
 }
 
 /* Texas data-broker disclosure */
 footer .footer-notice p {
-  font-size: 12px;
-  line-height: 1.5;
-  color: rgb(255 255 255 / 70%);
-  max-width: 900px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #fff;
+    max-width: 900px;
 }
 
 footer .footer-notice a:any-link {
-  color: rgb(255 255 255 / 70%);
-  text-decoration: underline;
+    color: rgb(255 255 255 / 70%);
+    text-decoration: underline;
 }
 
-/* dentsu logo + copyright */
+/* Dentsu logo + copyright */
 footer .footer-legal {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 16px;
 }
 
 footer .footer-legal img {
-  width: 120px;
-  height: auto;
+    width: 120px;
+    height: auto;
+    cursor: pointer;
 }
 
 footer .footer-legal p:last-child {
-  font-size: 14px;
-  color: rgb(255 255 255 / 70%);
+    font-size: 12px;
+    color: rgb(255 255 255 / 70%);
 }
 
-/* ===== Desktop ===== */
-@media (width >= 900px) {
-  footer .footer {
-    padding: 64px 32px 48px;
-    gap: 28px;
-  }
+/* Desktop */
+@media screen and (width >= 900px) {
+    footer .footer {
+        gap: 28px;
+    }
 
-  footer .footer-links ul {
-    flex-flow: row wrap;
-    gap: 12px 32px;
-  }
+    footer .footer-legal {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
 
-  footer .footer-legal {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
+/* Large desktop */
+@media screen and (width >= 1280px) {
+    footer .footer-notice p {
+        width: 50%;
+    }
+
+    footer .footer-decoration {
+        display: block;
+    }
+
+    footer .footer-decoration svg {
+        display: block;
+    }
+
+    footer .footer-links ul {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: repeat(4, auto);
+        grid-auto-flow: column;
+        gap: 24px 48px;
+    }
 }
