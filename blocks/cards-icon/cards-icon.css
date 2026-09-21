@@ -13,7 +13,7 @@
   line-height: 24px;
 }
 
-@media (max-width: 1279px) {
+@media (width <= 1279px) {
   .cards-icon-container > div > h2 {
     font-size: 44px;
     line-height: 40px;
@@ -25,6 +25,12 @@
   }
 }
 
+.cards-icon .cards-icon-card-body p {
+  margin: 48px 0 16px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+}
 
 
 .cards-icon-container > div:nth-child(3) > p:nth-child(3) {
@@ -46,11 +52,6 @@
   text-transform: uppercase;
 }
 
-.cards-icon-container > div:nth-child(3) > p:nth-of-type(2) > a:nth-of-type(1):hover{
-  background-color: #0328d1!important;
-  color: #fff !important;
-  transition: background-color 0.3s, color 0.3s;
-}
 
 .cards-icon-container > div:nth-child(3) > p:nth-of-type(2) > a:nth-of-type(2){
   border-radius: 16px;
@@ -62,6 +63,12 @@
   background-color: black;
   border:2px solid #dd3039;
   text-transform: uppercase;
+}
+
+.cards-icon-container > div:nth-child(3) > p:nth-of-type(2) > a:nth-of-type(1):hover{
+  background-color: #0328d1!important;
+  color: #fff !important;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .cards-icon-container > div:nth-child(3) > p:nth-of-type(2) > a:nth-of-type(2):hover{
@@ -116,12 +123,6 @@
 }
 
 /* Description — source p: 18px / 24px, weight 400 */
-.cards-icon .cards-icon-card-body p {
-  margin: 48px 0 16px;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 24px;
-}
 
  .cards-icon-container > div:first-child {
   margin-bottom: 56px;
@@ -144,7 +145,7 @@
   }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (width >= 1280px) {
   .cards-icon-container > div:nth-child(3) > p:nth-child(3) {
   margin-top:32px;
   display: flex !important;
@@ -154,7 +155,7 @@
 }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (width >= 1280px) {
   .cards-icon-container > div:first-child {
     width: 600px;
     margin: 0 auto;
@@ -162,7 +163,7 @@
   }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (width >= 1280px) {
  .cards-icon-container > div:nth-child(3) {
   width: 600px;
   margin: 0 auto;
