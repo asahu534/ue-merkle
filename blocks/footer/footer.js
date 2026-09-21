@@ -14,9 +14,22 @@ function iconFor(href) {
 
 // Decorative outlined "M" brand mark shown on the right of the footer (source design).
 // Purely decorative — hidden from assistive tech.
-const DECORATION_M = `<svg viewBox="0 0 200 220" fill="none" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMax meet">
-  <path d="M4 216 V16 L100 120 L196 16 V216" stroke="#1f6bff" stroke-width="2" fill="none" stroke-linejoin="round"/>
-</svg>`;
+const DECORATION_M = `<svg width="499" height="460" viewBox="0 0 499 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M446.365 1H498V477H400.2V194.027V191.583L398.487 193.326L249.5 344.867L100.513 193.326L98.8 191.583V194.027V477H1V1H52.639L250.05 201.795L250.768 202.525L251.481 201.791L446.365 1Z" stroke="url(#paint0_linear_23899_2985)" stroke-width="2"/>
+<path d="M446.365 1H498V477H400.2V194.027V191.583L398.487 193.326L249.5 344.867L100.513 193.326L98.8 191.583V194.027V477H1V1H52.639L250.05 201.795L250.768 202.525L251.481 201.791L446.365 1Z" stroke="url(#paint1_linear_23899_2985)" stroke-width="2"/>
+<defs>
+<linearGradient id="paint0_linear_23899_2985" x1="16.5" y1="395.5" x2="439.271" y2="-11.2179" gradientUnits="userSpaceOnUse">
+<stop/>
+<stop offset="0.42913" stop-color="#041677"/>
+<stop offset="1" stop-color="#0391F2"/>
+</linearGradient>
+<linearGradient id="paint1_linear_23899_2985" x1="390.5" y1="289.5" x2="455" y2="412" gradientUnits="userSpaceOnUse">
+<stop stop-opacity="0"/>
+<stop offset="1"/>
+</linearGradient>
+</defs>
+</svg>
+`;
 
 /**
  * Fetch the footer fragment. Metadata-independent dual-fetch:
