@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "projectType": "xwalk"
+  },
+  "templates": [
+    {
+      "name": "about-us",
+      "urls": [
+        "https://www.merkle.com/en/about-us/history.html"
+      ],
+      "representativeUrl": "https://www.merkle.com/en/about-us/history.html",
+      "description": "Merkle About Us / History — title + intro, hero image, narrative text, timeline image, acquisitions accordion",
+      "urlPattern": "/en/about-us",
+      "blocks": [
+        {
+          "name": "accordion",
+          "instances": [
+            ".accordion.panelcontainer"
+          ]
+        }
+      ],
+      "sections": [
+        { "id": "s1", "name": "Hero", "selector": ["#container-2fad844c5c > div.aem-Grid > div.teaser.cmp-teaser-layout-media.mer-full-bleed.cmp-teaser-dark:nth-of-type(1)"], "style": "dark", "blocks": [], "defaultContent": ["title","text","image"] },
+        { "id": "s2", "name": "History", "selector": ["#container-2fad844c5c > div.aem-Grid > div.text.aem-GridColumn:nth-of-type(2)"], "style": null, "blocks": [], "defaultContent": ["text"] },
+        { "id": "s3", "name": "Through the years", "selector": ["#container-2fad844c5c > div.aem-Grid > div.teaser.cmp-teaser-layout-medium.top-spacer-l:nth-of-type(3)"], "style": null, "blocks": [], "defaultContent": ["title","text","image"] },
+        { "id": "s4", "name": "Our growing family", "selector": ["#container-2fad844c5c > div.aem-Grid > div.accordion.panelcontainer:nth-of-type(6)"], "style": null, "blocks": ["accordion"], "defaultContent": [] }
+      ]
+    }
+  ]
+}

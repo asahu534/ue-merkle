@@ -2,14 +2,14 @@
   "type": "xwalk",
   "sites": {
     "ue-merkle": {
+      "libraryUrl": "https://main--sta-xwalk-boilerplate--aemysites.aem.page/tools/sidekick/library.json",
       "previewOrg": "asahu534",
       "previewSite": "ue-merkle",
       "contentHostUrl": "author-p24773-e1522172.adobeaemcloud.com",
       "aemSitePath": "/content/universal-editor-merkle",
       "aemAssetsFolderPath": "/content/dam/universal-editor-merkle",
       "aemSiteName": "universal-editor-merkle",
-      "aemSiteTitle": "Merkle",
-      "libraryUrl": "https://main--sta-xwalk-boilerplate--aemysites.aem.page/tools/sidekick/library.json"
+      "aemSiteTitle": "Merkle"
     }
   }
 }

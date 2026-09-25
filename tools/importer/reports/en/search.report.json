@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "url": "https://www.merkle.com/en/search.html",
+  "path": "en/search",
+  "timestamp": "2026-09-18T09:01:06.647Z",
+  "title": "Search",
+  "template": "search",
+  "blocks": [
+    "search"
+  ]
+}
