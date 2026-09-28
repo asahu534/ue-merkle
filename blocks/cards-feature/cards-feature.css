@@ -17,7 +17,6 @@
 
 
 
-
 .cards-feature-container > div > p {
   font-size: 21px;
   font-weight: 400;
@@ -52,6 +51,7 @@
 }
 
 .cards-feature > ul > li {
+    cursor: pointer;
   position: relative; /* positioning context for the full-bleed image */
   overflow: hidden;
   border-radius: 16px;
@@ -70,12 +70,6 @@
   line-height: 0;
 }
 
-.cards-feature .cards-feature-card-image img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 
 /* Text overlays the image; a top-anchored dark gradient keeps it legible. */
 .cards-feature .cards-feature-card-body {
@@ -84,7 +78,8 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 24px;
+  height: 89%;
+  padding: 24px 16px;
   background: linear-gradient(180deg, rgb(0 0 0 / 75%) 0%, rgb(0 0 0 / 45%) 40%, rgb(0 0 0 / 0%) 100%);
 }
 
@@ -113,7 +108,7 @@
 
 /* "Learn more" (last link paragraph) pushes to the bottom of the text area */
 .cards-feature .cards-feature-card-body p:last-child {
-  margin: 8px 0 0;
+  margin-top: auto; /* pushes the last paragraph to the bottom */
 }
 
 .cards-feature .cards-feature-card-body a:any-link {
@@ -171,5 +166,130 @@
 
   .cards-feature > ul > li.cardw-25 {
     flex-basis: calc(25% - 18px);
+  }
+}
+
+
+.cards-feature .cards-feature-card-body p:last-child > a {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+
+/* Animated underline */
+.cards-feature .cards-feature-card-body p:last-child > a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background-color: #0391f2;
+  transition: width 0.3s ease;
+}
+
+/* Hover anywhere on the card */
+.cards-feature > ul > li:hover
+.cards-feature-card-body p:last-child > a::after {
+  width: 100%;
+}
+
+.cards-feature .cards-feature-card-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* Second and third card images */
+.cards-feature > ul > li:nth-child(2) .cards-feature-card-image img,
+.cards-feature > ul > li:nth-child(3) .cards-feature-card-image img {
+  transform: scale(1);
+  transition: transform 0.5s ease;
+}
+
+/* Zoom in when hovering over the card */
+.cards-feature > ul > li:nth-child(2):hover .cards-feature-card-image img,
+.cards-feature > ul > li:nth-child(3):hover .cards-feature-card-image img {
+  transform: scale(1.05);
+}
+
+
+
+/* =========================================
+   Mobile Cards Carousel
+   ========================================= */
+
+@media (width <= 768px) {
+  .cards-feature {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .cards-feature > ul {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 16px;
+    overflow: auto hidden;
+
+    /* Smooth touch scrolling */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+
+    /* Snap cards while scrolling */
+    scroll-snap-type: x mandatory;
+
+    /* Remove default spacing */
+    margin: 0;
+    padding: 0 16px 10px;
+
+    /* Hide scrollbar */
+    scrollbar-width: none;
+  }
+
+  .cards-feature > ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 2.5 cards visible */
+  .cards-feature > ul > li {
+    flex: 0 0 calc((100% - 24px) / 2.5);
+    min-width: 0;
+    scroll-snap-align: start;
+    min-height: 380px;
+    cursor: pointer;
+  }
+
+  /* Override cardw-* desktop widths */
+  .cards-feature > ul > li.cardw-100,
+  .cards-feature > ul > li.cardw-75,
+  .cards-feature > ul > li.cardw-66,
+  .cards-feature > ul > li.cardw-50,
+  .cards-feature > ul > li.cardw-40,
+  .cards-feature > ul > li.cardw-33,
+  .cards-feature > ul > li.cardw-30,
+  .cards-feature > ul > li.cardw-25 {
+    flex-basis: calc((100% - 24px) / 2.5);
+  }
+}
+
+
+/* =========================================
+   Small Mobile — approximately 1.5 cards
+   ========================================= */
+
+@media (width <= 480px) {
+  .cards-feature > ul > li,
+  .cards-feature > ul > li.cardw-100,
+  .cards-feature > ul > li.cardw-75,
+  .cards-feature > ul > li.cardw-66,
+  .cards-feature > ul > li.cardw-50,
+  .cards-feature > ul > li.cardw-40,
+  .cards-feature > ul > li.cardw-33,
+  .cards-feature > ul > li.cardw-30,
+  .cards-feature > ul > li.cardw-25 {
+    flex-basis: calc((100% - 8px) / 1.5);
   }
 }
