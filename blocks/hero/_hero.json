@@ -40,6 +40,36 @@
           "value": "",
           "label": "Text",
           "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "valueType": "string",
+          "name": "video",
+          "label": "Background Video (optional)",
+          "description": "DAM MP4. Plays muted and looped behind the text; the image is used as poster and fallback."
+        },
+        {
+          "component": "multiselect",
+          "name": "classes",
+          "value": "",
+          "label": "Options",
+          "valueType": "string",
+          "description": "Leave empty for the default: image/video full-bleed behind the text.",
+          "options": [
+            {
+              "name": "Layout",
+              "children": [
+                {
+                  "name": "Split: image right",
+                  "value": "splitright"
+                },
+                {
+                  "name": "Split: image left",
+                  "value": "splitleft"
+                }
+              ]
+            }
+          ]
         }
       ]
     }

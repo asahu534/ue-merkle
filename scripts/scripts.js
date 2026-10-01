@@ -9,6 +9,7 @@ import {
   loadSection,
   loadSections,
   loadCSS,
+  toClassName,
 } from './aem.js';
 
 // --- BEGIN DM/Scene7 auto-block (excat-generated) ---
@@ -329,6 +330,18 @@ export function decorateButtons(main) {
 }
 
 /**
+ * Applies the Section "Anchor ID" (section metadata `anchor`, exposed as
+ * data-anchor) as the section's id so in-page links like #insights work.
+ * @param {Element} main The main element
+ */
+function decorateSectionAnchors(main) {
+  main.querySelectorAll('.section[data-anchor]').forEach((section) => {
+    const id = toClassName(section.dataset.anchor);
+    if (id && !document.getElementById(id)) section.id = id;
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -337,6 +350,7 @@ export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
+  decorateSectionAnchors(main);
   decorateBlocks(main);
   decorateButtons(main);
 }

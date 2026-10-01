@@ -15,6 +15,9 @@ export default function decorate(block) {
     ul.append(li);
   });
   ul.querySelectorAll('picture > img').forEach((img) => {
+    // Only EDS-hosted images take the optimisation params; external placeholders
+    // (e.g. Scene7 logos with transparency) are left untouched.
+    if (new URL(img.src, window.location.href).origin !== window.location.origin) return;
     const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);

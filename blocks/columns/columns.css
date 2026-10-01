@@ -104,3 +104,117 @@
     flex-basis: 50%;
   }
 }
+
+/* ===== Card styles (teaser panels): rounded panel, image fills its column ===== */
+.columns.darkcard > div,
+.columns.lightcard > div {
+  overflow: hidden;
+  border-radius: 24px;
+  gap: 0;
+}
+
+.columns.darkcard > div {
+  background-color: #000;
+  color: #fff;
+}
+
+.columns.lightcard > div {
+  background-color: #d6d6df;
+  color: #000;
+}
+
+/* Stacked teaser cards: 40px apart (source spacing) */
+.columns.darkcard,
+.columns.lightcard {
+  margin-bottom: 40px;
+}
+
+.columns.darkcard > div > div:not(.columns-img-col),
+.columns.lightcard > div > div:not(.columns-img-col) {
+  padding: 32px 24px;
+}
+
+.columns.darkcard h1,
+.columns.darkcard h2,
+.columns.darkcard h3,
+.columns.darkcard h4 {
+  color: #fff;
+}
+
+/* Eyebrow (paragraph right before the heading) */
+.columns.darkcard p:has(+ h2, + h3),
+.columns.lightcard p:has(+ h2, + h3) {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  text-transform: uppercase;
+  color: var(--muted-text-color);
+}
+
+.columns.lightcard p:has(+ h2, + h3) {
+  color: #6b6b7b;
+}
+
+.columns.darkcard h2,
+.columns.lightcard h2 {
+  margin: 0;
+  font-size: 32px;
+  line-height: 38px;
+}
+
+.columns.darkcard a:any-link {
+  color: #fff;
+}
+
+/* The image column bleeds to the panel edge — override the ratio-tile treatment */
+.columns.darkcard .columns-img-col img,
+.columns.lightcard .columns-img-col img {
+  height: 100%;
+  aspect-ratio: auto;
+  border-radius: 0;
+  object-fit: cover;
+}
+
+@media (width >= 900px) {
+  /* Cards: columns stretch to the panel height; text vertically centred */
+  .columns.darkcard > div,
+  .columns.lightcard > div {
+    align-items: stretch;
+    min-height: 552px;
+  }
+
+  .columns.darkcard > div > div:not(.columns-img-col),
+  .columns.lightcard > div > div:not(.columns-img-col) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 64px;
+  }
+
+  /* 60 / 40 and 40 / 60 */
+  .columns.ratio6040 > div > div:first-child,
+  .columns.ratio4060 > div > div:nth-child(2) {
+    flex-basis: 60%;
+  }
+
+  .columns.ratio6040 > div > div:nth-child(2),
+  .columns.ratio4060 > div > div:first-child {
+    flex-basis: 40%;
+  }
+
+  .columns.darkcard h2,
+  .columns.lightcard h2 {
+    font-size: 44px;
+    line-height: 48px;
+  }
+
+  /* Image position: swap the image column without re-authoring */
+  .columns.imageright > div > .columns-img-col {
+    order: 2;
+  }
+
+  .columns.imageleft > div > .columns-img-col {
+    order: -1;
+  }
+}

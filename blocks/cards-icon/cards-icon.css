@@ -33,7 +33,7 @@
 }
 
 
-.cards-icon-container > div:nth-child(3) > p:nth-child(3) {
+.cards-icon-container > .default-content-wrapper:nth-child(3) > p:nth-child(3) {
   margin-top:32px;
   display: flex !important;
   flex-direction: column !important;
@@ -41,7 +41,7 @@
   justify-content: center !important;
 }
 
-.cards-icon-container > div:nth-child(3) > p:nth-of-type(2) > a:nth-of-type(1) {
+.cards-icon-container > .default-content-wrapper:nth-child(3) > p:nth-of-type(2) > a:nth-of-type(1) {
   border-radius: 16px;
   padding: 15px 16px;
   text-decoration: none;
@@ -53,7 +53,7 @@
 }
 
 
-.cards-icon-container > div:nth-child(3) > p:nth-of-type(2) > a:nth-of-type(2){
+.cards-icon-container > .default-content-wrapper:nth-child(3) > p:nth-of-type(2) > a:nth-of-type(2){
   border-radius: 16px;
   padding: 15px 16px;
   text-decoration: none;
@@ -65,13 +65,13 @@
   text-transform: uppercase;
 }
 
-.cards-icon-container > div:nth-child(3) > p:nth-of-type(2) > a:nth-of-type(1):hover{
+.cards-icon-container > .default-content-wrapper:nth-child(3) > p:nth-of-type(2) > a:nth-of-type(1):hover{
   background-color: #0328d1!important;
   color: #fff !important;
   transition: background-color 0.3s, color 0.3s;
 }
 
-.cards-icon-container > div:nth-child(3) > p:nth-of-type(2) > a:nth-of-type(2):hover{
+.cards-icon-container > .default-content-wrapper:nth-child(3) > p:nth-of-type(2) > a:nth-of-type(2):hover{
  background: #dd3039 !important;
  color: #fff !important;
   transition: background-color 0.3s, color 0.3s;
@@ -124,11 +124,11 @@
 
 /* Description — source p: 18px / 24px, weight 400 */
 
- .cards-icon-container > div:first-child {
+ .cards-icon-container > .default-content-wrapper:first-child {
   margin-bottom: 56px;
  }
 
- .cards-icon-container > div:nth-child(3) {
+ .cards-icon-container > .default-content-wrapper:nth-child(3) {
   margin-bottom: 56px;
 
  }
@@ -146,7 +146,7 @@
 }
 
 @media screen and (width >= 1280px) {
-  .cards-icon-container > div:nth-child(3) > p:nth-child(3) {
+  .cards-icon-container > .default-content-wrapper:nth-child(3) > p:nth-child(3) {
   margin-top:32px;
   display: flex !important;
   flex-direction: row !important;
@@ -156,7 +156,7 @@
 }
 
 @media screen and (width >= 1280px) {
-  .cards-icon-container > div:first-child {
+  .cards-icon-container > .default-content-wrapper:first-child {
     width: 600px;
     margin: 0 auto;
     margin-bottom: 48px !important;
@@ -164,9 +164,139 @@
 }
 
 @media screen and (width >= 1280px) {
- .cards-icon-container > div:nth-child(3) {
+ .cards-icon-container > .default-content-wrapper:nth-child(3) {
   width: 600px;
   margin: 0 auto;
   margin-bottom: 48px !important;
 }
 }
+
+/* ===== Options (opt-in via block classes; the default look above is unchanged) =====
+ * The variant classes (stats/logos/awards/tiles) are mutually exclusive and the
+ * home-page section rules above never match these elements, so specificity
+ * ordering against them is irrelevant here. */
+/* stylelint-disable no-descending-specificity */
+
+/* Columns per row (desktop) */
+@media (width >= 900px) {
+  .cards-icon.threeup > ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cards-icon.fourup > ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .cards-icon.sixup > ul {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* --- Stats: large figure + caption, blue top rule (no icon) --- */
+.cards-icon.stats > ul {
+  gap: 40px 20px;
+}
+
+.cards-icon.stats > ul > li {
+  border-top: 2px solid #0391f2;
+  padding-top: 16px;
+}
+
+.cards-icon.stats > ul > li .cards-icon-card-body p {
+  margin: 0;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.cards-icon.stats > ul > li .cards-icon-card-body p:first-child {
+  margin: 0 0 8px;
+  font-size: 44px;
+  line-height: 48px;
+}
+
+/* --- Logos: square logo, name centred below --- */
+.cards-icon.logos > ul > li {
+  align-items: center;
+  text-align: center;
+}
+
+.cards-icon.logos > ul > li .cards-icon-card-image {
+  width: 187px;
+  max-width: 100%;
+}
+
+.cards-icon.logos > ul > li .cards-icon-card-image img {
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.cards-icon.logos > ul > li .cards-icon-card-body p {
+  margin: 16px 0 0;
+}
+
+/* --- Awards: 16:9 logo tile, centred label, link below --- */
+.cards-icon.awards > ul,
+.cards-icon.tiles > ul {
+  gap: 40px 0;
+}
+
+.cards-icon.awards > ul > li {
+  align-items: stretch;
+  text-align: center;
+}
+
+.cards-icon.awards > ul > li .cards-icon-card-image img {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.cards-icon.awards > ul > li .cards-icon-card-body {
+  padding: 0 30px;
+}
+
+.cards-icon.awards > ul > li .cards-icon-card-body h1,
+.cards-icon.awards > ul > li .cards-icon-card-body h2,
+.cards-icon.awards > ul > li .cards-icon-card-body h3,
+.cards-icon.awards > ul > li .cards-icon-card-body h4,
+.cards-icon.awards > ul > li .cards-icon-card-body h5,
+.cards-icon.awards > ul > li .cards-icon-card-body h6 {
+  margin: 48px 0 24px;
+}
+
+.cards-icon.awards > ul > li .cards-icon-card-body p {
+  margin: 0 0 16px;
+  font-size: 21px;
+  line-height: 24px;
+}
+
+.cards-icon.awards > ul > li .cards-icon-card-body a:any-link {
+  font-size: 18px;
+  color: inherit;
+}
+
+/* --- Text tiles: heading + copy, no icon --- */
+.cards-icon.tiles > ul > li .cards-icon-card-body {
+  padding: 0 30px;
+}
+
+.cards-icon.tiles > ul > li .cards-icon-card-body h1,
+.cards-icon.tiles > ul > li .cards-icon-card-body h2,
+.cards-icon.tiles > ul > li .cards-icon-card-body h3,
+.cards-icon.tiles > ul > li .cards-icon-card-body h4,
+.cards-icon.tiles > ul > li .cards-icon-card-body h5,
+.cards-icon.tiles > ul > li .cards-icon-card-body h6 {
+  margin: 40px 0 24px;
+  font-size: 26px;
+  line-height: 32px;
+}
+
+.cards-icon.tiles > ul > li .cards-icon-card-body p {
+  margin: 0 0 16px;
+}
+
+/* No-icon variants: hide an empty icon cell */
+.cards-icon .cards-icon-card-body:empty,
+.cards-icon .cards-icon-card-image:empty {
+  display: none;
+}
+/* stylelint-enable no-descending-specificity */

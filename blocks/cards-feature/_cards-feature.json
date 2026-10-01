@@ -9,7 +9,8 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Cards Feature",
-              "filter": "cards-feature"
+              "filter": "cards-feature",
+              "model": "cards-feature"
             }
           }
         }
@@ -32,6 +33,30 @@
     }
   ],
   "models": [
+    {
+      "id": "cards-feature",
+      "fields": [
+        {
+          "component": "multiselect",
+          "name": "classes",
+          "value": "",
+          "label": "Options",
+          "valueType": "string",
+          "description": "Leave empty for standard-height cards. 'Tall' gives portrait case-study tiles.",
+          "options": [
+            {
+              "name": "Card height",
+              "children": [
+                {
+                  "name": "Tall",
+                  "value": "tall"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     {
       "id": "cards-feature-item",
       "fields": [
