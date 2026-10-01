@@ -238,14 +238,14 @@ header nav .nav-tools .nav-cta a.button.primary:any-link {
   display: flex;
   width: 100%;
   justify-content: center;
-  padding: 14px 20px;
-  background-color: #fff;
-  color: #000;
-  border: 2px solid #fff;
+  padding: 13px 14px;
   border-radius: 16px;
   font-weight: 700;
   text-transform: uppercase;
   text-decoration: none;
+  border: 2px solid #dd3039;
+  background-color: transparent;
+  color: #fff;
 }
 
 header nav .nav-tools .nav-cta a.button.primary:any-link:hover,
@@ -254,6 +254,8 @@ header nav .nav-tools .nav-cta a.button.primary:any-link:focus-visible {
   border-color: var(--accent-color);
   color: #fff;
 }
+
+
 
 /* hover states (placed after all base link rules to keep specificity order) */
 header nav .nav-tools .nav-search > a:hover,
