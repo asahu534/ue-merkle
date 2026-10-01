@@ -41,8 +41,22 @@
             {
               "name": "Dark",
               "value": "theme-dark"
+            },
+            {
+              "name": "Navy",
+              "value": "theme-navy"
+            },
+            {
+              "name": "Grey",
+              "value": "theme-grey"
             }
           ]
+        },
+        {
+          "component": "text",
+          "name": "anchor",
+          "label": "Anchor ID",
+          "description": "Optional in-page link target, e.g. 'insights' makes #insights scroll to this section. Lowercase letters, numbers and hyphens."
         }
       ]
     }
