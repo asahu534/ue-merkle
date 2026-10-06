@@ -25,3 +25,54 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+
+/* ===== Options (opt-in via block classes) ===== */
+
+/* Profile: full-bleed headshot tiles, 16:9 image, centred name + role */
+.cards.profile > ul {
+  gap: 40px 0;
+}
+
+.cards.profile > ul > li {
+  border: 0;
+  background: transparent;
+  text-align: center;
+}
+
+.cards.profile > ul > li img {
+  aspect-ratio: 16 / 9;
+}
+
+.cards.profile .cards-card-body {
+  margin: 24px 30px 0;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.cards.profile .cards-card-body p {
+  margin: 0;
+}
+
+.cards.profile .cards-card-body strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 21px;
+  line-height: 24px;
+}
+
+@media (width >= 600px) {
+  .cards.threeup > ul,
+  .cards.fourup > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 900px) {
+  .cards.threeup > ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cards.fourup > ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

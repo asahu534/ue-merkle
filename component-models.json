@@ -198,8 +198,22 @@
           {
             "name": "Dark",
             "value": "theme-dark"
+          },
+          {
+            "name": "Navy",
+            "value": "theme-navy"
+          },
+          {
+            "name": "Grey",
+            "value": "theme-grey"
           }
         ]
+      },
+      {
+        "component": "text",
+        "name": "anchor",
+        "label": "Anchor ID",
+        "description": "Optional in-page link target, e.g. 'insights' makes #insights scroll to this section. Lowercase letters, numbers and hyphens."
       }
     ]
   },
@@ -277,6 +291,30 @@
     ]
   },
   {
+    "id": "cards-feature",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "value": "",
+        "label": "Options",
+        "valueType": "string",
+        "description": "Leave empty for standard-height cards. 'Tall' gives portrait case-study tiles.",
+        "options": [
+          {
+            "name": "Card height",
+            "children": [
+              {
+                "name": "Tall",
+                "value": "tall"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "cards-feature-item",
     "fields": [
       {
@@ -338,6 +376,59 @@
     ]
   },
   {
+    "id": "cards-icon",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "value": "",
+        "label": "Options",
+        "valueType": "string",
+        "description": "Leave empty for the default icon cards (4 per row).",
+        "options": [
+          {
+            "name": "Style",
+            "children": [
+              {
+                "name": "Stats (large figures)",
+                "value": "stats"
+              },
+              {
+                "name": "Logos",
+                "value": "logos"
+              },
+              {
+                "name": "Awards",
+                "value": "awards"
+              },
+              {
+                "name": "Text tiles",
+                "value": "tiles"
+              }
+            ]
+          },
+          {
+            "name": "Columns per row (desktop)",
+            "children": [
+              {
+                "name": "Three",
+                "value": "threeup"
+              },
+              {
+                "name": "Four",
+                "value": "fourup"
+              },
+              {
+                "name": "Six",
+                "value": "sixup"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "cards-icon-item",
     "fields": [
       {
@@ -357,6 +448,43 @@
     ]
   },
   {
+    "id": "cards",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "value": "",
+        "label": "Options",
+        "valueType": "string",
+        "description": "Leave empty for the default cards.",
+        "options": [
+          {
+            "name": "Style",
+            "children": [
+              {
+                "name": "Profile (headshots)",
+                "value": "profile"
+              }
+            ]
+          },
+          {
+            "name": "Columns per row (desktop)",
+            "children": [
+              {
+                "name": "Three",
+                "value": "threeup"
+              },
+              {
+                "name": "Four",
+                "value": "fourup"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -372,6 +500,69 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "carousel-cases",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "intro",
+        "value": "",
+        "label": "Intro (optional)",
+        "valueType": "string",
+        "description": "Optional heading/text shown in a column beside the carousel (e.g. 'Success stories'). Leave empty for a full-width carousel."
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "value": "",
+        "label": "Options",
+        "valueType": "string",
+        "description": "Leave empty for the default: outlined arrows bottom-left (under the intro when one is set), 3 cards visible, square corners.",
+        "options": [
+          {
+            "name": "Arrow position",
+            "children": [
+              {
+                "name": "Bottom right",
+                "value": "arrowsright"
+              },
+              {
+                "name": "Sides (overlay)",
+                "value": "arrowssides"
+              }
+            ]
+          },
+          {
+            "name": "Arrow style",
+            "children": [
+              {
+                "name": "Filled (light circle)",
+                "value": "arrowsfilled"
+              }
+            ]
+          },
+          {
+            "name": "Visible cards (desktop)",
+            "children": [
+              {
+                "name": "Four",
+                "value": "fourup"
+              }
+            ]
+          },
+          {
+            "name": "Card style",
+            "children": [
+              {
+                "name": "Rounded corners",
+                "value": "rounded"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -431,40 +622,75 @@
     "id": "columns",
     "fields": [
       {
-        "component": "select",
+        "component": "multiselect",
         "name": "classes",
         "value": "",
-        "label": "Layout",
+        "label": "Options",
         "valueType": "string",
-        "description": "Column width ratio. 'Equal' splits all columns evenly. When you pick a ratio, set the Columns field to match: 2 for 75/25 and 25/75; 3 for the three-part ratios.",
+        "description": "Layout: leave empty for equal columns; for a ratio set Columns to match (2 for two-part, 3 for three-part). Style 'Dark/Light card' renders a rounded teaser panel. Image position swaps the image column without re-authoring.",
         "options": [
           {
-            "name": "Equal (default)",
-            "value": ""
+            "name": "Layout",
+            "children": [
+              {
+                "name": "75 / 25 (two columns)",
+                "value": "layout-75-25"
+              },
+              {
+                "name": "25 / 75 (two columns)",
+                "value": "layout-25-75"
+              },
+              {
+                "name": "60 / 40 (two columns)",
+                "value": "ratio6040"
+              },
+              {
+                "name": "40 / 60 (two columns)",
+                "value": "ratio4060"
+              },
+              {
+                "name": "40 / 30 / 30 (three columns)",
+                "value": "layout-40-30-30"
+              },
+              {
+                "name": "50 / 25 / 25 (three columns)",
+                "value": "layout-50-25-25"
+              },
+              {
+                "name": "25 / 25 / 50 (three columns)",
+                "value": "layout-25-25-50"
+              },
+              {
+                "name": "25 / 50 / 25 (three columns)",
+                "value": "layout-25-50-25"
+              }
+            ]
           },
           {
-            "name": "75 / 25 (two columns)",
-            "value": "layout-75-25"
+            "name": "Style",
+            "children": [
+              {
+                "name": "Dark card",
+                "value": "darkcard"
+              },
+              {
+                "name": "Light card",
+                "value": "lightcard"
+              }
+            ]
           },
           {
-            "name": "25 / 75 (two columns)",
-            "value": "layout-25-75"
-          },
-          {
-            "name": "40 / 30 / 30 (three columns)",
-            "value": "layout-40-30-30"
-          },
-          {
-            "name": "50 / 25 / 25 (three columns)",
-            "value": "layout-50-25-25"
-          },
-          {
-            "name": "25 / 25 / 50 (three columns)",
-            "value": "layout-25-25-50"
-          },
-          {
-            "name": "25 / 50 / 25 (three columns)",
-            "value": "layout-25-50-25"
+            "name": "Image position",
+            "children": [
+              {
+                "name": "Image left",
+                "value": "imageleft"
+              },
+              {
+                "name": "Image right",
+                "value": "imageright"
+              }
+            ]
           }
         ]
       },
@@ -552,6 +778,36 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "video",
+        "label": "Background Video (optional)",
+        "description": "DAM MP4. Plays muted and looped behind the text; the image is used as poster and fallback."
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "value": "",
+        "label": "Options",
+        "valueType": "string",
+        "description": "Leave empty for the default: image/video full-bleed behind the text.",
+        "options": [
+          {
+            "name": "Layout",
+            "children": [
+              {
+                "name": "Split: image right",
+                "value": "splitright"
+              },
+              {
+                "name": "Split: image left",
+                "value": "splitleft"
+              }
+            ]
+          }
+        ]
       }
     ]
   },

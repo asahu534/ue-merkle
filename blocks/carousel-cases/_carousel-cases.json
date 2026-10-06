@@ -9,7 +9,8 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Carousel Cases",
-              "filter": "carousel-cases"
+              "filter": "carousel-cases",
+              "model": "carousel-cases"
             }
           }
         }
@@ -32,6 +33,69 @@
     }
   ],
   "models": [
+    {
+      "id": "carousel-cases",
+      "fields": [
+        {
+          "component": "richtext",
+          "name": "intro",
+          "value": "",
+          "label": "Intro (optional)",
+          "valueType": "string",
+          "description": "Optional heading/text shown in a column beside the carousel (e.g. 'Success stories'). Leave empty for a full-width carousel."
+        },
+        {
+          "component": "multiselect",
+          "name": "classes",
+          "value": "",
+          "label": "Options",
+          "valueType": "string",
+          "description": "Leave empty for the default: outlined arrows bottom-left (under the intro when one is set), 3 cards visible, square corners.",
+          "options": [
+            {
+              "name": "Arrow position",
+              "children": [
+                {
+                  "name": "Bottom right",
+                  "value": "arrowsright"
+                },
+                {
+                  "name": "Sides (overlay)",
+                  "value": "arrowssides"
+                }
+              ]
+            },
+            {
+              "name": "Arrow style",
+              "children": [
+                {
+                  "name": "Filled (light circle)",
+                  "value": "arrowsfilled"
+                }
+              ]
+            },
+            {
+              "name": "Visible cards (desktop)",
+              "children": [
+                {
+                  "name": "Four",
+                  "value": "fourup"
+                }
+              ]
+            },
+            {
+              "name": "Card style",
+              "children": [
+                {
+                  "name": "Rounded corners",
+                  "value": "rounded"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     {
       "id": "carousel-cases-item",
       "fields": [

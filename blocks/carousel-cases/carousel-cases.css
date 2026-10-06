@@ -162,3 +162,87 @@
     flex-basis: 30%;
   }
 }
+
+/* ===== Options (all opt-in via block classes; defaults above unchanged) ===== */
+
+/* Rounded cards */
+.carousel-cases.rounded .carousel-cases-slide {
+  border-radius: 24px;
+}
+
+/* Filled arrows: light circle with a dark chevron (source capability pages) */
+.carousel-cases.arrowsfilled .carousel-cases-navigation-buttons button {
+  border: 0;
+  background-color: #e5e5e9;
+  color: #000;
+}
+
+.carousel-cases.arrowsfilled .carousel-cases-navigation-buttons button:disabled {
+  opacity: 0.6;
+}
+
+/* Arrows bottom-right */
+.carousel-cases.arrowsright .carousel-cases-navigation-buttons {
+  left: auto;
+  right: 0;
+}
+
+/* Arrows on the sides, vertically centred over the track */
+.carousel-cases.arrowssides {
+  padding-bottom: 0;
+}
+
+.carousel-cases.arrowssides .carousel-cases-navigation-buttons {
+  inset: 50% 8px auto;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.carousel-cases.arrowssides .carousel-cases-navigation-buttons > * {
+  pointer-events: auto;
+}
+
+/* Intro column (e.g. "Success stories") — stacked above the track on mobile */
+.carousel-cases.has-intro .carousel-cases-intro {
+  margin-bottom: 24px;
+}
+
+.carousel-cases.has-intro .carousel-cases-intro > :first-child {
+  margin-top: 0;
+}
+
+@media (width >= 900px) {
+  /* Four cards visible: shorter cards (source 330 x 436) */
+  .carousel-cases.fourup .carousel-cases-slide {
+    flex-basis: calc(25% - 15px);
+    aspect-ratio: 330 / 436;
+  }
+
+  /* Intro beside the track; arrows at the bottom of the intro column */
+  .carousel-cases.has-intro {
+    display: grid;
+    grid-template-columns: minmax(220px, 25%) 1fr;
+    gap: 20px;
+    padding-bottom: 0;
+  }
+
+  .carousel-cases.has-intro .carousel-cases-intro {
+    position: relative;
+    margin: 0;
+    padding-bottom: 60px;
+  }
+
+  .carousel-cases.has-intro .carousel-cases-slides-container {
+    min-width: 0;
+  }
+
+  .carousel-cases.has-intro .carousel-cases-slide {
+    flex-basis: calc(33.333% - 14px);
+  }
+
+  .carousel-cases.has-intro.arrowsright,
+  .carousel-cases.has-intro.arrowssides {
+    padding-bottom: 80px;
+  }
+}

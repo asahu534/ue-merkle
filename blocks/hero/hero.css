@@ -1,12 +1,22 @@
+/* Hero — full-bleed media (image or muted background video) with text on top.
+ * Options (classes): splitright / splitleft place the media beside the text
+ * instead of behind it. Default (no class) keeps the original overlay look. */
+
 .hero-container .hero-wrapper {
   max-width: unset;
   padding: 0;
+}
+
+/* A hero sits flush under the header even inside a styled (coloured) section */
+main .section.hero-container:is(.theme-navy, .theme-dark, .theme-grey, .dark) {
+  padding-top: 0;
 }
 
 .hero {
   position: relative;
   padding: 40px 24px;
   min-height: 300px;
+  isolation: isolate;
 }
 
 .hero h1 {
@@ -16,22 +26,151 @@
   color: var(--background-color);
 }
 
-.hero picture {
+/* Media layer: behind the text by default */
+.hero .hero-media {
   position: absolute;
   z-index: -1;
   inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+  overflow: hidden;
+  line-height: 0;
 }
 
-.hero img {
-  object-fit: cover;
+.hero .hero-media > div {
+  height: 100%;
+}
+
+.hero picture {
+  display: block;
+  height: 100%;
+}
+
+.hero img,
+.hero video {
+  display: block;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+}
+
+/* Video sits above the poster image once it plays */
+.hero video {
+  position: absolute;
+  inset: 0;
+}
+
+.hero .hero-content {
+  position: relative;
+  max-width: 1264px;
+  margin: 0 auto;
+}
+
+/* Eyebrow (first paragraph when followed by a heading), headings, body copy */
+.hero .hero-content p:has(+ h1, + h2, + h3) {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  text-transform: uppercase;
+  color: var(--muted-text-color);
+}
+
+.hero .hero-content h2 {
+  margin: 0;
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 48px;
+  color: #fff;
+}
+
+.hero .hero-content h2 ~ p {
+  margin: 16px 0 0;
+  font-size: 18px;
+  line-height: 24px;
+  color: #fff;
+}
+
+/* ===== Split layouts: media beside the text ===== */
+.hero.splitright,
+.hero.splitleft {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  min-height: 0;
+}
+
+.hero.splitright .hero-media,
+.hero.splitleft .hero-media {
+  position: relative;
+  z-index: 0;
+  inset: auto;
+  aspect-ratio: 3 / 2;
+}
+
+.hero.splitright .hero-content,
+.hero.splitleft .hero-content {
+  order: -1;
+  margin: 0;
+  padding: 40px 24px;
+}
+
+/* Overlay + video: keep the text readable over moving footage */
+.hero.has-video:not(.splitright, .splitleft) .hero-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgb(0 0 0 / 55%) 0%, rgb(0 0 0 / 0%) 60%);
 }
 
 @media (width >= 900px) {
   .hero {
+    display: flex;
+    align-items: center;
     padding: 40px 32px;
+    min-height: 522px;
+  }
+
+  .hero .hero-content {
+    flex: 1;
+  }
+
+  .hero .hero-content > div {
+    max-width: 570px;
+  }
+
+  .hero .hero-content h2 {
+    font-size: 52px;
+    line-height: 56px;
+  }
+
+  /* Split: 50/50, text vertically centred, media bleeds to the viewport edge */
+  .hero.splitright,
+  .hero.splitleft {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 422px;
+  }
+
+  /* Media is first in the DOM: push it right (splitright) or keep it left */
+  .hero.splitright .hero-media {
+    order: 1;
+  }
+
+  .hero.splitleft .hero-media {
+    order: -1;
+  }
+
+  .hero.splitright .hero-content,
+  .hero.splitleft .hero-content {
+    order: 0;
+    display: flex;
+    flex: 0 0 50%;
+    align-items: center;
+    padding: 40px 30px;
+  }
+
+  .hero.splitright .hero-media,
+  .hero.splitleft .hero-media {
+    flex: 0 0 50%;
+    aspect-ratio: auto;
   }
 }

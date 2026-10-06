@@ -8,6 +8,11 @@
   margin-top: 64px !important;
 }
 
+/* Coloured bands sit flush against the previous section (no white gap) */
+main .cards-feature-container:is(.theme-dark, .theme-navy, .theme-grey, .dark) {
+  margin-top: 0 !important;
+}
+
 .cards-feature-container > div > h2 {
   font-size:52px;
   font-weight: 400;
@@ -108,7 +113,7 @@
 
 /* "Learn more" (last link paragraph) pushes to the bottom of the text area */
 .cards-feature .cards-feature-card-body p:last-child {
-  margin-top: auto; /* pushes the last paragraph to the bottom */
+    margin: 8px 0 0; /* pushes the last paragraph to the bottom */
 }
 
 .cards-feature .cards-feature-card-body a:any-link {
@@ -291,5 +296,17 @@
   .cards-feature > ul > li.cardw-30,
   .cards-feature > ul > li.cardw-25 {
     flex-basis: calc((100% - 8px) / 1.5);
+  }
+}
+
+
+/* Option: Tall cards (portrait case-study tiles, source 330 x 587) */
+.cards-feature.tall > ul > li {
+  min-height: 480px;
+}
+
+@media (width >= 900px) {
+  .cards-feature.tall > ul > li {
+    min-height: 587px;
   }
 }

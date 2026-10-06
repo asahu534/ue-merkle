@@ -3,7 +3,7 @@
     {
       "title": "Columns",
       "id": "columns",
-      "description": "Multi-column layout. Leave Layout as Equal for evenly-split columns, or pick a width ratio (e.g. 40/30/30) and set Columns to the matching count.",
+      "description": "Multi-column layout with optional width ratio, card style and image position.",
       "plugins": {
         "xwalk": {
           "page": {
@@ -22,40 +22,75 @@
       "id": "columns",
       "fields": [
         {
-          "component": "select",
+          "component": "multiselect",
           "name": "classes",
           "value": "",
-          "label": "Layout",
+          "label": "Options",
           "valueType": "string",
-          "description": "Column width ratio. 'Equal' splits all columns evenly. When you pick a ratio, set the Columns field to match: 2 for 75/25 and 25/75; 3 for the three-part ratios.",
+          "description": "Layout: leave empty for equal columns; for a ratio set Columns to match (2 for two-part, 3 for three-part). Style 'Dark/Light card' renders a rounded teaser panel. Image position swaps the image column without re-authoring.",
           "options": [
             {
-              "name": "Equal (default)",
-              "value": ""
+              "name": "Layout",
+              "children": [
+                {
+                  "name": "75 / 25 (two columns)",
+                  "value": "layout-75-25"
+                },
+                {
+                  "name": "25 / 75 (two columns)",
+                  "value": "layout-25-75"
+                },
+                {
+                  "name": "60 / 40 (two columns)",
+                  "value": "ratio6040"
+                },
+                {
+                  "name": "40 / 60 (two columns)",
+                  "value": "ratio4060"
+                },
+                {
+                  "name": "40 / 30 / 30 (three columns)",
+                  "value": "layout-40-30-30"
+                },
+                {
+                  "name": "50 / 25 / 25 (three columns)",
+                  "value": "layout-50-25-25"
+                },
+                {
+                  "name": "25 / 25 / 50 (three columns)",
+                  "value": "layout-25-25-50"
+                },
+                {
+                  "name": "25 / 50 / 25 (three columns)",
+                  "value": "layout-25-50-25"
+                }
+              ]
             },
             {
-              "name": "75 / 25 (two columns)",
-              "value": "layout-75-25"
+              "name": "Style",
+              "children": [
+                {
+                  "name": "Dark card",
+                  "value": "darkcard"
+                },
+                {
+                  "name": "Light card",
+                  "value": "lightcard"
+                }
+              ]
             },
             {
-              "name": "25 / 75 (two columns)",
-              "value": "layout-25-75"
-            },
-            {
-              "name": "40 / 30 / 30 (three columns)",
-              "value": "layout-40-30-30"
-            },
-            {
-              "name": "50 / 25 / 25 (three columns)",
-              "value": "layout-50-25-25"
-            },
-            {
-              "name": "25 / 25 / 50 (three columns)",
-              "value": "layout-25-25-50"
-            },
-            {
-              "name": "25 / 50 / 25 (three columns)",
-              "value": "layout-25-50-25"
+              "name": "Image position",
+              "children": [
+                {
+                  "name": "Image left",
+                  "value": "imageleft"
+                },
+                {
+                  "name": "Image right",
+                  "value": "imageright"
+                }
+              ]
             }
           ]
         },
