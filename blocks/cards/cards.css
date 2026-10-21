@@ -29,8 +29,48 @@
 /* ===== Options (opt-in via block classes) ===== */
 
 /* Profile: full-bleed headshot tiles, 16:9 image, centred name + role */
-.cards.profile > ul {
-  gap: 40px 0;
+
+
+@media (width >= 1280px) {
+  .cards-container > .default-content-wrapper > h3 {
+    margin: 36px 0;
+  }
+
+  .cards.profile.fourup > ul {
+  display: grid;
+  justify-content: flex-start;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.cards.profile.fourup > ul > li  img {
+  width: 250px;
+  height: 250px;
+}
+
+}
+
+@media (width < 1280px) {
+ .cards-container > .default-content-wrapper > h3 {
+    margin: 24px 0;
+  }
+
+
+.cards.profile.fourup > ul {
+  display: grid;
+  justify-content: flex-start;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.cards.profile.fourup > ul > li  img {
+  width: 150px;
+  height: 150px;
+}
+
+.cards.profile.fourup > ul > li  .cards-card-body {
+  font-size: 16px;
+}
 }
 
 .cards.profile > ul > li {
