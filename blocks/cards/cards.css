@@ -32,9 +32,8 @@
 
 
 @media (width >= 1280px) {
-
   .cards-container > .default-content-wrapper > h3 {
-    margin: 36px 0px;
+    margin: 36px 0;
   }
 
   .cards.profile.fourup > ul {
@@ -52,9 +51,8 @@
 }
 
 @media (width < 1280px) {
-
  .cards-container > .default-content-wrapper > h3 {
-    margin: 24px 0px;
+    margin: 24px 0;
   }
 
 
