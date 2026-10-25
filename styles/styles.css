@@ -349,6 +349,7 @@ main .section.centered .default-content-wrapper {
   text-align: center;
 }
 
+@media (width > 1280px) {
 /* Centered section */
 .centered.section .default-content-wrapper > h2{
 margin-top:64px;
@@ -362,9 +363,9 @@ font-weight: 400;
   width: 600px;
   margin: auto;
 }
+}
 
-@media (width < 1280px) {
-  
+@media (width <= 1280px) {
 .centered.section .default-content-wrapper > h2{
 margin-top:56px;
 font-size:44px;

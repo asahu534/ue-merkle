@@ -103,7 +103,9 @@ main .section.hero-container:is(.theme-navy, .theme-dark, .theme-grey, .dark) {
   position: relative;
   z-index: 0;
   inset: auto;
-  aspect-ratio: 3 / 2;
+  flex: 0 0 50%;
+  min-width: 0;
+  aspect-ratio: auto;
 }
 
 .hero.splitright .hero-media img {
@@ -113,22 +115,12 @@ main .section.hero-container:is(.theme-navy, .theme-dark, .theme-grey, .dark) {
   object-fit: cover;
 }
 
-.hero.splitright .hero-media,
-.hero.splitleft .hero-media {
-  flex: 0 0 50%;
-  min-width: 0;
-  aspect-ratio: auto;
-}
 
 .hero.splitright .hero-content,
 .hero.splitleft .hero-content {
-  flex: 0 0 50%;
+    flex: 0 0 50%;
   min-width: 0;
   box-sizing: border-box;
-}
-
-.hero.splitright .hero-content,
-.hero.splitleft .hero-content {
   order: -1;
   margin: 0;
   padding: 40px 24px;
