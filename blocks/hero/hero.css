@@ -106,6 +106,27 @@ main .section.hero-container:is(.theme-navy, .theme-dark, .theme-grey, .dark) {
   aspect-ratio: 3 / 2;
 }
 
+.hero.splitright .hero-media img {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero.splitright .hero-media,
+.hero.splitleft .hero-media {
+  flex: 0 0 50%;
+  min-width: 0;
+  aspect-ratio: auto;
+}
+
+.hero.splitright .hero-content,
+.hero.splitleft .hero-content {
+  flex: 0 0 50%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
 .hero.splitright .hero-content,
 .hero.splitleft .hero-content {
   order: -1;

@@ -32,6 +32,19 @@
   display: block;
 }
 
+@media (width >= 1280px) {
+.columns-2-cols > div > div{
+margin:24px 0px 80px 0px;
+}
+}
+
+@media (width < 1280px) {
+.columns-2-cols > div {
+margin:24px 0px 80px 0px;
+}
+}
+
+
 @media (width >= 900px) {
   .columns > div {
     align-items: center;

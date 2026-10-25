@@ -349,6 +349,37 @@ main .section.centered .default-content-wrapper {
   text-align: center;
 }
 
+/* Centered section */
+.centered.section .default-content-wrapper > h2{
+margin-top:64px;
+font-size:52px;
+font-weight: 400;
+}
+
+.centered.section .default-content-wrapper > p {
+  font-size: 21px;
+  line-height: 24px;
+  width: 600px;
+  margin: auto;
+}
+
+@media (width < 1280px) {
+  
+.centered.section .default-content-wrapper > h2{
+margin-top:56px;
+font-size:44px;
+font-weight: 400;
+}
+
+.centered.section .default-content-wrapper > p {
+  font-size: 16px;
+  line-height: 20px;
+  width: 100%;
+}
+}
+
+
+
 main .section.centered .default-content-wrapper .button-container {
   justify-content: center;
 }

@@ -20,7 +20,7 @@ main .cards-feature-container:is(.theme-dark, .theme-navy, .theme-grey, .dark) {
   margin-bottom: 16px;
 }
 
-
+.cards-feature
 
 .cards-feature-container > div > p {
   font-size: 21px;
@@ -42,6 +42,14 @@ main .cards-feature-container:is(.theme-dark, .theme-navy, .theme-grey, .dark) {
   }
 }
 
+@media (width >= 1280px) {
+   .cards-feature-container > .default-content-wrapper {
+      width:600px;
+      margin: 0 auto;
+      padding:24px 0px;
+    }
+}
+
 .cards-feature-wrapper {
   margin-top: 48px !important;
 }
@@ -56,15 +64,14 @@ main .cards-feature-container:is(.theme-dark, .theme-navy, .theme-grey, .dark) {
 }
 
 .cards-feature > ul > li {
-    cursor: pointer;
+  cursor: pointer;
   position: relative; /* positioning context for the full-bleed image */
   overflow: hidden;
   border-radius: 16px;
   background-color: #000; /* shows through on cards with no image */
   color: #fff;
   min-height: 380px;
-
-  /* Mobile: every card is full width regardless of its cardw-* class. */
+/* Mobile: every card is full width regardless of its cardw-* class. */
   flex: 0 0 100%;
 }
 
@@ -209,6 +216,10 @@ main .cards-feature-container:is(.theme-dark, .theme-navy, .theme-grey, .dark) {
 
 
 /* Second and third card images */
+.cards-feature.tall > ul > li:hover .cards-feature-card-image img{
+   transform: scale(1.05);
+}
+
 .cards-feature > ul > li:nth-child(2) .cards-feature-card-image img,
 .cards-feature > ul > li:nth-child(3) .cards-feature-card-image img {
   transform: scale(1);
