@@ -17,6 +17,8 @@ header .nav-wrapper {
   width: 100%;
 }
 
+
+
 header nav {
   box-sizing: border-box;
   display: grid;
@@ -48,6 +50,23 @@ header nav[aria-expanded='true'] {
 header nav p {
   margin: 0;
   line-height: 1;
+}
+
+.platforms-engineering-page header .nav-wrapper {
+  background-color: #040e4b;
+}
+
+.platforms-engineering-page header nav[aria-expanded='true'] {
+  background-color: #040e4b;
+}
+
+
+.ai-expertise-page header .nav-wrapper {
+  background-color: #040e4b;
+}
+
+.ai-expertise-page header nav[aria-expanded='true'] {
+  background-color: #040e4b;
 }
 
 header nav a:any-link {
