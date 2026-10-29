@@ -6,31 +6,30 @@
 }
 
 .carousel-cases-slide {
-  cursor:pointer;
+  cursor: pointer;
 }
 
+/* Background image container */
 .carousel-cases-slide-image {
   overflow: hidden;
 }
 
-.carousel-cases-slide-image img {
+/* Base image styles */
+.carousel-cases .carousel-cases-slide-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   transition: transform 0.4s ease;
 }
 
-.carousel-cases-slide:hover .carousel-cases-slide-image img {
+/* Zoom image on card hover */
+.carousel-cases .carousel-cases-slide:hover
+.carousel-cases-slide-image img {
   transform: scale(1.1);
 }
 
 .carousel-cases-slide-content > p > a {
   text-decoration: none !important;
-}
-
-/* Read case link */
-.carousel-cases .carousel-cases-slide-content a:any-link {
-  position: relative;
-  display: inline-block;
-  color: #fff;
-  text-decoration: none;
 }
 
 /* Animated underline — same as header navigation */
@@ -47,10 +46,15 @@
   transition: transform 0.25s ease-out;
 }
 
+/* Animate when the link receives keyboard focus */
+.carousel-cases .carousel-cases-slide-content a:focus-visible::before {
+  transform: scaleX(1);
+  transform-origin: left bottom;
+}
+
 /* Animate when hovering anywhere on the card */
 .carousel-cases .carousel-cases-slide:hover
-.carousel-cases-slide-content a::before,
-.carousel-cases .carousel-cases-slide-content a:focus-visible::before {
+.carousel-cases-slide-content a::before {
   transform: scaleX(1);
   transform-origin: left bottom;
 }
@@ -95,12 +99,6 @@
   line-height: 0;
 }
 
-.carousel-cases .carousel-cases-slide-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 /* Content overlaid on top of the card, with a top-down dark gradient */
 .carousel-cases .carousel-cases-slide-content {
   position: absolute;
@@ -141,17 +139,16 @@
   color: var(--eyebrow-color, rgb(174 174 188));
 }
 
+/* Case-study link */
 .carousel-cases .carousel-cases-slide-content a:any-link {
+  position: relative;
+  display: inline-block;
   font-size: 18px;
   font-weight: 400;
   line-height: 18px;
   color: #fff;
   text-decoration: none;
   text-transform: none;
-}
-
-.carousel-cases .carousel-cases-slide-content a:hover {
-  text-decoration: underline;
 }
 
 /* Navigation — circular arrow controls below the track, bottom-left */

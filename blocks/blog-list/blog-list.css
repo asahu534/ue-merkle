@@ -7,6 +7,7 @@
 .blog-list {
   --blog-list-tile-bg: #f2f2f4;
   --blog-list-label: #0391f2;
+
   max-width: 1264px;
   margin: 0 auto;
   padding: 0 20px;
